@@ -1,0 +1,164 @@
+html {
+  height: 100%; }
+
+a {
+  text-decoration: none; }
+
+button {
+  background: none;
+  border: none; }
+
+.main {
+  margin: 0;
+  background-size: cover;
+  height: 100%;
+  display: flex; }
+  .main__background {
+    background: url("/public/images/VI-project-0.0.2-nonet.jpg") center center;
+    filter: blur(5px);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1; }
+    .main__background__filter {
+      height: 100%;
+      background: rgba(159, 103, 21, 0.4); }
+  .main__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column; }
+    .main__content__header {
+      height: 180px; }
+      .main__content__header__image {
+        display: block;
+        margin: 80px auto 0;
+        width: 360px; }
+        @media (min-width: 1500px) {
+          .main__content__header__image {
+            width: 480px; } }
+    .main__content__section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 80px; }
+      .main__content__section__video {
+        align-self: center;
+        margin: auto; }
+        @media (min-width: 1180px) {
+          .main__content__section__video {
+            width: 640px;
+            height: 360px; } }
+        @media (min-width: 1340px) {
+          .main__content__section__video {
+            width: 800px;
+            height: 450px; } }
+        @media (min-width: 1500px) {
+          .main__content__section__video {
+            width: 960px;
+            height: 540px; } }
+      .main__content__section__enter {
+        align-self: center;
+        width: 360px;
+        margin: auto;
+        background: rgba(255, 255, 255, 0.7); }
+      .main__content__section__rules {
+        flex: 1;
+        box-sizing: border-box;
+        padding: 80px; }
+        .main__content__section__rules__content {
+          height: 100%;
+          padding: 40px;
+          background: rgba(255, 255, 255, 0.7); }
+  .main__navigation {
+    width: 360px;
+    display: flex; }
+    .main__navigation .navigation {
+      align-self: center;
+      padding: 180px 0;
+      width: 100%; }
+
+.navigation {
+  border-left: 3px solid white; }
+  .navigation__item {
+    color: white;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 20pt;
+    font-weight: bold;
+    padding: 15px 15px 15px 50px; }
+    .navigation__item_active {
+      padding-left: 45px;
+      border-left: 6px solid white; }
+    .navigation__item:hover {
+      background: rgba(255, 255, 255, 0.2); }
+
+.video {
+  background: url("/public/images/VI-project-0.0.2-nonet.jpg");
+  display: flex;
+  flex-direction: column;
+  height: 100%; }
+  .video__button {
+    align-self: center;
+    width: 120px;
+    margin: auto;
+    display: block; }
+
+.enter {
+  padding: 25px; }
+  .enter .field {
+    margin-bottom: 25px;
+    height: 48px; }
+  .enter .button {
+    height: 48px; }
+
+.field {
+  border-bottom: 2px solid #786b3f;
+  font-family: sans-serif; }
+  .field__name {
+    position: relative;
+    top: -48px;
+    color: #786b3f;
+    font-size: 8pt;
+    padding: 0 5px; }
+  .field__input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 10px 5px 0;
+    border: none;
+    background: none;
+    color: #786b3f;
+    font-size: 16pt;
+    outline: none; }
+
+.button {
+  box-sizing: border-box;
+  background: #786b3f;
+  font-size: 16pt;
+  font-family: sans-serif;
+  color: white;
+  text-align: center;
+  padding: 12px; }
+  .button:hover {
+    background: #918351; }
+
+.top {
+  padding: 25px; }
+  .top__member {
+    color: #786b3f;
+    font-family: sans-serif;
+    font-size: 18pt;
+    margin-bottom: 25px; }
+    .top__member:nth-child(1) {
+      color: #3c301e; }
+    .top__member:nth-child(2) {
+      color: #504328; }
+    .top__member:nth-child(3) {
+      color: #645732; }
+    .top__member__name {
+      display: inline-block;
+      width: 240px; }
+    .top__member__points {
+      display: inline-block; }
+
+/*# sourceMappingURL=style.css.map */
