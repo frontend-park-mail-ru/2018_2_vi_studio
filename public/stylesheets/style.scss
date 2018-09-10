@@ -39,12 +39,14 @@ button {
 
 
     &__header {
-      height: 180px;
-
       &__image {
         display: block;
-        margin: 80px auto 0;
+        margin: 40px auto 0;
         width: 360px;
+
+        @media (min-height: 720px) {
+          margin: 80px auto 0;
+        }
 
         @media (min-width: 1500px) {
           width: 480px
@@ -56,7 +58,11 @@ button {
       flex: 1;
       display: flex;
       flex-direction: column;
-      margin-bottom: 80px;
+      padding: 40px 80px;
+
+      @media (min-height: 720px) {
+        padding: 80px;
+      }
 
       &__video {
         align-self: center;
@@ -88,9 +94,9 @@ button {
       &__rules {
         flex: 1;
         box-sizing: border-box;
-        padding: 80px;
 
         &__content {
+          box-sizing: border-box;
           height: 100%;
           padding: 40px;
           background: rgba(255, 255, 255, 0.7);
@@ -105,7 +111,7 @@ button {
 
     .navigation {
       align-self: center;
-      padding: 180px 0;
+      padding: 160px 0;
       width: 100%;
     }
   }
