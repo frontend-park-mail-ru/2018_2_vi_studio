@@ -1,3 +1,5 @@
+@import "consts";
+
 html {
   height: 100%;
 }
@@ -17,7 +19,7 @@ button {
   height: 100%;
   display: flex;
 
-  &__background {
+  .main__background {
     background: url("/public/images/VI-project-0.0.2-nonet.jpg") center center;
     filter: blur(5px);
     position: fixed;
@@ -25,20 +27,20 @@ button {
     height: 100%;
     z-index: -1;
 
-    &__filter {
+    .main__filter {
       height: 100%;
       background: rgba(159, 103, 21, 0.4);
     }
   }
 
-  &__content {
+  .main__content {
     flex: 1;
     display: flex;
     flex-direction: column;
 
 
-    &__header {
-      &__image {
+    .main__header {
+      .main__image {
         display: block;
         margin: 40px auto 0;
         width: 360px;
@@ -53,7 +55,7 @@ button {
       }
     }
 
-    &__section {
+    .main__section {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -63,7 +65,7 @@ button {
         padding: 80px;
       }
 
-      &__video {
+      .main__video {
         align-self: center;
         margin: auto;
 
@@ -83,18 +85,18 @@ button {
         }
       }
 
-      &__enter {
+      .main__enter {
         align-self: center;
         width: 360px;
         margin: auto;
         background: rgba(255, 255, 255, 0.7);
       }
 
-      &__rules {
+      .main__rules {
         flex: 1;
         box-sizing: border-box;
 
-        &__content {
+        .main__content {
           box-sizing: border-box;
           height: 100%;
           padding: 40px;
@@ -104,7 +106,7 @@ button {
     }
   }
 
-  &__navigation {
+  .main__navigation {
     width: 360px;
     display: flex;
 
@@ -119,7 +121,7 @@ button {
 .navigation {
   border-left: 3px solid white;
 
-  &__item {
+  .navigation__item {
     color: white;
     text-decoration: none;
     font-family: sans-serif;
@@ -144,7 +146,7 @@ button {
   flex-direction: column;
   height: 100%;
 
-  &__button {
+  .video__button {
     align-self: center;
     width: 120px;
     margin: auto;
@@ -166,25 +168,25 @@ button {
 }
 
 .field {
-  border-bottom: 2px solid #786b3f;
+  border-bottom: 2px solid $main-color;
   font-family: sans-serif;
 
-  &__name {
+  .field__name {
     position: relative;
     top: -48px;
-    color: #786b3f;
+    color: $main-color;
     font-size: 8pt;
     padding: 0 5px;
   }
 
-  &__input {
+  .field__input {
     box-sizing: border-box;
     width: 100%;
     height: 100%;
     padding: 10px 5px 0;
     border: none;
     background: none;
-    color: #786b3f;
+    color: $main-color;
     font-size: 16pt;
     outline: none;
   }
@@ -192,7 +194,7 @@ button {
 
 .button {
   box-sizing: border-box;
-  background: #786b3f;
+  background: $main-color;
   font-size: 16pt;
   font-family: sans-serif;
   color: white;
@@ -207,8 +209,8 @@ button {
 .top {
   padding: 25px;
 
-  &__member {
-    color: #786b3f;
+  .top__member {
+    color: $main-color;
     font-family: sans-serif;
     font-size: 18pt;
     margin-bottom: 25px;
@@ -225,12 +227,12 @@ button {
       color: #645732;
     }
 
-    &__name {
+    .top__name {
       display: inline-block;
       width: 240px;
     }
 
-    &__points {
+    .top__points {
       display: inline-block;
     }
   }
