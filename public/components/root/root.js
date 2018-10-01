@@ -7,10 +7,11 @@ const AJAX = window.AjaxModule;
 const COOKIE = window.CookieModule;
 
 export class Root {
-    constructor() {
+    constructor(renderNav) {
         this._el = document.createElement('div');
         this._el.classList.add('root');
         this.renderHome();
+        this._renderNav =renderNav;
     }
 
     renderSignIn() {
@@ -33,6 +34,9 @@ export class Root {
                 (obj) => {
                     COOKIE.setCookie('access_token', obj.AccessToken);
                     console.log(obj);
+                    this.clean();
+                    this.renderHome();
+                    this._renderNav();
                 },
                 (error) => {
                     console.log(error);
@@ -44,7 +48,7 @@ export class Root {
 
     renderSignUp() {
         const form = new Form([
-            {label: 'Username', name: 'username', type: 'text'},
+            {label: 'Nickname', name: 'nickname', type: 'text'},
             {label: 'E-mail', name: 'email', type: 'email'},
             {label: 'Password', name: 'password', type: 'password'},
             {label: 'Repeat password', name: 'rep_password', type: 'password'},
@@ -58,14 +62,14 @@ export class Root {
             event.preventDefault();
             if (formEl.password.value === formEl.rep_password.value) {
                 AJAX.register({
-                        nickname: formEl.username.value,
+                        nickname: formEl.nickname.value,
                         email: formEl.email.value,
                         password: formEl.password.value,
                     },
                     (obj) => {
                         console.log(obj);
-                        root.innerHTML = '';
-                        renderSignIn();
+                        this._el.innerHTML = '';
+                        this.renderSignIn();
 
                     },
                     (error) => {
@@ -76,6 +80,55 @@ export class Root {
                 form.showError('Passwords do not match');
             }
         });
+    }
+
+    renderProfile() {
+
+
+        const form = new Form([
+            {label: 'Nickname', name: 'nickname', type: 'text'},
+            {label: 'E-mail', name: 'email', type: 'email'},
+            {label: 'Password', name: 'password', type: 'password'},
+            {label: 'Repeat password', name: 'rep_password', type: 'password'},
+            {label: 'Update', type: 'submit'},
+        ]);
+
+        const formEl = form.element();
+        this._el.appendChild(formEl);
+
+        AJAX.getProfile(
+            (obj) => {
+                formEl.nickname.value = obj.nickname;
+                formEl.email.value = obj.email;
+            },
+            (error) => {
+                console.log(error);
+                form.showError('Authorize error');
+            }
+        )
+
+        // formEl.addEventListener("submit", (event) => {
+        //     event.preventDefault();
+        //     if (formEl.password.value === formEl.rep_password.value) {
+        //         AJAX.register({
+        //                 nickname: formEl.username.value,
+        //                 email: formEl.email.value,
+        //                 password: formEl.password.value,
+        //             },
+        //             (obj) => {
+        //                 console.log(obj);
+        //                 root.innerHTML = '';
+        //                 renderSignIn();
+        //
+        //             },
+        //             (error) => {
+        //                 console.log(error);
+        //                 form.showError('Error');
+        //             })
+        //     } else {
+        //         form.showError('Passwords do not match');
+        //     }
+        // });
     }
 
     renderLeaders() {

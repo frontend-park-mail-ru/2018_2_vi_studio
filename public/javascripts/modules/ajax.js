@@ -1,7 +1,7 @@
+const COOKIE = window.CookieModule;
+
 (function () {
     const noop = () => null;
-
-
 
     class AjaxModule {
         constructor() {
@@ -17,7 +17,7 @@
         }
 
         getProfile(onFulfilled, onRejected) {
-            const accessToken = _getCookie('access_token');
+            const accessToken = COOKIE.getCookie('access_token');
             if (accessToken === undefined) {
                 onRejected();
             }

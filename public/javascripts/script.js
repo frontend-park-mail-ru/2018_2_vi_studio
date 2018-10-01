@@ -8,20 +8,36 @@ const navRoot = document.getElementById('nav-root');
 
 const COOKIE = window.CookieModule;
 
-(() => {
-    const rootElem = new Root();
-    root.appendChild(rootElem.element());
+function renderNav() {
+    navRoot.innerHTML = '';
 
-    console.log(COOKIE.getCookie('access_token'));
+    let navItems = [];
+    if (COOKIE.getCookie('access_token') === undefined) {
+        navItems = [
+            {title: 'Home', href: 'home'},
+            {title: 'Sign in', href: 'sign_in'},
+            {title: 'Sign up', href: 'sign_up'},
+            {title: 'Leaders', href: 'leaders'},
+            {title: 'Rules', href: 'rules'}
+        ]
+    } else {
+        navItems = [
+            {title: 'Home', href: 'home'},
+            {title: 'Profile', href: 'profile'},
+            {title: 'Leaders', href: 'leaders'},
+            {title: 'Rules', href: 'rules'},
+            {title: 'Sign out', href: 'sign_out'}
+        ]
+    }
 
-    const navElem = new Navigation([
-        {title: 'Home', href: 'home'},
-        {title: 'Sign in', href: 'sign_in'},
-        {title: 'Sign up', href: 'sign_up'},
-        {title: 'Leaders', href: 'leaders'},
-        {title: 'Rules', href: 'rules'}
-    ]);
+    const navElem = new Navigation(navItems);
     navRoot.appendChild(navElem.element());
+}
+
+(() => {
+    const rootElem = new Root(() => renderNav());
+    root.appendChild(rootElem.element());
+    renderNav();
 
     const pages = {
         home: {
@@ -47,6 +63,18 @@ const COOKIE = window.CookieModule;
         rules: {
             title: 'Root', handler: () => {
                 rootElem.renderRules()
+            }
+        },
+        profile: {
+            title: 'Root', handler: () => {
+                rootElem.renderProfile()
+            }
+        },
+        sign_out: {
+            title: 'Root', handler: () => {
+                COOKIE.clean();
+                rootElem.renderHome();
+                renderNav();
             }
         }
     };
