@@ -21,6 +21,6 @@ export class Video {
     }
 
     element() {
-        return this._el
+        return this._el;
     }
 }

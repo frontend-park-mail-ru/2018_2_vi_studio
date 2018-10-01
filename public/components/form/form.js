@@ -1,5 +1,5 @@
-import {Button} from '../button/button.js'
-import {Field} from '../field/field.js'
+import {Button} from '../button/button.js';
+import {Field} from '../field/field.js';
 
 export class Form {
     constructor(inputs) {

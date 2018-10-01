@@ -10,9 +10,9 @@ const COOKIE = window.CookieModule;
 
         getLeaders(onFulfilled, onRejected) {
             fetch(
-                this._path+'/resource/leaders',
+                this._path+'/resource/leaders'
             ).then(response => {
-                return response.json()
+                return response.json();
             }).then(onFulfilled, onRejected);
         }
 
@@ -31,7 +31,7 @@ const COOKIE = window.CookieModule;
 
                 }
             ).then(response => {
-                return response.json()
+                return response.json();
             }).then(onFulfilled, onRejected);
         }
 
@@ -48,7 +48,7 @@ const COOKIE = window.CookieModule;
                     body: JSON.stringify(data)
                 }
             ).then(response => {
-                return response.json()
+                return response.json();
             }).then(onFulfilled, onRejected);
         }
 

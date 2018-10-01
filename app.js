@@ -16,7 +16,7 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 console.log(path.join(__dirname, 'public'));
 app.use(sassMiddleware({

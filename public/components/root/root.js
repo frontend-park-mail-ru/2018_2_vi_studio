@@ -42,7 +42,7 @@ export class Root {
                     console.log(error);
                     form.showError('Wrong username or password');
                 }
-            )
+            );
         });
     };
 
@@ -75,7 +75,7 @@ export class Root {
                     (error) => {
                         console.log(error);
                         form.showError('Error');
-                    })
+                    });
             } else {
                 form.showError('Passwords do not match');
             }
