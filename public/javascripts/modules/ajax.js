@@ -5,7 +5,8 @@ const COOKIE = window.CookieModule;
 
     class AjaxModule {
         constructor() {
-            this._path = 'http://127.0.0.1:8080';
+            this._path = 'https://20182vistudio-xiwfyofpix.now.sh';
+            // this._path = 'http://127.0.0.1:8080';
         }
 
         getLeaders(onFulfilled, onRejected) {

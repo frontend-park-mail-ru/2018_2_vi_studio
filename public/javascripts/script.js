@@ -19,7 +19,7 @@ function renderNav() {
             {title: 'Sign up', href: 'sign_up'},
             {title: 'Leaders', href: 'leaders'},
             {title: 'Rules', href: 'rules'}
-        ]
+        ];
     } else {
         navItems = [
             {title: 'Home', href: 'home'},
@@ -27,7 +27,7 @@ function renderNav() {
             {title: 'Leaders', href: 'leaders'},
             {title: 'Rules', href: 'rules'},
             {title: 'Sign out', href: 'sign_out'}
-        ]
+        ];
     }
 
     const navElem = new Navigation(navItems);
@@ -67,7 +67,7 @@ function renderNav() {
         },
         profile: {
             title: 'Root', handler: () => {
-                rootElem.renderProfile()
+                rootElem.renderProfile();
             }
         },
         sign_out: {

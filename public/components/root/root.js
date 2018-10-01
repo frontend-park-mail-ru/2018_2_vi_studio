@@ -105,7 +105,7 @@ export class Root {
                 console.log(error);
                 form.showError('Authorize error');
             }
-        )
+        );
 
         // formEl.addEventListener("submit", (event) => {
         //     event.preventDefault();
