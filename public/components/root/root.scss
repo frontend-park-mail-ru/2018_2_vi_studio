@@ -1,0 +1,28 @@
+.root {
+
+
+  .video {
+    margin: auto;
+    width: 640px;
+    height: 360px;
+
+    @media (min-width: 1340px) {
+      width: 800px;
+      height: 450px;
+    }
+
+    @media (min-width: 1500px) {
+      width: 960px;
+      height: 540px;
+    }
+  }
+
+  .form, .leaders {
+    padding: 25px;
+    box-sizing: border-box;
+    align-self: center;
+    width: 360px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.7);
+  }
+}

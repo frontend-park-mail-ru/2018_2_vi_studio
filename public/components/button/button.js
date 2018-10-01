@@ -1,13 +1,13 @@
 export class Button {
-    constructor(type, value) {
+    constructor(type, label) {
         this._el = document.createElement('input');
         this._el.classList.add('button');
-        this.render(type, value);
+        this.render(type, label);
     }
 
-    render(type, value) {
+    render(type, label) {
         this._el.type = type;
-        this._el.value = value;
+        this._el.value = label;
     }
 
     element() {

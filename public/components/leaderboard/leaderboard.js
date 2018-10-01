@@ -8,7 +8,7 @@ export class Leaderboard {
     render(leaders) {
         this._el.innerHTML = leaders.map((item) => `
 <div class="leaders__member">
-    <div class="leaders__name">${item.name}</div>
+    <div class="leaders__name">${item.nickname}</div>
     <div class="leaders__points">${item.points}</div>
 </div>`).join('').trim();
     }

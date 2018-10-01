@@ -1,9 +1,11 @@
+@import "../components/root/root";
 @import "../components/background/background";
 @import "../components/header/header";
 @import "../components/navigation/navigation";
 @import "../components/video/video";
 @import "../components/form/form";
 @import "../components/leaderboard/leaderboard";
+@import "../components/rules/rules";
 
 @import "consts";
 
@@ -44,6 +46,22 @@ body {
     }
   }
 
+  #root{
+    flex: 1;
+    padding: 40px 80px;
+    display: flex;
+    flex-direction: row;
+
+    @media (min-height: 720px) {
+      padding: 80px;
+    }
+
+    .root {
+      align-self: center;
+      margin: auto;
+    }
+  }
+
   .nav-root {
     width: 360px;
     margin: 180px 0;
@@ -52,48 +70,4 @@ body {
       height: 100%;
     }
   }
-}
-
-.root {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 40px 80px;
-
-  @media (min-height: 720px) {
-    padding: 80px;
-  }
-
-  .video {
-    align-self: center;
-    margin: auto;
-    width: 640px;
-    height: 360px;
-
-    @media (min-width: 1340px) {
-      width: 800px;
-      height: 450px;
-    }
-
-    @media (min-width: 1500px) {
-      width: 960px;
-      height: 540px;
-    }
-  }
-
-  .form, .leaders {
-    padding: 25px;
-    box-sizing: border-box;
-    align-self: center;
-    width: 360px;
-    margin: auto;
-    background: rgba(255, 255, 255, 0.7);
-  }
-}
-
-.rules {
-  background: rgba(255, 255, 255, 0.7);
-  height: 100%;
-  box-sizing: border-box;
-  padding: 40px;
 }
