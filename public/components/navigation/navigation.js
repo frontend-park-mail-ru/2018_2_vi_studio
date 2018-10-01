@@ -14,6 +14,6 @@ export class Navigation {
     }
 
     element() {
-        return this._el
+        return this._el;
     }
 }

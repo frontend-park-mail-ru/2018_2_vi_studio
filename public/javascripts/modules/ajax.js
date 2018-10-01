@@ -10,9 +10,9 @@
 
         getLeaders(onFulfilled, onRejected) {
             fetch(
-                this._path+'/resource/leaders',
+                this._path+'/resource/leaders'
             ).then(response => {
-                return response.json()
+                return response.json();
             }).then(onFulfilled, onRejected);
         }
 
@@ -31,7 +31,7 @@
 
                 }
             ).then(response => {
-                return response.json()
+                return response.json();
             }).then(onFulfilled, onRejected);
         }
 
@@ -48,7 +48,7 @@
                     body: JSON.stringify(data)
                 }
             ).then(response => {
-                return response.json()
+                return response.json();
             }).then(onFulfilled, onRejected);
         }
 

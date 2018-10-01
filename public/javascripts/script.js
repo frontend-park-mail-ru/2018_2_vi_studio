@@ -26,27 +26,27 @@ const COOKIE = window.CookieModule;
     const pages = {
         home: {
             title: 'Home', handler: () => {
-                rootElem.renderHome()
+                rootElem.renderHome();
             }
         },
         sign_in: {
             title: 'Sign in', handler: () => {
-                rootElem.renderSignIn()
+                rootElem.renderSignIn();
             }
         },
         sign_up: {
             title: 'Sign up', handler: () => {
-                rootElem.renderSignUp()
+                rootElem.renderSignUp();
             }
         },
         leaders: {
             title: 'Leaders', handler: () => {
-                rootElem.renderLeaders()
+                rootElem.renderLeaders();
             }
         },
         rules: {
             title: 'Root', handler: () => {
-                rootElem.renderRules()
+                rootElem.renderRules();
             }
         }
     };
