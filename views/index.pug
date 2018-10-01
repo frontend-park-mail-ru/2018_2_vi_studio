@@ -1,0 +1,11 @@
+extends layout
+
+include ../public/components/background/background
+include ../public/components/header/header
+
+block content
+  +Background
+  div(class='content')
+    +Header('/public/images/Group%206@2x.png')
+    section(id='root' class='root')
+  nav(id='nav-root' class='nav-root')
