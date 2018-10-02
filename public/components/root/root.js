@@ -2,9 +2,8 @@ import {Form} from "../form/form.js";
 import {Leaderboard} from "../leaderboard/leaderboard.js";
 import {Rules} from "../rules/rules.js";
 import {Video} from "../video/video.js";
-
-const AJAX = window.AjaxModule;
-const COOKIE = window.CookieModule;
+import {Auth} from '../../javascripts/modules/data-source.js';
+import {DataSource} from "../../javascripts/modules/data-source.js";
 
 export class Root {
     constructor(renderNav) {
@@ -15,6 +14,7 @@ export class Root {
     }
 
     renderSignIn() {
+        this._clean();
         const form = new Form([
             {label: 'Nickname', name: 'nickname', type: 'text'},
             {label: 'Password', name: 'password', type: 'password'},
@@ -26,15 +26,13 @@ export class Root {
 
         formEl.addEventListener("submit", (event) => {
             event.preventDefault();
-            AJAX.authorize(
+            Auth.signIn(
                 {
                     nickname: formEl.nickname.value,
                     password: formEl.password.value
                 },
                 (obj) => {
-                    COOKIE.setCookie('access_token', obj.AccessToken);
                     console.log(obj);
-                    this.clean();
                     this.renderHome();
                     this._renderNav();
                 },
@@ -47,6 +45,7 @@ export class Root {
     };
 
     renderSignUp() {
+        this._clean();
         const form = new Form([
             {label: 'Nickname', name: 'nickname', type: 'text'},
             {label: 'E-mail', name: 'email', type: 'email'},
@@ -61,7 +60,7 @@ export class Root {
         formEl.addEventListener("submit", (event) => {
             event.preventDefault();
             if (formEl.password.value === formEl.rep_password.value) {
-                AJAX.register({
+                Auth.signUp({
                         nickname: formEl.nickname.value,
                         email: formEl.email.value,
                         password: formEl.password.value,
@@ -83,8 +82,7 @@ export class Root {
     }
 
     renderProfile() {
-
-
+        this._clean();
         const form = new Form([
             {label: 'Nickname', name: 'nickname', type: 'text'},
             {label: 'E-mail', name: 'email', type: 'email'},
@@ -96,7 +94,7 @@ export class Root {
         const formEl = form.element();
         this._el.appendChild(formEl);
 
-        AJAX.getProfile(
+        DataSource.getProfile(
             (obj) => {
                 formEl.nickname.value = obj.nickname;
                 formEl.email.value = obj.email;
@@ -106,33 +104,11 @@ export class Root {
                 form.showError('Authorize error');
             }
         );
-
-        // formEl.addEventListener("submit", (event) => {
-        //     event.preventDefault();
-        //     if (formEl.password.value === formEl.rep_password.value) {
-        //         AJAX.register({
-        //                 nickname: formEl.username.value,
-        //                 email: formEl.email.value,
-        //                 password: formEl.password.value,
-        //             },
-        //             (obj) => {
-        //                 console.log(obj);
-        //                 root.innerHTML = '';
-        //                 renderSignIn();
-        //
-        //             },
-        //             (error) => {
-        //                 console.log(error);
-        //                 form.showError('Error');
-        //             })
-        //     } else {
-        //         form.showError('Passwords do not match');
-        //     }
-        // });
     }
 
     renderLeaders() {
-        AJAX.getLeaders(
+        this._clean();
+        DataSource.getLeaders(
             (obj) => {
                 const leaders = new Leaderboard(obj);
                 this._el.appendChild(leaders.element());
@@ -143,11 +119,13 @@ export class Root {
     }
 
     renderRules() {
+        this._clean();
         const rules = new Rules();
         this._el.appendChild(rules.element());
     }
 
     renderHome() {
+        this._clean();
         const video = new Video();
         this._el.appendChild(video.element());
     }
@@ -156,7 +134,7 @@ export class Root {
         return this._el;
     }
 
-    clean() {
+    _clean() {
         this._el.innerHTML = '';
     }
 }
