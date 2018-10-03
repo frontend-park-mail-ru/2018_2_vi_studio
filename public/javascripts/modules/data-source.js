@@ -5,7 +5,7 @@ const noop = () => {
 export class DataSource {
     static getLeaders(onFulfilled, onRejected) {
         fetch(
-            path + '/resource/leaders'
+            path + '/leader'
         ).then(response => {
             return response.json();
         }).then(onFulfilled, onRejected);
@@ -13,7 +13,7 @@ export class DataSource {
 
     static getProfile(onFulfilled = noop, onRejected = noop) {
         fetch(
-            path + '/resource/profile',
+            path + '/user',
             {
                 credentials: "include"
             }
@@ -28,7 +28,7 @@ export class DataSource {
 export class Auth {
     static signIn(data, onFulfilled, onRejected) {
         fetch(
-            path + '/auth/sign-in',
+            path + '/session',
             {
                 method: 'POST',
                 headers: {
@@ -47,8 +47,9 @@ export class Auth {
 
     static signOut(onFulfilled) {
         fetch(
-            path + '/auth/sign-out',
+            path + '/session',
             {
+                method: "DELETE",
                 credentials: "include"
             }
         ).then(onFulfilled);
@@ -56,7 +57,7 @@ export class Auth {
 
     static signUp(data, onFulfilled, onRejected) {
         fetch(
-            path + '/auth/sign-up',
+            path + '/user',
             {
                 method: 'POST',
                 headers: {
