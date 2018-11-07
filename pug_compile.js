@@ -1,0 +1,53 @@
+const fs = require('fs');
+const path = require('path');
+const pug = require('pug');
+
+
+function walk(dir, done) {
+    let results = [];
+    fs.readdir(dir, function (err, list) {
+        if (err) return done(err);
+        let pending = list.length;
+        if (!pending) return done(null, results);
+        list.forEach(function (file) {
+            file = path.resolve(dir, file);
+            fs.stat(file, function (err, stat) {
+                if (stat && stat.isDirectory()) {
+                    walk(file, function (err, res) {
+                        results = results.concat(res);
+                        if (!--pending) done(null, results);
+                    });
+                } else {
+                    results.push(file);
+                    if (!--pending) done(null, results);
+                }
+            });
+        });
+    });
+}
+
+function compilePug(path) {
+    walk(path, (err, list) => {
+        if (err) {
+            return;
+        }
+
+        list.forEach(filePath => {
+            const match = filePath.match(/^(.+\/)(\w+)\.pug$/);
+            if (match) {
+
+                const jsFunctionString = pug.compileFileClient(filePath, {
+                        name: "render" + match[2],
+                        exportMixins: true
+                    })
+                    + ` import Component from "../Component.js";`
+                    + ` export default class ${match[2]} extends Component`
+                    + ` {constructor(props){super(props);this.getHTML = render${match[2]}.bind(this, props);}}`;
+
+                fs.writeFileSync(match[1] + match[2] + ".pug.js", jsFunctionString);
+            }
+        })
+    })
+}
+
+module.exports = compilePug;

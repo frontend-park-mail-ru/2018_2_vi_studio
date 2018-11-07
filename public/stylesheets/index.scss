@@ -1,18 +1,19 @@
-@import "../components/root/root";
-@import "../components/background/background";
-@import "../components/header/header";
-@import "../components/navigation/navigation";
-@import "../components/video/video";
-@import "../components/form/form";
-@import "../components/leaderboard/leaderboard";
-@import "../components/rules/rules";
-
 @import "consts";
+/* components */
+@import "../javascripts/components/root/root";
+@import "../javascripts/components/background/background";
+@import "../javascripts/components/header/header";
+@import "../javascripts/components/navigation/navigation";
+@import "../javascripts/components/video/video";
+@import "../javascripts/components/form/form";
+@import "../javascripts/components/leaderboard/leaderboard";
+@import "../javascripts/components/rules/rules";
+/* views */
+@import "../javascripts/views/MainView/main-view";
 
 html {
   height: 100%;
 }
-
 
 a {
   text-decoration: none;
@@ -24,50 +25,20 @@ button {
 }
 
 body {
-  height: 100%;
+  min-height: 100%;
   margin: 0;
   display: flex;
 
-  .background {
-    background: url("/public/images/VI-project-0.0.2-nonet.jpg") center center;
+  #root {
+    min-height: 100%;
     width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
 
-  .content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 40px;
-
-    @media (min-width: 1500px) {
-      margin-bottom: 60px;
+    .main-view {
+      min-height: 100%;
     }
   }
+}
 
-  #root{
-    flex: 1;
-    padding: 40px 80px;
-    display: flex;
-    flex-direction: row;
-
-    @media (min-height: 720px) {
-      padding: 80px;
-    }
-
-    .root {
-      align-self: center;
-      margin: auto;
-    }
-  }
-
-  .nav-root {
-    width: 360px;
-    margin: 180px 0;
-
-    .navigation {
-      height: 100%;
-    }
-  }
+.hidden {
+  display: none;
 }
