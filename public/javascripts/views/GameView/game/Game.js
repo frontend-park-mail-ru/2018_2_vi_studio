@@ -1,7 +1,6 @@
-import {MODES} from "./modes";
-import {GameControllers} from "./controllers"
+import MODES from "./modes.js";
+import {GameControllers} from "./controllers.js"
 
-const GAME_MODES = MODES;
 // const GameControllers = GameControllers;
 // const OfflineGame = require('game/core/offline');
 // const OnlineGame = require('game/core/online');
@@ -16,7 +15,7 @@ class Game {
             //     GameConstructor = OnlineGame;
             //     break;
             // }
-            case GAME_MODES.OFFLINE: {
+            case MODES.OFFLINE: {
                 GameConstructor = OfflineGame;
                 break;
             }
@@ -40,5 +39,5 @@ class Game {
     }
 }
 
-export {Game};
+export default Game;
 // export const Game = new Game();

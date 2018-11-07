@@ -5,7 +5,7 @@ const FadingBlock = require('game/game-scene/fading-block');
 const GamePlayerFigure = require('game/game-scene/player');
 const Circle = require('graphics/circle');
 
-import {bus} from './../../bus';
+import {bus} from '../../bus';
 const bus = bus;
 
 return class GameScene {

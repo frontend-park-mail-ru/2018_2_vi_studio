@@ -1,5 +1,5 @@
 import {EVENTS} from "./events";
-import {bus} from "./../../bus";
+import {bus} from "../../bus";
 
 const events = EVENTS;
 const Bus = bus;
