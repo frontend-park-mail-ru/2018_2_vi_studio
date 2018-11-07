@@ -1,6 +1,6 @@
 import View from '../View.js';
-import Game from './game/Game.js';
-import MODES from './game/modes.js'
+import Game from '../../game/Game.js';
+import MODES from '../../game/modes.js'
 import Component from "../../components/Component.js";
 
 const LEN_X = 60;
