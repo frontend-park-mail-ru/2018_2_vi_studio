@@ -1,21 +1,22 @@
 import MODES from "./modes.js";
-import {GameControllers} from "./controllers.js"
+import {GameControllers} from "./controllers.js";
+import {OfflineGame} from "./core/offline.js";
+import {GameScene} from "./game-scenes/mainScene.js";
+import {GameServise} from "./GameService.js";
 
-// const GameControllers = GameControllers;
-// const OfflineGame = require('game/core/offline');
-// const OnlineGame = require('game/core/online');
-// const GameScene = require('game/game-scene');
-// const GameControllers = require('game/controllers');
+const GAME_MODES = MODES;
+
 
 class Game {
     constructor(mode, canvas) {
         let GameConstructor = null;
+        console.log("Game mode: ", mode);
         switch (mode) {
-            // case GAME_MODES.ONLINE: {
-            //     GameConstructor = OnlineGame;
-            //     break;
-            // }
-            case MODES.OFFLINE: {
+            case GAME_MODES.ONLINE: {
+                GameConstructor = OfflineGame;
+                break;
+            }
+            case GAME_MODES.OFFLINE: {
                 GameConstructor = OfflineGame;
                 break;
             }
@@ -25,9 +26,9 @@ class Game {
 
         this.gameScene = new GameScene(canvas);
         this.gameControllers = new GameControllers(canvas);
-
+        this.gameService = new GameServise(mode);
         this.gameCore = new GameConstructor(this.gameControllers, this.gameScene);
-        this.start();
+        //this.start();
     }
 
     start() {

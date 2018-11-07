@@ -1,4 +1,4 @@
-import bus from '../bus.js'
+import bus from '../bus.js';
 
 export default class GameRPC {
     constructor() {
@@ -20,15 +20,15 @@ export default class GameRPC {
 
     onWSMessage(event) {
         const message = JSON.parse(event.data);
-        bus.emit('game-event-' + message.event, message.data)
+        bus.emit('game-event-' + message.event, message.data);
     }
 
     onReadyToPlay(data) {
-        this.ws.send(JSON.stringify({event: 'ReadyToPlay', data: data}))
+        this.ws.send(JSON.stringify({event: 'ReadyToPlay', data: data}));
     }
 
     onDoneTry(data) {
-        this.ws.send(JSON.stringify({event: 'DoneTry', data: data}))
+        this.ws.send(JSON.stringify({event: 'DoneTry', data: data}));
     }
 
     onWSClose(event) {

@@ -1,6 +1,6 @@
 import View from '../View.js';
 import Game from '../../game/Game.js';
-import MODES from '../../game/modes.js'
+import MODES from '../../game/modes.js';
 import Component from "../../components/Component.js";
 
 const LEN_X = 60;
@@ -13,6 +13,8 @@ export default class GameView extends View {
 
     render () {
         const canvas = document.createElement('canvas');
+        canvas.setAttribute('width', '1020');
+        canvas.setAttribute('height', '1020');
         Component.render(canvas, this.el);
 
         const game = new Game(MODES.OFFLINE, canvas);
