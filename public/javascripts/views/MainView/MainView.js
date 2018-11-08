@@ -28,6 +28,10 @@ const GUEST_NAV_ITEMS = [
     {title: 'Rules', href: '/rules'},
 ];
 
+console.log(window);
+window.SERVER_PATH = 'http://127.0.0.1:8080';
+const AVATAR_PATH = window.SERVER_PATH + '/media/images/';
+
 export default class MenuView extends View {
     constructor(el, router) {
         super(el, router);
@@ -85,9 +89,15 @@ export default class MenuView extends View {
         }
 
         UserModel.get().then(
-            response => response.error ?
-                Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._navRoot) :
-                Component.render([new Profile({name: response.nickname}), new Navigation({items: USER_NAV_ITEMS})], this._navRoot)
+            response => {
+                console.log(AVATAR_PATH + response.avatar);
+                return response.error ?
+                    Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._navRoot) :
+                    Component.render([new Profile({
+                        name: response.nickname,
+                        avatar: AVATAR_PATH + response.avatar
+                    }), new Navigation({items: USER_NAV_ITEMS})], this._navRoot);
+            }
         ).catch(alert);
     }
 
@@ -131,7 +141,7 @@ export default class MenuView extends View {
         Component.render(form, this.content);
 
         const formEl = form.element;
-        formEl.addEventListener("submit", (event) => {
+        formEl.addEventListener("submit", event => {
             event.preventDefault();
             if (formEl.password.value === formEl.rep_password.value) {
                 UserModel.add({
@@ -174,6 +184,28 @@ export default class MenuView extends View {
             console.log(error);
             form.showError('Authorize error');
         });
+
+        formEl.addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (formEl.password.value !== formEl.rep_password.value) {
+                form.showError('Passwords do not match');
+                return
+            }
+
+            UserModel.update({
+                nickname: formEl.nickname.value,
+                email: formEl.email.value,
+                password: formEl.password.value,
+            }).then(() =>
+                formEl.avatar.value !== '' ? UserModel.addAvatar(formEl.avatar.files[0]) : null
+            ).then(() => {
+                this.renderNav();
+                this.router.open('/profile');
+            }).catch(error => {
+                console.log(error);
+                form.showError('Error');
+            });
+        })
     }
 
     renderLeaders() {

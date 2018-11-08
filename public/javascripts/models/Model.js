@@ -39,7 +39,7 @@ export default class Model {
         return fetch(
             this.path + '/' + id,
             {
-                method: 'UPDATE',
+                method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

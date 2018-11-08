@@ -7,7 +7,7 @@ export default class Profile extends Component {
 
     getHTML() {
         return `<div class="profile">` +
-            `<img class="profile__avatar" src="${this.props && this.props.avatar ? this.props.src : '/public/images/no-avatar.jpg'}"/>` +
+            `<img class="profile__avatar" src="${this.props && this.props.avatar ? this.props.avatar : '/public/images/no-avatar.jpg'}"/>` +
             `<div class="profile__name">${this.props.name}</div>` +
             `</div>`;
     }

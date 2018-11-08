@@ -82,6 +82,24 @@
     color: #92763f;
     font-size: 16pt;
     outline: none; }
+    .field .field__input_no-right-padding {
+      padding-right: 0; }
+  .field .field__file-button {
+    display: inline-block;
+    box-sizing: border-box;
+    background: #92763f;
+    font-size: 16pt;
+    font-family: sans-serif;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    border: none;
+    width: 100px; }
+    .field .field__file-button:hover {
+      background: #918351; }
+  .field .field__file-name {
+    display: inline-block;
+    width: 205px; }
 
 .button {
   box-sizing: border-box;
