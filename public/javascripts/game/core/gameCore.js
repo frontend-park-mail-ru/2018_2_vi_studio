@@ -1,5 +1,5 @@
-import {EVENTS} from "./events";
-import {bus} from "../../bus";
+import {EVENTS} from "./events.js";
+import bus from "./../../bus.js";
 
 const events = EVENTS;
 const Bus = bus;
@@ -11,7 +11,7 @@ class GameCore {
 
         this.onGameStarted = this.onGameStarted.bind(this);
         this.onGameFinished = this.onGameFinished.bind(this);
-        // this.onMousePressed = this.onMousePressed.bind(this);
+        this.onMouseClicked = this.onMouseClicked.bind(this);
         this.onGameStateChanged = this.onGameStateChanged.bind(this);
 
         this.controllersLoopIntervalId = null;
@@ -20,33 +20,25 @@ class GameCore {
     start() {
         bus.on(events.START_GAME, this.onGameStarted);
         bus.on(events.FINISH_GAME, this.onGameFinished);
-        // bus.on(events.MOUSE_PRESSED, this.onMousePressed);
+        bus.on(events.MOUSE_CLICKED, this.onMouseClicked);
         bus.on(events.GAME_STATE_CHANGED, this.onGameStateChanged);
-
-        const controller = this.controller;
-        this.controllersLoopIntervalId = setInterval(function () {
-            const actions = controller.diff();
-
-            if (Object.keys(actions).some(k => actions[k])) {
-                bus.emit(events.MOUSE_PRESSED, actions);
-            }
-        }, 50);
+        // this.controller.start();
     }
 
     destroy() {
         clearInterval(this.controllersLoopIntervalId);
         bus.off(events.START_GAME, this.onGameStarted);
         bus.off(events.FINISH_GAME, this.onGameFinished);
-        // bus.off(events.MOUSE_PRESSED, this.onMousePressed);
+        bus.off(events.MOUSE_CLICKED, this.onMouseClicked);
         bus.off(events.GAME_STATE_CHANGED, this.onGameStateChanged);
 
         this.controller.destroy();
         this.scene.stop();
     }
 
-    // onMousePressed(evt) {
-    //     throw new Error('This method must be overridden');
-    // }
+    onMouseClicked(evt) {
+        throw new Error('This method must be overridden');
+    }
 
     onGameStarted(evt) {
         throw new Error('This method must be overridden');
@@ -60,9 +52,9 @@ class GameCore {
         throw new Error('This method must be overridden');
     }
 
-    _pressed(name, data) {
-        return KEYS[name].some(k => data[k.toLowerCase()]);
-    }
-};
+    // _pressed(name, data) {
+    //     return KEYS[name].some(k => data[k.toLowerCase()]);
+    // }
+}
 
-export {GameCore}
+export {GameCore};

@@ -1,3 +1,5 @@
+@import "../../../stylesheets/consts";
+
 .main-view {
   flex: 1;
   display: flex;
@@ -15,11 +17,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    margin-bottom: 40px;
-
-    @media (min-width: 1500px) {
-      margin-bottom: 60px;
-    }
 
     .video {
       margin: auto;
@@ -45,14 +42,29 @@
       margin: auto;
       background: rgba(255, 255, 255, 0.7);
     }
+
+    .rules {
+      margin: 80px;
+    }
   }
 
-  .main-view__navigation {
+  .main-view__aside {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
     width: 360px;
     margin: 180px 0;
+    border-left: 3px solid white;
+
+    .profile {
+      margin: 0 50px 50px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
 
     .navigation {
-      height: 100%;
     }
   }
 }

@@ -1,121 +1,89 @@
-import {GameCore} from 'index.html'
-import {EVENTS} from "./events";
-import {bus} from "../../bus";
+import {GameCore} from "./gameCore.js";
+import {EVENTS} from "./events.js";
+import bus from "../../bus.js";
+import {TILE_SIZE} from "../tileSpec.js";
+import {GameServise} from "../GameService.js";
 
 const events = EVENTS;
+
 // const rand = require('rand');
 
-return class OfflineGame extends GameCore {
+class OfflineGame extends GameCore {
     constructor(controller, scene) {
         super(controller, scene);
+        this.service = new GameServise();
+        this.playersQueue = null;
+        this.tilesStack = null;
 
         this.state = {};
-        this.gameloop = this.gameloop.bind(this);
-        this.gameloopRequestId = null;
-        this.lastFrame = 0;
+        // this.gameloop = this.gameloop.bind(this);
+        // this.gameloopRequestId = null;
+        // this.lastFrame = 0;
     }
 
     start() {
         super.start();
-        this.state = {
-            bullets: [],
-            me: {
-                coll: 2
-            }
+        console.log('Emited: START_GAME');
+        // TODO: get state data
+        // Запрос в GameService за состоянием игры
+        let state = {
+            playersQueue: [],
+            tilesStack: [],
         };
-
-        this.state.items = Array.from(new Array(3 * 5), function (_, position) {
-            return {
-                coll: position % 5,
-                row: position < 5 ? 0 : (position / 5) | 0,
-                dead: false,
-                fadeSpeed: 0,
-                fadeLevel: 0
-            };
-        });
-
         setTimeout(function () {
             bus.emit(events.START_GAME, this.state);
         }.bind(this));
     }
 
-    gameloop(now) {
-        const delay = now - this.lastFrame;
-        this.lastFrame = now;
-
-        this.state.bullets = this.state.bullets
-            .map(function (bullet) {
-                bullet.percents += 0.02;
-                return bullet;
-            })
-            .filter(function (bullet) {
-                if (bullet.percents >= 1 && bullet.row >= 0) {
-                    this.state.items[bullet.row * 5 + bullet.coll].fadeSpeed = rand(10, 20) / 1000;
-                    return false;
-                }
-
-                return bullet.percents < 1;
-            }.bind(this));
-
-        this.state.items = this.state.items.map(function (item) {
-            if (item.fadeSpeed) {
-                item.fadeLevel += item.fadeSpeed;
-            }
-
-            if (item.fadeLevel >= 1) {
-                item.dead = true;
-            }
-
-            return item;
-        });
-
+    onMouseClicked(evt) {
+        console.log('Event: MOUSE_CLICKED - ', evt);
         bus.emit(events.GAME_STATE_CHANGED, this.state);
 
-        if (!this.state.items.find(item => !item.dead)) {
-            setTimeout(function () {
-                bus.emit(events.FINISH_GAME);
-            }.bind(this));
-        }
+        const ctx = this.scene.ctx;
+        let x = (evt.pageX - this.scene.canvas.offsetLeft) * this.scene.canvas.height / this.scene.canvasRectLen;
+        let y = (evt.pageY - this.scene.canvas.offsetTop) * this.scene.canvas.height / this.scene.canvasRectLen;
 
-        this.gameloopRequestId = requestAnimationFrame(this.gameloop);
+
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = this.color;
+        ctx.stroke();
+        let text = (y / (TILE_SIZE.y * 2) ^ 0).toString() + " " + (x / (TILE_SIZE.x * 2) ^ 0).toString(); // TODO: ОООЧЕНЬ ПЛОХО БЕРИ КОНСТАНТЫ
+        ctx.fillText(text, x + 10, y);
+
+        ctx.closePath();
+
     }
 
-    onControllsPressed(evt) {
-        if (this._pressed('LEFT', evt)) {
-            this.state.me.coll = Math.max(0, this.state.me.coll - 1);
-        } else if (this._pressed('RIGHT', evt)) {
-            this.state.me.coll = Math.min(4, this.state.me.coll + 1);
-        } else if (this._pressed('FIRE', evt)) {
-            const coll = this.state.me.coll;
-            const arr = [
-                this.state.items[10 + coll],
-                this.state.items[5 + coll],
-                this.state.items[coll]
-            ];
-            this.state.bullets.push({
-                coll,
-                row: (arr.find(item => !item.fadeSpeed) || {row: -1}).row, // FIXME
-                percents: 0
-            });
-        }
-    }
+
+    // onControllsPressed(evt) {
+    //
+    // }
 
     onGameStarted(evt) {
+        console.log('Event: GAME_STARTED -', evt);
         this.controller.start();
         this.scene.init(evt);
         this.scene.start();
-
-        this.lastFrame = performance.now();
-        this.gameloopRequestId = requestAnimationFrame(this.gameloop);
+        const state = this.service.getGameStartState();
+        this.scene.tileMap.setGates(state.players);
+        bus.emit(events.GAME_STATE_CHANGED, this.state);
+        // this.lastFrame = performance.now();
+        // this.gameloopRequestId = requestAnimationFrame(this.gameloop);
     }
 
     onGameFinished(evt) {
         cancelAnimationFrame(this.gameloopRequestId);
 
-        bus.emit('CLOSE_GAME');
+        bus.emit('Event: CLOSE_GAME');
     }
 
     onGameStateChanged(evt) {
+        console.log('StateChanged');
         this.scene.setState(evt);
+        this.scene.renderScene();
     }
 };
+
+export {OfflineGame};

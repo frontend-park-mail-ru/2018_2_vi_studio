@@ -25,5 +25,6 @@ export default class Component {
     }
 
     getHTML() {
+        throw new Error('This method must be overridden');
     }
 }

@@ -1,8 +1,9 @@
 export class Scene {
     constructor(ctx) {
         this.ctx = ctx;
-        this.frontView = [];
-        this.backView = [];
+        // this.frontView = [];
+        // this.backView = [];
+
         this.figures = {};
 
         this._id = 0;
@@ -15,32 +16,9 @@ export class Scene {
     push(figure) {
         const id = this.ID();
         this.figures[id] = figure;
-        this.frontView.push(figure);
-
         return id;
     }
 
-    toFront(id) {
-        const figure = this.figures[id];
-        this.backView = this.backView.filter(function (item) {
-            return item !== figure;
-        });
-        this.frontView = this.frontView.filter(function (item) {
-            return item !== figure;
-        });
-        this.frontView.push(figure);
-    }
-
-    toBack(id) {
-        const figure = this.figures[id];
-        this.backView = this.backView.filter(function (item) {
-            return item !== figure;
-        });
-        this.frontView = this.frontView.filter(function (item) {
-            return item !== figure;
-        });
-        this.backView.push(figure);
-    }
 
     remove(id) {
         const figure = this.figures[id];
@@ -60,8 +38,10 @@ export class Scene {
     render() {
         const ctx = this.ctx;
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        this.backView.forEach(figure => figure.render());
-        this.frontView.forEach(figure => figure.render());
+        // this.backView.forEach(figure => figure.render());
+        // this.frontView.forEach(figure => figure.render());
+        console.log('render :', this.figures);
+        Object.keys(this.figures).forEach(key => this.figures[key].render());
     }
 
     clear() {
@@ -69,4 +49,3 @@ export class Scene {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     }
 }
-
