@@ -9,7 +9,6 @@ class GateTile extends Tile {
     }
 
     draw() {
-        super.draw();
         if (!this.zero) {
             const ctx = this.ctx;
 
@@ -23,6 +22,7 @@ class GateTile extends Tile {
         else {
             this.fillStyle = 'green';
         }
+        super.draw();
     }
 }
 

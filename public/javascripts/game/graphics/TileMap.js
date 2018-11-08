@@ -178,7 +178,7 @@ export class TileMap {
                         tile = new GateTile(this.ctx, this.schema[i][j].zero);
                         break;
                     default:
-                        tile = new Tile(this.ctx);
+                        tile = new TileWithWays(this.ctx);
                 }
                 if (j !== 0) {
                     tile.x = (j * 2 - 0.5 * j) * tile.xDelta;

@@ -4,43 +4,43 @@ export default class GameRPC {
     constructor() {
         this.onReadyToPlay = this.onReadyToPlay.bind(this);
         this.onDoneTry = this.onDoneTry.bind(this);
-        this.onWSMessage = this.onWSMessage.bind(this);
-        this.onWSClose = this.onWSClose.bind(this);
+        this.onMessage = this.onMessage.bind(this);
+        this.onGameStart = this.onGameStart.bind(this);
+        this.onNextTry = this.onGameStart.bind(this);
 
-        this.ws = new WebSocket(window.SERVER_WS_PATH);
-
-        this.ws.addEventListener('open', () => bus.emit('game-rpc-ws-open'));
-        this.ws.addEventListener('message', this.onWSMessage);
-        this.ws.addEventListener('error', error => bus.emit('game-rpc-ws-error', error));
-        this.ws.addEventListener('close', this.onWSClose);
-
+        bus.on('game-event-Message', this.onMessage);
         bus.on('game-event-ReadyToPlay', this.onReadyToPlay);
         bus.on('game-event-DoneTry', this.onDoneTry);
+        bus.on('game-event-GameStart', this.onGameStart);
     }
 
-    onWSMessage(event) {
-        const message = JSON.parse(event.data);
-        bus.emit('game-event-' + message.event, message.data);
+    onGameStart(data) {
+        throw new Error('This method must be overridden');
+    }
+
+    onMessage(event) {
+        throw new Error('This method must be overridden');
     }
 
     onReadyToPlay(data) {
-        this.ws.send(JSON.stringify({event: 'ReadyToPlay', data: data}));
+        throw new Error('This method must be overridden');
     }
 
     onDoneTry(data) {
-        this.ws.send(JSON.stringify({event: 'DoneTry', data: data}));
+        throw new Error('This method must be overridden');
     }
 
-    onWSClose(event) {
-        this.destroy();
-        bus.emit('game-rpc-ws-close', event);
-    }
+
 
     destroy() {
+        bus.off('game-event-Message', this.onMessage);
         bus.off('game-event-ReadyToPlay', this.onReadyToPlay);
         bus.off('game-event-DoneTry', this.onDoneTry);
+        bus.off('game-event-GameStart', this.onGameStart);
+
     }
 }
+
 
 /*
 ------------------------------------------ RESPONSES ------------------------------------------

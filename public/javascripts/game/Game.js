@@ -3,31 +3,30 @@ import {GameControllers} from "./controllers.js";
 import {OfflineGame} from "./core/offline.js";
 import {GameScene} from "./game-scenes/mainScene.js";
 import {GameServise} from "./GameService.js";
+import OnlineRPC from "../game/GameRPCOnline.js";
+import OfflineRPC from "../game/GameRPCOffline.js";
 
 const GAME_MODES = MODES;
 
 
 class Game {
     constructor(mode, canvas) {
-        let GameConstructor = null;
-        console.log("Game mode: ", mode);
+        let GameServiseConstructor = null;
+        this.gameScene = new GameScene(canvas);
+        this.gameControllers = new GameControllers(canvas);
+        this.gameCore = new OfflineGame(this.gameControllers, this.gameScene);
         switch (mode) {
             case GAME_MODES.ONLINE: {
-                GameConstructor = OfflineGame;
+                this.servise = new OnlineRPC();
                 break;
             }
             case GAME_MODES.OFFLINE: {
-                GameConstructor = OfflineGame;
+                this.servise = new OfflineRPC(this.gameCore.scene.tileMap);
                 break;
             }
             default:
                 throw new Error('Invalid game mode ' + mode);
         }
-
-        this.gameScene = new GameScene(canvas);
-        this.gameControllers = new GameControllers(canvas);
-        this.gameService = new GameServise(mode);
-        this.gameCore = new GameConstructor(this.gameControllers, this.gameScene);
         //this.start();
     }
 
