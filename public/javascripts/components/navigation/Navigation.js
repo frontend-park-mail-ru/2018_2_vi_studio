@@ -6,10 +6,10 @@ export default class Navigation extends Component{
     }
 
     getHTML() {
-        return '<div class="navigation"><div class="navigation__content">' +
+        return '<div class="navigation">' +
             this.props.items
                 .map(item => `<a class="navigation__item" href="${item.href}" data-href="${item.href}">${item.title}</a>`)
                 .join('') +
-            '</div></div>'
+            '</div>'
     }
 }

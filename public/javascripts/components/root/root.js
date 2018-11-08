@@ -1,5 +1,5 @@
-import {Form} from "../form/form.js";
-import {Leaderboard} from "../leaderboard/leaderboard.js";
+import {Form} from "../form/Form.js";
+import {Leaderboard} from "../leaderboard/Leaderboard.js";
 import {Rules} from "../rules/rules.js";
 import {Video} from "../video/video.js";
 import {Auth} from '../../modules/data-source.js.tmp';

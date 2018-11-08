@@ -1,6 +1,4 @@
 .navigation {
-  border-left: 3px solid white;
-  display: flex;
 
   .navigation__item {
     display: block;
@@ -21,8 +19,4 @@
     }
   }
 
-  .navigation__content {
-    align-self: center;
-    width: 100%;
-  }
 }

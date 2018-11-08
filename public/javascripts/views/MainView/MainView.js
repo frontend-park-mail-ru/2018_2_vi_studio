@@ -2,21 +2,22 @@ import View from '../View.js';
 import Background from "../../components/background/Background.pug.js";
 import Component from "../../components/Component.js";
 import UserModel from "../../models/UserModel.js";
-import Navigation from "../../components/navigation/navigation.js";
-import Form from "../../components/form/form.js";
-import Leaderboard from "../../components/leaderboard/leaderboard.js";
+import Navigation from "../../components/navigation/Navigation.js";
+import Form from "../../components/form/Form.js";
+import Leaderboard from "../../components/leaderboard/Leaderboard.js";
 import Rules from "../../components/rules/rules.js";
 import Video from "../../components/video/video.js";
 import SessionModel from "../../models/SessionModel.js";
 import LeaderModel from "../../models/LeaderModel.js";
+import Profile from "../../components/profile/Profile.js";
 
 const USER_NAV_ITEMS = [
+    {title: 'Game', href: '/game'},
     {title: 'Home', href: '/'},
     {title: 'Profile', href: '/profile'},
     {title: 'Leaders', href: '/leaders'},
     {title: 'Rules', href: '/rules'},
-    {title: 'Sign out', href: '/sign_out'},
-    {title: 'Game', href: '/game'}
+    {title: 'Sign out', href: '/sign_out'}
 ];
 
 const GUEST_NAV_ITEMS = [
@@ -24,6 +25,7 @@ const GUEST_NAV_ITEMS = [
     {title: 'Sign in', href: '/sign_in'},
     {title: 'Sign up', href: '/sign_up'},
     {title: 'Leaders', href: '/leaders'},
+    {title: 'Rules', href: '/rules'},
 ];
 
 export default class MenuView extends View {
@@ -39,7 +41,7 @@ export default class MenuView extends View {
             profile: this.renderProfile.bind(this),
             sign_out: () => {
                 SessionModel.remove();
-                this.renderNav();
+                this.renderNav(true);
                 this.router.open('/')
             }
         };
@@ -51,7 +53,7 @@ export default class MenuView extends View {
         this.content = contentEL;
 
         const navEl = document.createElement('nav');
-        navEl.classList.add('main-view__navigation');
+        navEl.classList.add('main-view__aside');
         this._navRoot = navEl;
 
         const newEl = this.el.cloneNode();
@@ -76,11 +78,16 @@ export default class MenuView extends View {
         }
     }
 
-    renderNav() {
+    renderNav(ignoreAuth) {
+        if (ignoreAuth) {
+            Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._navRoot);
+            return
+        }
+
         UserModel.get().then(
             response => response.error ?
                 Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._navRoot) :
-                Component.render(new Navigation({items: USER_NAV_ITEMS}), this._navRoot)
+                Component.render([new Profile({name: response.nickname}), new Navigation({items: USER_NAV_ITEMS})], this._navRoot)
         ).catch(alert);
     }
 
@@ -94,7 +101,7 @@ export default class MenuView extends View {
         const form = new Form({inputs: inputs});
         Component.render(form, this.content);
 
-        const formEl = this.content.getElementsByClassName('form')[0];
+        const formEl = form.element;
         formEl.addEventListener("submit", event => {
             event.preventDefault();
             SessionModel.add({
@@ -123,7 +130,7 @@ export default class MenuView extends View {
         const form = new Form({inputs: inputs});
         Component.render(form, this.content);
 
-        const formEl = this.content.getElementsByClassName('form')[0];
+        const formEl = form.element;
         formEl.addEventListener("submit", (event) => {
             event.preventDefault();
             if (formEl.password.value === formEl.rep_password.value) {
@@ -150,21 +157,23 @@ export default class MenuView extends View {
             {label: 'E-mail', name: 'email', type: 'email'},
             {label: 'Password', name: 'password', type: 'password'},
             {label: 'Repeat password', name: 'rep_password', type: 'password'},
+            {label: 'Avatar', name: 'avatar', type: 'file'},
             {label: 'Update', type: 'submit'},
         ];
 
-        Component.render(new Form({inputs: inputs}), this.content);
+        const form = new Form({inputs: inputs});
+        Component.render(form, this.content);
 
-        // DataSource.getProfile(
-        //     (obj) => {
-        //         formEl.nickname.value = obj.nickname;
-        //         formEl.email.value = obj.email;
-        //     },
-        //     (error) => {
-        //         console.log(error);
-        //         form.showError('Authorize error');
-        //     }
-        // );
+        const formEl = form.element;
+        UserModel.get().then(obj => {
+            console.log(obj);
+            console.log(formEl);
+            formEl.nickname.value = obj.nickname;
+            formEl.email.value = obj.email;
+        }).catch(error => {
+            console.log(error);
+            form.showError('Authorize error');
+        });
     }
 
     renderLeaders() {

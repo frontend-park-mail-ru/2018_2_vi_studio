@@ -11,6 +11,7 @@ class GameServise {
         this.playersQueue = [];
         this.tilesStack = [];
         if (gameType === MODES.ONLINE) {
+
             this.servise = new GameRPC();
         }
     }

@@ -17,44 +17,7 @@ export default class GameView extends View {
         canvas.setAttribute('height', '1020');
         Component.render(canvas, this.el);
 
-        const game = new Game(MODES.OFFLINE, canvas);
+        const game = new Game(MODES.ONLINE, canvas);
         game.start();
-    }
-
-    drawTile(ctx, startX, startY) {
-        let lenX = 60;
-        let lenY = Math.sin(Math.PI / 3) * lenX;
-        // let startX = 0;
-        // let startY = 0;
-        let pointerX = 0;
-        let pointerY = 0;
-
-        ctx.lineWidth=5;
-        ctx.strokeStyle = "#ff0000"; // цвет линии
-
-        ctx.beginPath();
-
-        pointerX = startX + lenX / 2;
-        pointerY = startY;
-        ctx.moveTo(pointerX, pointerY);  // left top
-
-        pointerX += lenX;
-        ctx.lineTo(pointerX , pointerY);  // right top
-
-        pointerY += lenY;
-        ctx.lineTo(pointerX + lenX / 2, pointerY); // right middle
-
-        pointerY += lenY;
-        ctx.lineTo(pointerX, pointerY); // right bottom
-
-        pointerX -= lenX;
-        ctx.lineTo(pointerX, pointerY); // left bottom
-
-        pointerX -= lenX / 2;
-        pointerY -= lenY;
-        ctx.lineTo(pointerX, pointerY); // left middle
-        ctx.lineTo(startX + lenX / 2, startY);
-        ctx.closePath();
-        ctx.stroke();
     }
 }

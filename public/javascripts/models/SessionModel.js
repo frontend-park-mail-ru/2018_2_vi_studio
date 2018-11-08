@@ -17,7 +17,7 @@ class SessionModel extends Model {
                 method: 'DELETE',
                 credentials: "include"
             }
-        ).then(response => response.json())
+        )
     }
 }
 
