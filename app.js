@@ -15,16 +15,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(sassMiddleware({
-        src: path.join(__dirname, 'public'),
-        dest: path.join(__dirname, 'public'),
+        src: path.join(__dirname, 'src'),
+        dest: path.join(__dirname, 'build'),
         indentedSyntax: false, // true = .sass and false = .scss
         sourceMap: true,
     }));
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/src', express.static(path.join(__dirname, 'src')));
+app.use('/build', express.static(path.join(__dirname, 'build')));
 
 const router = express.Router();
 router.get('*', function(req, res, next) {
-    res.sendfile('public/index.html');
+    res.sendfile('src/index.html');
 });
 
 app.use('/', router);

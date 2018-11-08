@@ -1,0 +1,14 @@
+.video {
+  background: url("/src/images/background.jpg");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .video__button {
+    align-self: center;
+    width: 120px;
+    margin: auto;
+    display: block;
+  }
+}
