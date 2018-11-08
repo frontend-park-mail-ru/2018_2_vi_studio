@@ -10,7 +10,7 @@ class Tile extends Base {
         this.text = "";
 
         this.rotation = 0;
-        // this.rotation = Math.PI / 3;
+        this.rotationCount = 0;
         this.xDelta = DELTA_X;
         this.yDelta = DELTA_Y;
         this.width = 0;
@@ -18,8 +18,11 @@ class Tile extends Base {
         this.fillStyle = 'yellow';
         this.lineColor = 'green';
     }
+
     rotate() {
-        this.rotation += Math.PI / 3;
+        this.rotationCount++;
+        this.rotationCount %= 6;
+        this.rotation = Math.PI / 3 * this.rotationCount;
     }
 
     // /**

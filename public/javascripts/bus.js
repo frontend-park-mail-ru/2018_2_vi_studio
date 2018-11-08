@@ -1,26 +1,27 @@
 class Bus {
-    constructor () {
+    constructor() {
         this.listeners = {};
     }
 
-    on (event, callback) {    // подписываемся на событие
-        this.listeners[ event ] = this.listeners[ event ] || [];
-        this.listeners[ event ].push(callback);
+    on(event, listener) {
+        (this.listeners[event] || (this.listeners[event] = [])).push(listener);
+        return this;
     }
 
-    off (event, callback) {   // отписываемся от события
-        this.listeners[ event ] = this.listeners[ event ]
-            .filter(function (listener) {
-                return listener !== callback;
-            });
+    off(event, listener) {
+        if (listener) {
+            this.listeners[event] = (this.listeners[event] || []).filter(l => l !== listener);
+        } else {
+            this.listeners[event] = [];
+        }
+        return this;
     }
 
-    emit (event, data) {      // публикуем (диспатчим, эмитим) событие
-        this.listeners[ event ].forEach(function (listener) {
-            listener(data);
-        });
+    emit(event, data) {
+        console.log('EVENT', event);
+        (this.listeners[event] || (this.listeners[event] = [])).forEach(l => l(data));
+        return this;
     }
-
 }
 
 export default new Bus;
