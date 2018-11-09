@@ -1,5 +1,5 @@
 // TODO: rewrite
-window.SERVER_PATH = 'http://127.0.0.1:8080';
+window.SERVER_PATH = 'http://20182vistudioserver-kkdnijptrs.now.sh';
 
 export default class Model {
     constructor() {

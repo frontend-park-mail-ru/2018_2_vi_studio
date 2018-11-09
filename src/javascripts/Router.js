@@ -8,7 +8,7 @@ export default class Router {
 
     /**
      * @param {string} pattern
-     * @param {View} View
+     * @param {Controller} View
      */
     register(pattern, View) {
         this.routes.push({
@@ -40,13 +40,13 @@ export default class Router {
 
             let view;
 
-            if (this.views.has(route.View)) {
-                view = this.views.get(route.View);
+            if (this.views.has(route.Controller)) {
+                view = this.views.get(route.Controller);
             } else {
                 const el = document.createElement('section');
                 this.root.appendChild(el);
-                view = new route.View(el, this);
-                this.views.set(route.View, view);
+                view = new route.Controller(el, this);
+                this.views.set(route.Controller, view);
             }
 
 

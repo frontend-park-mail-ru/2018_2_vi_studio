@@ -38,11 +38,10 @@ function compilePug(path) {
 
                 const jsFunctionString = pug.compileFileClient(filePath, {
                         name: "render" + match[2],
-                        exportMixins: true
+                        exportMixins: true,
+                        compileDebug: false
                     })
-                    + ` import Component from "../Component.js";`
-                    + ` export default class ${match[2]} extends Component`
-                    + ` {constructor(props){super(props);this.getHTML = render${match[2]}.bind(this, props);}}`;
+                    + ` export default render${match[2]};`;
 
                 fs.writeFileSync(match[1] + match[2] + ".pug.js", jsFunctionString);
             }

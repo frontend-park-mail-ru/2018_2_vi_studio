@@ -6,7 +6,7 @@ const sassMiddleware = require('node-sass-middleware');
 
 const compilePug = require('./pug_compile');
 
-compilePug('public');
+compilePug('src');
 
 const app = express();
 

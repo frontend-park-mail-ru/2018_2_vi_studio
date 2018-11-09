@@ -1,17 +1,12 @@
 import Component from "../Component.js";
+import renderLeaderboard from "../leaderboard/Leaderboard.pug.js"
 
 export default class Leaderboard extends Component {
     constructor(props) {
-        super(props);
-    }
+        super();
 
-    getHTML() {
-        return '<div class="leaders">' +
-            this.props.leaders.map(item => `
-                <div class="leaders__member">
-                    <div class="leaders__name">${item.nickname}</div>
-                    <div class="leaders__points">${item.points}</div>
-                </div>`).join('') +
-            '</div>'
+        this._element.outerHTML = renderLeaderboard({
+            leaders: props.leaders || [],
+        });
     }
 }

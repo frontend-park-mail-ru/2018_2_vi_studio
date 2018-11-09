@@ -8,9 +8,9 @@ export default class OnlineGameService extends GameServise {
 
         this.ws = new WebSocket(window.SERVER_WS_PATH);
 
-        this.ws.addEventListener('open', () => bus.emit('game-rpc-ws-open'));
+        this.ws.addEventListener('open', () => bus.emit('GameController-rpc-ws-open'));
         this.ws.addEventListener('message', event => this.onMessage(JSON.parse(event.data)));
-        this.ws.addEventListener('error', error => bus.emit('game-rpc-ws-error', error));
+        this.ws.addEventListener('error', error => bus.emit('GameController-rpc-ws-error', error));
         this.ws.addEventListener('close', this.onWSClose);
     }
 
@@ -24,6 +24,6 @@ export default class OnlineGameService extends GameServise {
 
     onWSClose(event) {
         this.destroy();
-        bus.emit('game-rpc-ws-close', event);
+        bus.emit('GameController-rpc-ws-close', event);
     }
 }

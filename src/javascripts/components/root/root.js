@@ -1,4 +1,4 @@
-import {Form} from "../form/Form.js";
+import {Form} from "../Form/Form.js";
 import {Leaderboard} from "../leaderboard/Leaderboard.js";
 import {Rules} from "../rules/rules.js";
 import {Video} from "../video/video.js";

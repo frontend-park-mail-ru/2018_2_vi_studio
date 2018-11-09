@@ -6,10 +6,10 @@ export default class OfflineGameServise extends GameServise {
         super();
 
         const game = new OfflineGame();
-        game.onQueuePosition = data => this.onMessage('QueuePosition', data);
-        game.onGameStart = data => this.onMessage('GameStart', data);
-        game.onNextTry = data => this.onMessage('NextTry', data);
-        game.onWrongTry = data => this.onMessage('WrongTry', data);
+        game.emitQueuePosition = data => this.onMessage('QueuePosition', data);
+        game.emitGameStart = data => this.onMessage('GameStart', data);
+        game.emitNextTry = data => this.onMessage('NextTry', data);
+        game.emitWrongTry = data => this.onMessage('WrongTry', data);
         this.game = game;
     }
 

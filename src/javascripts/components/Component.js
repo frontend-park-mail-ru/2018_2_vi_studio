@@ -1,6 +1,10 @@
 export default class Component {
-    constructor(props) {
-        this.props = props;
+    constructor() {
+        this._element = document.createElement('div');
+    }
+
+    get element() {
+        return this._element;
     }
 
     static render(component, element) {
@@ -15,16 +19,12 @@ export default class Component {
     static _renderComponents(components, element) {
         components.forEach(component => {
             if (component instanceof Component) {
-                element.innerHTML += component.getHTML();
+                element.appendChild(component.element);
             } else if (component instanceof HTMLElement) {
                 element.appendChild(component);
             } else {
                 throw new Error('Component unknown type');
             }
         });
-    }
-
-    getHTML() {
-        throw new Error('This method must be overridden');
     }
 }
