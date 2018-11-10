@@ -62,7 +62,6 @@ class Tile extends Base {
         this.ctx.globalAlpha = 1;
         ctx.fillStyle = 'red';
         ctx.fillText(this.text, -15, 0);
-        // this.ctx.globalAlpha = 0.45;
 
     }
 

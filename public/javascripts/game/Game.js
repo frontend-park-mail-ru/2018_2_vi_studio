@@ -11,7 +11,6 @@ const GAME_MODES = MODES;
 
 class Game {
     constructor(mode, canvas) {
-        let GameServiseConstructor = null;
         this.gameScene = new GameScene(canvas);
         this.gameControllers = new GameControllers(canvas);
         this.gameCore = new OfflineGame(this.gameControllers, this.gameScene);

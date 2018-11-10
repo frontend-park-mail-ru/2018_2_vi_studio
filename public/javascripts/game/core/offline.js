@@ -16,7 +16,6 @@ class OfflineGame extends GameCore {
         super(controller, scene);
         this.userId = null;
         this.currentPlayerIndex = 0;
-        this.service = new GameServise();
         this.playersQueue = null;
         this.tilesStack = null;
         const miniCanvas = document.getElementById('mini-canvas');
@@ -31,9 +30,7 @@ class OfflineGame extends GameCore {
         ];
 
         this.state = {};
-        // this.gameloop = this.gameloop.bind(this);
-        // this.gameloopRequestId = null;
-        // this.lastFrame = 0;
+
     }
 
     start() {

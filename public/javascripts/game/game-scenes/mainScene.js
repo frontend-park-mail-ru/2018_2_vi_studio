@@ -5,14 +5,12 @@ import {TileMap} from "../graphics/TileMap.js";
 
 export class GameScene {
     constructor(canvas) {
-        this.bus = bus;
         this.canvas = canvas;
         const ctx = canvas.getContext('2d');
         this.ctx = ctx;
         this.scene = new Scene(ctx);
         this.state = null;
         this.requestFrameId = null;
-        this.lastFrameTime = 0;
 
 
         this.canvasRectLen = canvas.getBoundingClientRect().height;
