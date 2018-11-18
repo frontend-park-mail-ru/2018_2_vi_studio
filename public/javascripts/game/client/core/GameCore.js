@@ -1,5 +1,5 @@
 import {EVENTS} from "./events.js";
-import bus from "./../../bus.js";
+import bus from "../../../bus.js";
 
 const events = EVENTS;
 const Bus = bus;
@@ -19,21 +19,21 @@ class GameCore {
     }
 
     start() {
-        bus.on(events.START_GAME, this.onGameStarted);
+        bus.on(events.GAME_START, this.onGameStarted);
         bus.on(events.FINISH_GAME, this.onGameFinished);
         bus.on(events.MOUSE_CLICKED, this.onMouseClicked);
         bus.on(events.GAME_STATE_CHANGED, this.onGameStateChanged);
-        bus.on('NEXT_TRY', this.onNextTry);
+        bus.on(events.NEXT_TRY, this.onNextTry);
         // this.controller.start();
     }
 
     destroy() {
         clearInterval(this.controllersLoopIntervalId);
-        bus.off(events.START_GAME, this.onGameStarted);
+        bus.off(events.GAME_START, this.onGameStarted);
         bus.off(events.FINISH_GAME, this.onGameFinished);
         bus.off(events.MOUSE_CLICKED, this.onMouseClicked);
         bus.off(events.GAME_STATE_CHANGED, this.onGameStateChanged);
-        bus.off('NEXT_TRY', this.onNextTry);
+        bus.off(events.NEXT_TRY, this.onNextTry);
 
         this.controller.destroy();
         this.scene.stop();

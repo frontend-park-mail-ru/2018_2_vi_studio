@@ -1,7 +1,7 @@
-import bus from '../bus.js';
-import GameRPC from "./GameRPC.js";
+import bus from '../../bus.js';
+import GameRPC from "../GameService.js";
 
-export default class GameRPCOnline extends GameRPC{
+export default class OnlineGameService extends GameRPC{
     constructor() {
         super();
         this.onWSClose = this.onWSClose.bind(this);

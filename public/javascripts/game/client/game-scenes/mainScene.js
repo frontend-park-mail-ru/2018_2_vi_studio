@@ -1,5 +1,5 @@
 import {Scene} from "../graphics/scene.js";
-import bus from '../../bus.js';
+import bus from '../../../bus.js';
 import {TileMap} from "../graphics/TileMap.js";
 
 
@@ -18,10 +18,9 @@ export class GameScene {
     }
 
     init(state) {
-        // Установка начальных данных
         const ctx = this.ctx;
         const scene = this.scene;
-        console.log('Game-Scenes: INIT');
+        console.log('Game-Scenes: init');
         this.state = state;
 
         this.tileMap = new TileMap(ctx);
@@ -34,9 +33,6 @@ export class GameScene {
                 this.scene.push(this.tileMap.tiles[i][j]);
             }
         }
-
-        // this.tileMap.id = scene.push(this.tileMap);
-
     }
 
     setState(state) {

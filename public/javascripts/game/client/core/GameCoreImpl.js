@@ -1,8 +1,8 @@
-import {GameCore} from "./gameCore.js";
+import {GameCore} from "./GameCore.js";
 import {EVENTS} from "./events.js";
-import bus from "../../bus.js";
+import bus from "../../../bus.js";
 import {TILE_SIZE} from "../tileSpec.js";
-import {GameServise} from "../GameService.js";
+// import {GameServise} from "../../GameService.js";
 import TileSelectScene from "../game-scenes/TileSelectScene.js";
 import Player from "../Player.js";
 import {TileWithWays} from "../graphics/TileWithWays.js";
@@ -11,7 +11,7 @@ const events = EVENTS;
 
 // const rand = require('rand');
 
-class OfflineGame extends GameCore {
+class GameCoreImpl extends GameCore {
     constructor(controller, scene) {
         super(controller, scene);
         this.userId = null;
@@ -24,9 +24,10 @@ class OfflineGame extends GameCore {
 
         const player1 = document.getElementById('player1');
         const player2 = document.getElementById('player2');
+        console.log(player1);
         this.players = [
             {object: new Player(), element: player1,},
-            {object: new Player(), element: player2},
+            {object: new Player(), element: player2,},
         ];
 
         this.state = {};
@@ -35,12 +36,7 @@ class OfflineGame extends GameCore {
 
     start() {
         super.start();
-        console.log('Emited: game-event-ReadyToPlay');
-        // // TODO: get state data
-
-        setTimeout(function () {
-            bus.emit('game-event-ReadyToPlay', {});
-        }.bind(this));
+        bus.emit('game-event-ReadyToPlay', {});
     }
 
     onMouseClicked(evt) {
@@ -89,39 +85,23 @@ class OfflineGame extends GameCore {
         }
     }
 
-
-    // onControllsPressed(evt) {
-    //
-    // }
-
-    onGameStarted(evt) {
-        console.log('Event: GAME_STARTED -', evt);
+    onGameStarted(data) {
         alert('Game Started');
         this.controller.start();
         for (let i = 0; i < this.players.length; i++) {
-            this.players[i].id = evt.playersQueue[i].id;
-            this.players[i].element.innerText = evt.playersQueue[i].nickname;
-            this.players[i].object.nickname = evt.playersQueue[i].nickname;
-            this.players[i].object.id = evt.playersQueue[i].id;
-            this.players[i].object.avatar = evt.playersQueue[i].avatar;
+            this.players[i].id = data.players[i].id;
+            this.players[i].element.innerText = data.players[i].username;
+            this.players[i].object.username = data.players[i].username;
+            this.players[i].object.id = data.players[i].id;
+            this.players[i].object.avatar = data.players[i].avatar;
             this.players[i].object.active = false;
-
-
-            // if (evt.id === evt.playersQueue[i].id) {
-            //     this.players[i].element.setAttribute('style', 'font-style: italic');
-            // }
         }
-        this.userId = evt.id;
-
-        this.scene.init(evt);
-        this.tileSelectScene.init(evt);
+        this.userId = data.userId;
+        this.scene.init(data);
+        this.tileSelectScene.init(data);
         this.scene.start();
         this.tileSelectScene.start();
-        // const state = this.service.getGameStartState();
-        // this.scene.tileMap.setGates(state.players);
-        // bus.emit(events.GAME_STATE_CHANGED, this.state);
-        // this.lastFrame = performance.now();
-        // this.gameloopRequestId = requestAnimationFrame(this.gameloop);
+        this.scene.tileMap.setGates(this.players);
     }
 
     onGameFinished(evt) {
@@ -139,26 +119,24 @@ class OfflineGame extends GameCore {
 
 
     onNextTry(evt) {
-        console.log('NEXT', evt);
-        if (evt.currentTry.id) {
+        console.log('onNext', evt);
+        if (evt.currentTry.playerId) {
             this.players.forEach(player => {
                 player.object.active = false;
                 player.element.setAttribute('style', 'font-style: normal');
             });
             for (let i = 0; i < this.players.length; i++) {
-                if (this.players[i].object.id === evt.currentTry.id) {
+                if (this.players[i].object.id === evt.currentTry.playerId) {
                     this.players[i].object.active = true;
                     this.players[i].element.setAttribute('style', 'font-style: normal');
                 }
             }
-            this.tileSelectScene.tile.setType(evt.currentTry.tile);
+            this.tileSelectScene.tile.setType(evt.currentTry.tileType);
             this.tileSelectScene.renderScene();
         } else {
             this.players.forEach(player => player.object.active = false);
         }
-        // this.tileSelectScene.renderScene();
-
     }
 }
 
-export {OfflineGame};
+export default GameCoreImpl;

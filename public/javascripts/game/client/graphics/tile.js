@@ -5,10 +5,8 @@ const DELTA_Y = Math.sin(Math.PI / 3) * DELTA_X;
 class Tile extends Base {
     constructor(ctx) {
         super(ctx);
-
         ctx.font = "15px Arial";
         this.text = "";
-
         this.rotation = 0;
         this.rotationCount = 0;
         this.xDelta = DELTA_X;

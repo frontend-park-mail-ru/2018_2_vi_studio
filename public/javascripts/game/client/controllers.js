@@ -1,5 +1,5 @@
 import {EVENTS} from "./core/events.js";
-import bus from "../bus.js";
+import bus from "../../bus.js";
 
 
 class GameControllers {

@@ -1,9 +1,9 @@
-import bus from '../bus.js';
-import GameRPC from "./GameRPC.js";
-import Player from "./Player.js";
-import {TILES} from "./tileSpec.js";
+import bus from '../../bus.js';
+import GameRPC from "../GameService.js";
+import Player from "../client/Player.js";
+import {TILES} from "../client/tileSpec.js";
 
-export default class GameRPCOffline extends GameRPC{
+export default class OfflineGameService extends GameRPC{
     // TODO: implement
     constructor(tileMap) {
         super();

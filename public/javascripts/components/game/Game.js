@@ -15,8 +15,8 @@ export default class Game extends Component {
                     </div>
                     <div class="tile_select_block">
                         <canvas id="mini-canvas" width=400 height=400></canvas>
-                        <button type="button" id="rotate">Rotate</button>
-                        <button type="button" id="submit">submit</button>
+                        <button type="button" id="rotate" style="height: 40px; width: 100px; background-color: aquamarine">Rotate</button>
+                        <button type="button" id="submit" style="height: 40px; width: 100px; background-color: green">submit</button>
                     </div>
                 </div>`;
     }
