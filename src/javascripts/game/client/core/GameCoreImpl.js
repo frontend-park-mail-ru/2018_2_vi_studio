@@ -1,23 +1,22 @@
 import {GameCore} from "./GameCore.js";
-import {EVENTS} from "./events.js";
+import EVENTS from "./events.js";
 import bus from "../../../bus.js";
 import {TILE_SIZE} from "../tileSpec.js";
 import TileSelectScene from "../game-scenes/TileSelectScene.js";
 import Player from "../Player.js";
 import {TileWithWays} from "../graphics/TileWithWays.js";
 
-const events = EVENTS;
-
 class GameCoreImpl extends GameCore {
-    constructor(controller, scene) {
+    constructor(controller, scene, tileCanvas) {
         super(controller, scene);
         this.userId = null;
         this.currentPlayerIndex = 0;
         this.playersQueue = null;
         this.tilesStack = null;
-        const miniCanvas = document.getElementById('mini-canvas');
-        this.tileSelectScene = new TileSelectScene(miniCanvas);
 
+        this.tileSelectScene = new TileSelectScene(tileCanvas);
+
+        // TODO: replace player logic
         const player1 = document.getElementById('player1');
         const player2 = document.getElementById('player2');
         this.players = [
@@ -47,8 +46,8 @@ class GameCoreImpl extends GameCore {
 
             const ctx = this.scene.ctx;
             const tiles = this.scene.tileMap.tiles;
-            let x = (evt.pageX - this.scene.canvas.offsetLeft) * this.scene.canvas.height / this.scene.canvasRectLen;
-            let y = (evt.pageY - this.scene.canvas.offsetTop) * this.scene.canvas.height / this.scene.canvasRectLen;
+            let x = (evt.pageX - this.scene.areaCanvas.offsetLeft) * this.scene.areaCanvas.height / this.scene.canvasRectLen;
+            let y = (evt.pageY - this.scene.areaCanvas.offsetTop) * this.scene.areaCanvas.height / this.scene.canvasRectLen;
             for (let i = 0; i < this.scene.tileMap.rows; i++) {
                 for (let j = 0; j < this.scene.tileMap.columns; j++) {
                     if ((tiles[i][j] instanceof TileWithWays) &&
@@ -77,7 +76,7 @@ class GameCoreImpl extends GameCore {
                         this.tileSelectScene.selectedTile.fillStyle = 'orange';
                         this.tileSelectScene.selectedTile.setType(this.tileSelectScene.tile.type);
                         this.tileSelectScene.selectedTile.setRotation(this.tileSelectScene.tile.rotationCount);
-                        bus.emit(events.GAME_STATE_CHANGED, this.state);
+                        bus.emit(EVENTS.GAME_STATE_CHANGED, this.state);
                         return;
                     }
                 }
@@ -121,7 +120,6 @@ class GameCoreImpl extends GameCore {
     }
 
     onGameFinished(evt) {
-
         bus.emit('Event: CLOSE_GAME');
     }
 

@@ -1,5 +1,5 @@
 import GameServise from "../GameServise.js";
-import OfflineGame from "./OfflineGame";
+import OfflineGame from "./OfflineGame.js";
 
 export default class OfflineGameServise extends GameServise {
     constructor() {

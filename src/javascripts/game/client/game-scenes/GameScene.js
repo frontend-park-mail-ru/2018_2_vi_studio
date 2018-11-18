@@ -1,8 +1,7 @@
 import {Scene} from "../graphics/scene.js";
 import {TileMap} from "../graphics/TileMap.js";
 
-
-export class GameScene {
+export default class GameScene {
     constructor(canvas) {
         this.canvas = canvas;
         const ctx = canvas.getContext('2d');

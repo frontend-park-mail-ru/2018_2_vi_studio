@@ -1,15 +1,14 @@
 @import "consts";
 /* components */
-@import "../javascripts/components/root/root";
 @import "../javascripts/components/Background/background";
-@import "../javascripts/components/header/header";
-@import "../javascripts/components/navigation/navigation";
-@import "../javascripts/components/video/video";
+@import "../javascripts/components/FileInput/file-input";
+@import "../javascripts/components/Navigation/navigation";
+@import "../javascripts/components/Video/video";
 @import "../javascripts/components/Form/form";
-@import "../javascripts/components/leaderboard/leaderboard";
-@import "../javascripts/components/rules/rules";
-@import "../javascripts/components/profile/profile";
-/* views */
+@import "../javascripts/components/Leaderboard/leaderboard";
+@import "../javascripts/components/Rules/rules";
+@import "../javascripts/components/Profile/profile";
+/* controllers */
 @import "../javascripts/components/MainView/main-view";
 @import "../javascripts/components/GameView/game-view";
 

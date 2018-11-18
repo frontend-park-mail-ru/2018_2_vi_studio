@@ -1,13 +1,10 @@
 import {Scene} from "../graphics/scene.js";
 import bus from '../../../bus.js';
-import {TileMap} from "../graphics/TileMap.js";
 import {TileWithWays} from "../graphics/TileWithWays.js";
-import {EVENTS} from "../core/events.js";
-
+import EVENTS from "../core/events.js";
 
 export default class TileSelectScene {
     constructor(canvas) {
-        this.bus = bus;
         this.canvas = canvas;
         const ctx = canvas.getContext('2d');
         this.ctx = ctx;

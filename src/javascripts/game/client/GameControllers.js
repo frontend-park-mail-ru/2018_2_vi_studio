@@ -1,6 +1,5 @@
-import {EVENTS} from "./core/events.js";
+import EVENTS from "./core/events.js";
 import bus from "../../bus.js";
-
 
 class GameControllers {
     constructor(root) {
@@ -54,5 +53,5 @@ class GameControllers {
     }
 
 }
-// const controlls = new GameControllers();
-export {GameControllers};
+
+export default GameControllers;

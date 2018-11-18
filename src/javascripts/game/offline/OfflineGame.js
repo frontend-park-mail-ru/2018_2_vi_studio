@@ -14,7 +14,7 @@ export default class OfflineGame{
     }
 
     doneTry(data) {
-        if (/* */) {
+        if (true) {
             this.emitWrongTry();
             return
         }

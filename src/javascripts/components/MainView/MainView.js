@@ -2,7 +2,7 @@ import Component from "../Component.js";
 import Background from "../Background/Background.js"
 
 export default class MainView extends Component {
-    constructor(props) {
+    constructor() {
         super();
 
         this._element = document.createElement('section');

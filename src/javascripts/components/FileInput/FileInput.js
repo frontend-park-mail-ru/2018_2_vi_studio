@@ -1,23 +1,23 @@
 import Component from "../Component.js";
-import renderFileInput from "FileInput.pug.js"
+import renderFileInput from "./FileInput.pug.js"
+import VirtualDOM from "../VirtualDOM.js";
 
-export class FileInput extends Component {
-    constructor(props) {
-        super();
-
-        this._element.outerHTML = renderFileInput({
+export default class FileInput extends Component {
+    constructor(props = {}) {
+        super(VirtualDOM.createElementByHtml(renderFileInput({
             name: props.name || '',
             label: props.label || '',
-        });
+        })));
 
-        const nameEl = this.element.getElementsByClassName('file-input__name')[0];
+        console.log(this.element);
+        const nameEl = this._element.getElementsByClassName('file-input__name')[0];
 
-        this.element.getElementsByClassName('file-input__button')[0].addEventListener('click', event => {
+        this._element.getElementsByClassName('file-input__button')[0].addEventListener('click', event => {
             event.preventDefault();
-            this.nextSibling.click()
+            this.nextSibling.click();
         });
 
-        this.element.getElementsByClassName('file-input__input')[0].addEventListener('change', () => {
+        this._element.getElementsByClassName('file-input__input')[0].addEventListener('change', () => {
             nameEl.innerText = this.value.replace('C:\\\\fakepath\\\\', '');
         });
     }

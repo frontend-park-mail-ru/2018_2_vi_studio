@@ -1,6 +1,10 @@
 export default class Component {
-    constructor() {
-        this._element = document.createElement('div');
+    constructor(element) {
+        if (element) {
+            this._element = element;
+        } else {
+            this._element = document.createElement('div');
+        }
     }
 
     get element() {

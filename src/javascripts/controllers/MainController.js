@@ -1,20 +1,21 @@
 import Controller from './Controller.js';
 import Component from "../components/Component.js";
 import UserModel from "../models/UserModel.js";
-import Navigation from "../components/navigation/Navigation.js";
+import Navigation from "../components/Navigation/Navigation.js";
 import Form from "../components/Form/Form.js";
-import Leaderboard from "../components/leaderboard/Leaderboard.js";
-import Rules from "../components/rules/rules.js";
-import Video from "../components/video/video.js";
+import Leaderboard from "../components/Leaderboard/Leaderboard.js";
+import Rules from "../components/Rules/Rules.js";
+import Video from "../components/Video/Video.js";
 import SessionModel from "../models/SessionModel.js";
 import LeaderModel from "../models/LeaderModel.js";
-import Profile from "../components/profile/Profile.js";
+import Profile from "../components/Profile/Profile.js";
 import Button from "../components/Button/Button.js";
-import MainView from "../components/MainView/MainView";
+import MainView from "../components/MainView/MainView.js";
+import constants from "../constants.js";
 
 const USER_NAV_ITEMS = [
-    {title: 'GameController Online', href: '/GameController/online'},
-    {title: 'GameController Offline', href: '/GameController/offline'},
+    {title: 'Online Game', href: '/game/online'},
+    {title: 'Offline Game', href: '/game/offline'},
     {title: 'Home', href: '/'},
     {title: 'Profile', href: '/profile'},
     {title: 'Leaders', href: '/leaders'},
@@ -30,11 +31,11 @@ const GUEST_NAV_ITEMS = [
     {title: 'Rules', href: '/rules'},
 ];
 
-const AVATAR_PATH = window.SERVER_PATH + '/media/images/';
+const AVATAR_PATH = constants.SERVER_PATH + '/media/images/';
 
 export default class MainController extends Controller {
     constructor(router) {
-        super();
+        super(MainView);
 
         this.router = router;
 
@@ -52,8 +53,7 @@ export default class MainController extends Controller {
             }
         };
 
-        this._view = new MainView();
-        this._element = this._view.element;
+        this.renderNav();
     }
 
     handle(args = []) {
@@ -61,8 +61,10 @@ export default class MainController extends Controller {
 
         if (action && this.actions[action]) {
             this.actions[action]()
-        } else {
+        } else if (action) {
             this.router.open('/');
+        } else {
+            this.actions.home();
         }
     }
 
@@ -100,7 +102,9 @@ export default class MainController extends Controller {
         Component.render(form, this._view.content);
 
         const formEl = form.element;
+        console.log(formEl);
         formEl.addEventListener("submit", event => {
+            console.log(formEl);
             event.preventDefault();
             SessionModel.add({
                 nickname: formEl.nickname.value,
@@ -185,7 +189,7 @@ export default class MainController extends Controller {
                 formEl.avatar.value !== '' ? UserModel.addAvatar(formEl.avatar.files[0]) : null
             ).then(() => {
                 this.renderNav();
-                this.router.open('/profile');
+                this.router.open('/Profile');
             }).catch(error => {
                 // TODO: handle
             });

@@ -1,8 +1,5 @@
-import {EVENTS} from "./events.js";
+import EVENTS from "./events.js";
 import bus from "../../../bus.js";
-
-const events = EVENTS;
-const Bus = bus;
 
 class GameCore {
     constructor(controller, scene) {
@@ -13,28 +10,28 @@ class GameCore {
         this.onGameFinished = this.onGameFinished.bind(this);
         this.onMouseClicked = this.onMouseClicked.bind(this);
         this.onGameStateChanged = this.onGameStateChanged.bind(this);
-        this.onNextTry = this.emitNextTry.bind(this);
+        this.onNextTry = this.onNextTry.bind(this);
 
         this.controllersLoopIntervalId = null;
     }
 
 
-    // TODO: rewrite events
+    // TODO: rewrite EVENTS
     start() {
-        bus.on(events.START_GAME, this.onGameStarted);
-        bus.on(events.FINISH_GAME, this.onGameFinished);
-        bus.on(events.MOUSE_CLICKED, this.onMouseClicked);
-        bus.on(events.GAME_STATE_CHANGED, this.onGameStateChanged);
+        bus.on(EVENTS.START_GAME, this.onGameStarted);
+        bus.on(EVENTS.FINISH_GAME, this.onGameFinished);
+        bus.on(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
+        bus.on(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.on('NEXT_TRY', this.emitNextTry);
-        // this.controller.start();
+        // this.controllers.start();
     }
 
     destroy() {
         clearInterval(this.controllersLoopIntervalId);
-        bus.off(events.START_GAME, this.onGameStarted);
-        bus.off(events.FINISH_GAME, this.onGameFinished);
-        bus.off(events.MOUSE_CLICKED, this.onMouseClicked);
-        bus.off(events.GAME_STATE_CHANGED, this.onGameStateChanged);
+        bus.off(EVENTS.START_GAME, this.onGameStarted);
+        bus.off(EVENTS.FINISH_GAME, this.onGameFinished);
+        bus.off(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
+        bus.off(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.off('NEXT_TRY', this.emitNextTry);
 
         this.controller.destroy();
