@@ -1,4 +1,4 @@
-export class Scene {
+export default class Scene {
     constructor(ctx) {
         this.ctx = ctx;
         // this.frontView = [];
@@ -37,7 +37,7 @@ export class Scene {
 
     render() {
         const ctx = this.ctx;
-        ctx.clearRect(0, 0, ctx.areaCanvas.width, ctx.areaCanvas.height);
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         // this.backView.forEach(figure => figure.render());
         // this.frontView.forEach(figure => figure.render());
         console.log('render :', this.figures);
@@ -46,6 +46,6 @@ export class Scene {
 
     clear() {
         const ctx = this.ctx;
-        ctx.clearRect(0, 0, ctx.areaCanvas.width, ctx.areaCanvas.height);
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     }
 }

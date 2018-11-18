@@ -1,55 +1,51 @@
 import {GameCore} from "./GameCore.js";
-import EVENTS from "./events.js";
+import EVENTS from "../../../events.js";
 import bus from "../../../bus.js";
 import {TILE_SIZE} from "../tileSpec.js";
-import TileSelectScene from "../game-scenes/TileSelectScene.js";
+// import TileSelectScene from "../game-scenes/TileSelectScene.js";
 import Player from "../Player.js";
 import {TileWithWays} from "../graphics/TileWithWays.js";
+import GameScene from "../game-scenes/GameScene.js";
+import Component from "../../../components/Component.js";
+import TileSelectScene from "../game-scenes/TileSelectScene.js";
 
 class GameCoreImpl extends GameCore {
-    constructor(controller, scene, tileCanvas) {
-        super(controller, scene);
+    constructor(component) {
+        super();
+
+        this.boardScene = new GameScene(component.boardCanvas);
+        this.tileScene = new TileSelectScene(component.tileCanvas);
+        this.playersRoot = component.playersRoot;
+
+        this.rotateButton = component.rotateButton;
+        this.rotateButton.addEventListener('click', this.tileScene.rotate);
+
+        this.submitButton = component.submitButton;
+        this.submitButton.addEventListener('click', this.tileScene.submit);
+
         this.userId = null;
         this.currentPlayerIndex = 0;
-        this.playersQueue = null;
-        this.tilesStack = null;
-
-        this.tileSelectScene = new TileSelectScene(tileCanvas);
-
-        // TODO: replace player logic
-        const player1 = document.getElementById('player1');
-        const player2 = document.getElementById('player2');
-        this.players = [
-            {object: new Player(), element: player1,},
-            {object: new Player(), element: player2},
-        ];
 
         this.state = {};
-        // this.gameloop = this.gameloop.bind(this);
-        // this.gameloopRequestId = null;
-        // this.lastFrame = 0;
     }
 
     start() {
         super.start();
-        console.log('Emited: game-event-ReadyToPlay');
-        // TODO: get state data
-
-        setTimeout(() => bus.emit('game-event-ReadyToPlay', {}));
+        bus.emit('game-event-ReadyToPlay', {});
     }
 
     onMouseClicked(evt) {
-        console.log(this.players[this.currentPlayerIndex].object.id, this.userId);
-        const currentPlayer = this.players[this.currentPlayerIndex].object;
-        if (currentPlayer.id === this.userId && currentPlayer.active) {
+        console.log(this.players[this.currentPlayerIndex].id, this.userId);
+        const currentPlayer = this.players[this.currentPlayerIndex];
+        if (currentPlayer.id === this.userId && currentPlayer._active) {
             console.log('Event: MOUSE1_CLICKED - ', evt);
 
-            const ctx = this.scene.ctx;
-            const tiles = this.scene.tileMap.tiles;
-            let x = (evt.pageX - this.scene.areaCanvas.offsetLeft) * this.scene.areaCanvas.height / this.scene.canvasRectLen;
-            let y = (evt.pageY - this.scene.areaCanvas.offsetTop) * this.scene.areaCanvas.height / this.scene.canvasRectLen;
-            for (let i = 0; i < this.scene.tileMap.rows; i++) {
-                for (let j = 0; j < this.scene.tileMap.columns; j++) {
+            const ctx = this.boardScene.ctx;
+            const tiles = this.boardScene.tileMap.tiles;
+            let x = (evt.pageX - this.boardScene.canvas.offsetLeft) * this.boardScene.canvas.height / this.boardScene.canvasRectLen;
+            let y = (evt.pageY - this.boardScene.canvas.offsetTop) * this.boardScene.canvas.height / this.boardScene.canvasRectLen;
+            for (let i = 0; i < this.boardScene.tileMap.rows; i++) {
+                for (let j = 0; j < this.boardScene.tileMap.columns; j++) {
                     if ((tiles[i][j] instanceof TileWithWays) &&
                         (!tiles[i][j].ways) &&
                         (TILE_SIZE.x * TILE_SIZE.x >
@@ -64,18 +60,18 @@ class GameCoreImpl extends GameCore {
                         ctx.fillText(text, x + 10, y);
                         ctx.closePath();
                         console.log(i, j);
-                        console.log(this.scene.tileMap.tiles[i][j]);
-                        if (this.tileSelectScene.selectedTile) {
-                            this.tileSelectScene.selectedTile.setType(null);
-                            this.tileSelectScene.selectedTile.fillStyle = 'yellow';
+                        console.log(this.boardScene.tileMap.tiles[i][j]);
+                        if (this.tileScene.selectedTile) {
+                            this.tileScene.selectedTile.setType(null);
+                            this.tileScene.selectedTile.fillStyle = 'yellow';
                         }
-                        this.tileSelectScene.selectedTile = this.scene.tileMap.tiles[i][j];
-                        this.tileSelectScene.selectedTile.row = i;
-                        this.tileSelectScene.selectedTile.col = j;
+                        this.tileScene.selectedTile = this.boardScene.tileMap.tiles[i][j];
+                        this.tileScene.selectedTile.row = i;
+                        this.tileScene.selectedTile.col = j;
 
-                        this.tileSelectScene.selectedTile.fillStyle = 'orange';
-                        this.tileSelectScene.selectedTile.setType(this.tileSelectScene.tile.type);
-                        this.tileSelectScene.selectedTile.setRotation(this.tileSelectScene.tile.rotationCount);
+                        this.tileScene.selectedTile.fillStyle = 'orange';
+                        this.tileScene.selectedTile.setType(this.tileScene.tile.type);
+                        this.tileScene.selectedTile.setRotation(this.tileScene.tile.rotationCount);
                         bus.emit(EVENTS.GAME_STATE_CHANGED, this.state);
                         return;
                     }
@@ -84,39 +80,23 @@ class GameCoreImpl extends GameCore {
         }
     }
 
+    onGameStarted(data) {
+        alert('Game Started');
 
-    // onControllsPressed(evt) {
-    //
-    // }
+        this.players = data.players.map(player => {
+            const result = new Player(player.id, player.username, player.avatar);
+            Component.render(result.component, this.playersRoot);
+            return result;
+        });
 
-    onGameStarted(evt) {
-        console.log('Event: GAME_STARTED -', evt);
-        alert('game Started');
-        this.controller.start();
-        for (let i = 0; i < this.players.length; i++) {
-            this.players[i].id = evt.playersQueue[i].id;
-            this.players[i].element.innerText = evt.playersQueue[i].nickname;
-            this.players[i].object.nickname = evt.playersQueue[i].nickname;
-            this.players[i].object.id = evt.playersQueue[i].id;
-            this.players[i].object.avatar = evt.playersQueue[i].avatar;
-            this.players[i].object.active = false;
+        console.log(this.players);
 
-
-            // if (evt.id === evt.playersQueue[i].id) {
-            //     this.players[i].element.setAttribute('style', 'font-style: italic');
-            // }
-        }
-        this.userId = evt.id;
-
-        this.scene.init(evt);
-        this.tileSelectScene.init(evt);
-        this.scene.start();
-        this.tileSelectScene.start();
-        // const state = this.service.getGameStartState();
-        // this.scene.tileMap.setGates(state.players);
-        // bus.emit(events.GAME_STATE_CHANGED, this.state);
-        // this.lastFrame = performance.now();
-        // this.gameloopRequestId = requestAnimationFrame(this.gameloop);
+        this.userId = data.userId;
+        this.boardScene.init(data);
+        this.tileScene.init(data);
+        this.boardScene.start();
+        this.tileScene.start();
+        this.boardScene.tileMap.setGates(this.players);
     }
 
     onGameFinished(evt) {
@@ -125,33 +105,25 @@ class GameCoreImpl extends GameCore {
 
     onGameStateChanged(evt) {
         console.log('StateChanged');
-        this.scene.setState(evt);
-        // this.tileSelectScene.setState(evt);
-        this.scene.renderScene();
-        // this.tileSelectScene.renderScene();
+        this.boardScene.setState(evt);
+        // this.tileScene.setState(evt);
+        this.boardScene.renderScene();
+        // this.tileScene.renderScene();
     }
 
 
     onNextTry(evt) {
-        console.log('NEXT', evt);
-        if (evt.currentTry.id) {
-            this.players.forEach(player => {
-                player.object.active = false;
-                player.element.setAttribute('style', 'font-style: normal');
-            });
-            for (let i = 0; i < this.players.length; i++) {
-                if (this.players[i].object.id === evt.currentTry.id) {
-                    this.players[i].object.active = true;
-                    this.players[i].element.setAttribute('style', 'font-style: normal');
-                }
-            }
-            this.tileSelectScene.tile.setType(evt.currentTry.tile);
-            this.tileSelectScene.renderScene();
-        } else {
-            this.players.forEach(player => player.object.active = false);
-        }
-        // this.tileSelectScene.renderScene();
+        console.log('onNext', evt);
+        if (evt.currentTry.playerId) {
+            this.players.forEach(
+                player => evt.currentTry.playerId === player.id ? player.activate() : player.deactivate()
+            );
 
+            this.tileScene.tile.setType(evt.currentTry.tileType);
+            this.tileScene.renderScene();
+        } else {
+            this.players.forEach(player => player.deactivate());
+        }
     }
 }
 

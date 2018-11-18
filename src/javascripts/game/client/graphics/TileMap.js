@@ -4,6 +4,7 @@ import {TileWithWays} from "./TileWithWays.js";
 import {SideTile} from "./SideTile.js";
 import {CentralTile} from "./CentralTile.js";
 import {GateTile} from "./GateTile.js";
+import {Emerald} from "./Emerald.js";
 
 const ROWS_COUNT = 10;
 const COLUMNS_COUNT = 11;
@@ -26,6 +27,7 @@ export class TileMap {
         this.gates = [];
         this.rows = ROWS_COUNT;
         this.columns = COLUMNS_COUNT;
+        this.emeralds = [];
 
         console.log('TILES', this.tiles);
     }
@@ -85,14 +87,16 @@ export class TileMap {
         let centralRow = this.rows / 2 ^ 0;
         let centralColumn = this.columns / 2 ^ 0;
         this.schema[1][centralColumn] = {
-            type: TYPES.SIDE, rotation: Math.PI,
+            // type: TYPES.SIDE, rotation: Math.PI,
+            type: TYPES.SIDE, rotation: 0,
         };
         this.schema[ROWS_COUNT - 1][centralColumn] = {
             type: TYPES.SIDE, rotation: 0,
         };
         this.schema[centralRow + centralRow - 3][centralColumn + centralRow - 1] = {
             type: TYPES.SIDE,
-            rotation: Math.PI / 3 * 5,
+            // rotation: Math.PI / 3 * 5,
+            rotation: 0,
         };
         this.schema[centralRow + centralRow - 3][1] = {
             type: TYPES.SIDE,
@@ -170,6 +174,7 @@ export class TileMap {
                         break;
                     case TYPES.SIDE:
                         tile = new SideTile(this.ctx, this.schema[i][j].rotation);
+                        // this.emeralds.push(new Emerald(this.ctx, tile, row, col, tile.get_gate));
                         break;
                     case TYPES.CENTRAL:
                         tile = new CentralTile(this.ctx);
@@ -200,18 +205,41 @@ export class TileMap {
             }
         }
         this.gates.push(this.tiles[1][7]);
+        this.gates[0].gates = [null, null, null, [0, 1], 0, null];
+
         this.gates.push(this.tiles[1][8]);
+        this.gates[1].gates = [null, null, null, 1, [0, 1], null];
+
         this.gates.push(this.tiles[4][10]);
+        this.gates[2].gates = [null, null, null, null, [0, 1], 0];
+
         this.gates.push(this.tiles[5][10]);
+        this.gates[3].gates = [null, null, null, null, 1, [0, 1]];
+
         this.gates.push(this.tiles[8][8]);
+        this.gates[4].gates = [0, null, null, null, null, [0, 1]];
+
         this.gates.push(this.tiles[9][7]);
+        this.gates[5].gates = [[0, 1], null, null, null, null, 1];
+
         this.gates.push(this.tiles[9][3]);
+        this.gates[6].gates = [[0, 1], 0, null, null, null, null];
+
         this.gates.push(this.tiles[8][2]);
+        this.gates[7].gates = [1, [0, 1], null, null, null, null];
+
         this.gates.push(this.tiles[5][0]);
+        this.gates[8].gates = [null, [0, 1], 0, null, null, null];
+
         this.gates.push(this.tiles[4][0]);
+        this.gates[9].gates = [null, 1, [0, 1], null, null, null];
 
         this.gates.push(this.tiles[1][2]);
+        this.gates[10].gates = [null, null, [0, 1], 0, null, null];
+
         this.gates.push(this.tiles[1][3]);
+        this.gates[11].gates = [null, null, 1, [0, 1], null, null];
+
 
     }
 

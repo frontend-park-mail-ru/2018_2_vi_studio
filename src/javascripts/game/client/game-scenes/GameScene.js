@@ -1,4 +1,4 @@
-import {Scene} from "../graphics/scene.js";
+import Scene from "./Scene.js";
 import {TileMap} from "../graphics/TileMap.js";
 
 export default class GameScene {

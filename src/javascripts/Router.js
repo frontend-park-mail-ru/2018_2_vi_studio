@@ -51,10 +51,10 @@ export default class Router {
             this.controllers.set(route.Controller, controller);
         }
 
-            for (let [, c] of this.controllers) {
-                c.element.classList.add('hidden')
-            }
-            controller.element.classList.remove('hidden');
+        for (let [, c] of this.controllers) {
+            c.element.classList.add('hidden')
+        }
+        controller.element.classList.remove('hidden');
 
         controller.handle(args.slice(1));
     }

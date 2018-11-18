@@ -1,16 +1,16 @@
 import bus from '../../bus.js';
-import GameServise from "../GameServise.js";
+import GameRPC from "../GameService.js";
 
-export default class OnlineGameService extends GameServise {
+export default class OnlineGameService extends GameRPC{
     constructor() {
         super();
         this.onWSClose = this.onWSClose.bind(this);
 
         this.ws = new WebSocket(window.SERVER_WS_PATH);
 
-        this.ws.addEventListener('open', () => bus.emit('GameController-rpc-ws-open'));
-        this.ws.addEventListener('message', event => this.onMessage(JSON.parse(event.data)));
-        this.ws.addEventListener('error', error => bus.emit('GameController-rpc-ws-error', error));
+        this.ws.addEventListener('open', () => bus.emit('game-rpc-ws-open'));
+        this.ws.addEventListener('message', this.onMessage);
+        this.ws.addEventListener('error', error => bus.emit('game-rpc-ws-error', error));
         this.ws.addEventListener('close', this.onWSClose);
     }
 
@@ -24,6 +24,6 @@ export default class OnlineGameService extends GameServise {
 
     onWSClose(event) {
         this.destroy();
-        bus.emit('GameController-rpc-ws-close', event);
+        bus.emit('game-rpc-ws-close', event);
     }
 }

@@ -5,6 +5,7 @@ class SideTile extends Tile {
         super(ctx);
         this.fillStyle = 'orange';
         this.rotation = rotation;
+        this.gates = [0, null, null, null, null, null];
     }
 
     draw() {

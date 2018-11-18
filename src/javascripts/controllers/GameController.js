@@ -1,10 +1,10 @@
 import Controller from './Controller.js';
 import GameView from "../components/GameView/GameView.js";
-import GameControllers from "../game/client/GameControllers.js";
 import GameCoreImpl from "../game/client/core/GameCoreImpl.js";
-import GameScene from "../game/client/game-scenes/GameScene.js";
 import OnlineGameService from "../game/online/OnlineGameService.js";
-import OfflineGameServise from "../game/offline/OfflineGameServise.js";
+import OfflineGameService from "../game/offline/OfflineGameService.js";
+import EVENTS from "../events.js";
+import bus from "../bus.js"
 
 const LEN_X = 60;
 const LEN_Y = Math.sin(Math.PI / 3) * LEN_X;
@@ -12,20 +12,20 @@ const LEN_Y = Math.sin(Math.PI / 3) * LEN_X;
 export default class GameController extends Controller {
     constructor() {
         super(GameView);
+
+        this._onClick = this._handleEvent.bind(this, 'click');
     }
 
     handle(args = []) {
-        const gameScene = new GameScene(this._view.areaCanvas);
-        const gameControllers = new GameControllers(this._view.areaCanvas);
-        const gameCore = new GameCoreImpl(gameControllers, this._view);
+        const gameCore = new GameCoreImpl(this._view);
 
         switch (args[0]) {
             case 'offline': {
-                this.servise = new OnlineGameService();
+                this.servise = new OfflineGameService();
                 break;
             }
             case 'online': {
-                this.servise = new OfflineGameServise(gameCore.scene.tileMap);
+                this.servise = new OnlineGameService();
                 break;
             }
             default:
@@ -33,7 +33,24 @@ export default class GameController extends Controller {
                 throw new Error('PAGE NOT FOUND');
         }
 
+        this.start();
         gameCore.start();
+    }
 
+    start() {
+        console.log("GameControllers: Start");
+        this._view.boardCanvas.addEventListener('click', this._onClick);
+    }
+
+    stop() {
+        this._view.boardCanvas.removeEventListener('click', this._onClick);
+    }
+
+    _handleEvent(type, event) {
+        console.log(type, event);
+        if (type === 'click') {
+            // this.clickEvent['event'] = event;
+            bus.emit(EVENTS.MOUSE_CLICKED, event);
+        }
     }
 }

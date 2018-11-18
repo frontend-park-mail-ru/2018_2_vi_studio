@@ -1,9 +1,10 @@
 import bus from '../../bus.js';
-import GameServise from "../GameServise.js";
-import Player from "../Player.js";
-import {TILES} from "../tileSpec.js";
+import GameRPC from "../GameService.js";
+import Player from "../client/Player.js";
+import {TILES} from "../client/tileSpec.js";
 
-export default class OfflineGameServise extends GameServise {
+export default class OfflineGameService extends GameRPC{
+    // TODO: implement
     constructor(tileMap) {
         super();
         this.tileMap = tileMap;
@@ -22,30 +23,29 @@ export default class OfflineGameServise extends GameServise {
         };
     }
 
-    onMessage(message) {
-        console.log('message', message);
-        bus.emit(message.event, message.data);
+    onMessage(event) {
+        console.log('message', event);
+        bus.emit(event.event, event.data);
     }
 
     onReadyToPlay(data) {
         console.log('ready_to_play');
         bus.emit('game-event-GameStart', {});
-    }
 
+    }
     onGameStart(data) {
         let gameStartMessage = {
             playersQueue: this.players,
             id: this.players[0].id,
         };
         let message = {
-            event: 'GameStart',
+            event: 'START_GAME',
             data: gameStartMessage,
         };
-        // bus.emit('game-event-Message', message);
-        this.onMessage(message);
+        bus.emit('game-event-Message', message);
         const lastTileType = this.tilesStack.pop();
         message = {
-            event: 'NextTry',
+            event: 'NEXT_TRY',
             data: {
                 currentTry: {
                     id: this.players[this.currentPlayerIndex].id,
@@ -60,7 +60,7 @@ export default class OfflineGameServise extends GameServise {
                 gameOver: {},
             },
         };
-        this.currentPlayerIndex++;
+        this.currentPlayerIndex ++;
         this.currentPlayerIndex %= 2;
         bus.emit('game-event-Message', message);
     }
@@ -88,7 +88,7 @@ export default class OfflineGameServise extends GameServise {
                 gameOver: {},
             },
         };
-        this.currentPlayerIndex++;
+        this.currentPlayerIndex ++;
         this.currentPlayerIndex %= 2;
         bus.emit('game-event-Message', message);
     }

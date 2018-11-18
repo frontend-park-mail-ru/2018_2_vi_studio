@@ -5,7 +5,7 @@ class GateTile extends Tile {
         super(ctx);
         this.zero = zero;
         this.color = 'black';
-        this.player = null;
+        this.gates = [];
     }
 
     draw() {

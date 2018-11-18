@@ -1,7 +1,7 @@
-import EVENTS from "./core/events.js";
+import EVENTS from "../../events.js";
 import bus from "../../bus.js";
 
-class GameControllers {
+class   GameControllers {
     constructor(root) {
         this.root = root;
         this.previous = {};

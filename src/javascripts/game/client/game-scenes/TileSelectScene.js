@@ -1,7 +1,8 @@
-import {Scene} from "../graphics/scene.js";
+import Scene from "./Scene.js";
 import bus from '../../../bus.js';
+// import {TileMap} from "../graphics/TileMap.js";
 import {TileWithWays} from "../graphics/TileWithWays.js";
-import EVENTS from "../core/events.js";
+import EVENTS from "../../../events.js";
 
 export default class TileSelectScene {
     constructor(canvas) {
@@ -11,35 +12,28 @@ export default class TileSelectScene {
         this.scene = new Scene(ctx);
         this.state = null;
         this.requestFrameId = null;
-        this.rotateBtn = document.getElementById('rotate');
-        this.submitBtn = document.getElementById('submit');
-        // this.submitBtn.disabled = true;
-        // this.rotateBtn.disabled = true;
-        this.onRotateBtnClick = this.onRotateBtnClick.bind(this);
-        this.onSubmitBtnClick = this.onSubmitBtnClick.bind(this);
+
+        this.rotate = this.rotate.bind(this);
+        this.submit = this.submit.bind(this);
         this.selectedTile = null;
         this.tile = null;
-
-
-        this.rotateBtn.addEventListener('click', this.onRotateBtnClick);
-        this.submitBtn.addEventListener('click', this.onSubmitBtnClick);
-        // bus.on(rotateBtn.onclick, this.onRotateBtnClick);
 
         this.canvasRectLen = canvas.getBoundingClientRect().height;
         this.renderScene = this.renderScene.bind(this);
     }
 
-    onRotateBtnClick(event){
+    rotate(){
         console.log('rotate');
         if (this.selectedTile) {
             this.selectedTile.rotate();
         }
         this.tile.rotate();
         this.renderScene();
+
         bus.emit(EVENTS.GAME_STATE_CHANGED, {});
     };
 
-    onSubmitBtnClick(event){
+    submit(){
         console.log('submit');
         if (this.selectedTile) {
 
@@ -96,7 +90,6 @@ export default class TileSelectScene {
 
         this.renderScene();
         console.log('MINI-Scene: start', this.tile);
-
     }
 
     stop() {

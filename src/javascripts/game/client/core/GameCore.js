@@ -1,11 +1,9 @@
-import EVENTS from "./events.js";
+import EVENTS from "../../../events.js";
 import bus from "../../../bus.js";
 
-class GameCore {
-    constructor(controller, scene) {
-        this.controller = controller;
-        this.scene = scene;
 
+class GameCore {
+    constructor() {
         this.onGameStarted = this.onGameStarted.bind(this);
         this.onGameFinished = this.onGameFinished.bind(this);
         this.onMouseClicked = this.onMouseClicked.bind(this);
@@ -18,24 +16,22 @@ class GameCore {
 
     // TODO: rewrite EVENTS
     start() {
-        bus.on(EVENTS.START_GAME, this.onGameStarted);
+        bus.on(EVENTS.GAME_START, this.onGameStarted);
         bus.on(EVENTS.FINISH_GAME, this.onGameFinished);
         bus.on(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
         bus.on(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
-        bus.on('NEXT_TRY', this.emitNextTry);
-        // this.controllers.start();
+        bus.on(EVENTS.NEXT_TRY, this.onNextTry);
+        // this.controller.start();
     }
 
     destroy() {
         clearInterval(this.controllersLoopIntervalId);
-        bus.off(EVENTS.START_GAME, this.onGameStarted);
+
+        bus.off(EVENTS.GAME_START, this.onGameStarted);
         bus.off(EVENTS.FINISH_GAME, this.onGameFinished);
         bus.off(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
         bus.off(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
-        bus.off('NEXT_TRY', this.emitNextTry);
-
-        this.controller.destroy();
-        this.scene.stop();
+        bus.off(EVENTS.NEXT_TRY, this.onNextTry);
     }
 
     onNextTry(evt) {

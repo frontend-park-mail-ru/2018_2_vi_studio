@@ -7,7 +7,7 @@ const EVENTS = [
     'WrongTry',
 ];
 
-export default class GameServise {
+export default class GameService {
     constructor() {
         this.onReadyToPlay = this.onReadyToPlay.bind(this);
         this.onDoneTry = this.onDoneTry.bind(this);
@@ -17,6 +17,7 @@ export default class GameServise {
     }
 
     onMessage(message) {
+        console.log('on message: ', message);
         if (EVENTS.includes(message.event)) {
             bus.emit('game-event-' + message.event, message.data);
         } else {
@@ -40,13 +41,11 @@ export default class GameServise {
 
 /*
 ------------------------------------------ RESPONSES ------------------------------------------
-
 // game-event-QueuePosition
 event: QueuePosition
 data: {
     position int
 }
-
 // game-event-GameStart
 event: GameStart
 data: {
@@ -57,7 +56,6 @@ data: {
         }
     ]
 }
-
 // game-event-NextTry
 event: NextTry
 data: {
@@ -77,17 +75,13 @@ data: {
         ]
     }
 }
-
 // game-event-WrongTry
 event: WrongTry
 data: {}
-
 ------------------------------------------ REQUESTS ------------------------------------------
-
 // game-event-ReadyToPlay
 event: ReadyToPlay
 data: {}
-
 // game-event-DoneTry
 event: DoneTry
 data: {
@@ -95,5 +89,4 @@ data: {
     col int
     rotation int
 }
-
  */
