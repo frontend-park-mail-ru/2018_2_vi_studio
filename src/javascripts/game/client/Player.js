@@ -1,4 +1,4 @@
-import PlayerComponent from "../../components/Player/Player.js"
+import PlayerComponent from "../../components/Player/Player.js";
 
 export default class Player {
     constructor(id, nickname, avatar) {
@@ -7,11 +7,11 @@ export default class Player {
         this.avatar = avatar;
         this._active = false;
 
-        this._component = new PlayerComponent({nickname: nickname, avatar: avatar})
+        this._component = new PlayerComponent({nickname: nickname, avatar: avatar});
     }
 
     get component() {
-        return this._component
+        return this._component;
     }
 
     activate() {

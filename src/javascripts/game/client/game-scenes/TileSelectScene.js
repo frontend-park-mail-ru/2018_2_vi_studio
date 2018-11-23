@@ -23,7 +23,7 @@ export default class TileSelectScene {
     }
 
     rotate(){
-        console.log('rotate');
+        // console.log('rotate');
         if (this.selectedTile) {
             this.selectedTile.rotate();
         }
@@ -42,9 +42,9 @@ export default class TileSelectScene {
                 col: this.selectedTile.col,
                 rotation: this.selectedTile.rotationCount,
             };
-            bus.emit('GameController-event-DoneTry', data);
+            bus.emit('game-event-DoneTry', data);
             bus.emit(EVENTS.GAME_STATE_CHANGED, {});
-            this.selectedTile = null;
+            // this.selectedTile = null;
 
         } else {
             alert('Select tile position, please!');
@@ -62,7 +62,7 @@ export default class TileSelectScene {
         this.tile.x = 200;
         this.tile.y = 200;
         this.tile.id = scene.push(this.tile);
-        console.log('MINI-Scene: INIT', state);
+        // console.log('MINI-Scene: INIT', state);
         // this.tileMap.id = scene.push(this.tileMap);
 
     }
@@ -72,7 +72,7 @@ export default class TileSelectScene {
         this.tile.y = 200;
         const scene = this.scene;
         this.state = state;
-        console.log('MINI-Scene: setState', this.tile);
+        // console.log('MINI-Scene: setState', this.tile);
         // обратотать данные пришедшие с сервера
 
     }
@@ -89,7 +89,7 @@ export default class TileSelectScene {
         // this.requestFrameId = requestAnimationFrame(this.renderScene);
 
         this.renderScene();
-        console.log('MINI-Scene: start', this.tile);
+        // console.log('MINI-Scene: start', this.tile);
     }
 
     stop() {

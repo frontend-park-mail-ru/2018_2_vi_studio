@@ -8,6 +8,7 @@ class GameCore {
         this.onGameFinished = this.onGameFinished.bind(this);
         this.onMouseClicked = this.onMouseClicked.bind(this);
         this.onGameStateChanged = this.onGameStateChanged.bind(this);
+        this.onWrongTry = this.onWrongTry.bind(this);
         this.onNextTry = this.onNextTry.bind(this);
 
         this.controllersLoopIntervalId = null;
@@ -21,6 +22,7 @@ class GameCore {
         bus.on(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
         bus.on(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.on(EVENTS.NEXT_TRY, this.onNextTry);
+        bus.on(EVENTS.WRONG_TRY, this.onWrongTry);
         // this.controller.start();
     }
 
@@ -32,9 +34,13 @@ class GameCore {
         bus.off(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
         bus.off(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.off(EVENTS.NEXT_TRY, this.onNextTry);
+        bus.off(EVENTS.WRONG_TRY, this.onWrongTry);
     }
 
     onNextTry(evt) {
+        throw new Error('This method must be overridden');
+    }
+    onWrongTry(evt) {
         throw new Error('This method must be overridden');
     }
     onMouseClicked(evt) {

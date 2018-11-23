@@ -19,7 +19,7 @@ export default class GameScene {
         // Установка начальных данных
         const ctx = this.ctx;
         const scene = this.scene;
-        console.log('GameController-Scenes: INIT');
+        console.log('GameController-Scenes: init');
         this.state = state;
 
         this.tileMap = new TileMap(ctx);
@@ -33,8 +33,15 @@ export default class GameScene {
             }
         }
 
+
+
         // this.tileMap.id = scene.push(this.tileMap);
 
+    }
+    addStones() {
+        this.tileMap.stones.forEach(stone => {
+           this.scene.push(stone);
+        });
     }
 
     setState(state) {

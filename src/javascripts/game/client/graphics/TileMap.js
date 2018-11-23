@@ -27,9 +27,9 @@ export class TileMap {
         this.gates = [];
         this.rows = ROWS_COUNT;
         this.columns = COLUMNS_COUNT;
-        this.emeralds = [];
+        this.stones = [];
 
-        console.log('TILES', this.tiles);
+        // console.log('TILES', this.tiles);
     }
 
     initSchema() {
@@ -44,6 +44,7 @@ export class TileMap {
         this._setSidesTiles();
         this._setCentralTile();
         this._setGateTiles();
+        this.setGates();
 
     }
 
@@ -87,20 +88,19 @@ export class TileMap {
         let centralRow = this.rows / 2 ^ 0;
         let centralColumn = this.columns / 2 ^ 0;
         this.schema[1][centralColumn] = {
-            // type: TYPES.SIDE, rotation: Math.PI,
-            type: TYPES.SIDE, rotation: 0,
+            type: TYPES.SIDE, rotation: Math.PI,
         };
         this.schema[ROWS_COUNT - 1][centralColumn] = {
             type: TYPES.SIDE, rotation: 0,
         };
         this.schema[centralRow + centralRow - 3][centralColumn + centralRow - 1] = {
             type: TYPES.SIDE,
-            // rotation: Math.PI / 3 * 5,
-            rotation: 0,
+            rotation: Math.PI / 3 * 5,
         };
         this.schema[centralRow + centralRow - 3][1] = {
             type: TYPES.SIDE,
             rotation: Math.PI / 3,
+            // rotation: 0,
         };
         this.schema[3][9] = {
             type: TYPES.SIDE,
@@ -204,63 +204,63 @@ export class TileMap {
                 this.tiles[i].push(tile);
             }
         }
-        this.gates.push(this.tiles[1][7]);
-        this.gates[0].gates = [null, null, null, [0, 1], 0, null];
+        this.gates.push(this.tiles[1][7])
+        this.gates[0].gates = [null, null, null, 0, 0, null];
 
         this.gates.push(this.tiles[1][8]);
-        this.gates[1].gates = [null, null, null, 1, [0, 1], null];
+        this.gates[1].gates = [null, null, null, 0, 0, null];
 
         this.gates.push(this.tiles[4][10]);
-        this.gates[2].gates = [null, null, null, null, [0, 1], 0];
+        this.gates[2].gates = [null, null, null, null, 1, 1];
 
         this.gates.push(this.tiles[5][10]);
-        this.gates[3].gates = [null, null, null, null, 1, [0, 1]];
+        this.gates[3].gates = [null, null, null, null, 1, 1];
 
         this.gates.push(this.tiles[8][8]);
-        this.gates[4].gates = [0, null, null, null, null, [0, 1]];
+        this.gates[4].gates = [0, null, null, null, null, 0];
 
         this.gates.push(this.tiles[9][7]);
-        this.gates[5].gates = [[0, 1], null, null, null, null, 1];
+        this.gates[5].gates = [0, null, null, null, null, 0];
 
         this.gates.push(this.tiles[9][3]);
-        this.gates[6].gates = [[0, 1], 0, null, null, null, null];
+        this.gates[6].gates = [1, 1, null, null, null, null];
 
         this.gates.push(this.tiles[8][2]);
-        this.gates[7].gates = [1, [0, 1], null, null, null, null];
+        this.gates[7].gates = [1, 1, null, null, null, null];
 
         this.gates.push(this.tiles[5][0]);
-        this.gates[8].gates = [null, [0, 1], 0, null, null, null];
+        this.gates[8].gates = [null, 0, 0, null, null, null];
 
         this.gates.push(this.tiles[4][0]);
-        this.gates[9].gates = [null, 1, [0, 1], null, null, null];
+        this.gates[9].gates = [null, 0, 0, null, null, null];
 
         this.gates.push(this.tiles[1][2]);
-        this.gates[10].gates = [null, null, [0, 1], 0, null, null];
+        this.gates[10].gates = [null, null, 1, 1, null, null];
 
         this.gates.push(this.tiles[1][3]);
-        this.gates[11].gates = [null, null, 1, [0, 1], null, null];
+        this.gates[11].gates = [null, null, 1, 1, null, null];
 
 
     }
 
-    setGates(players) {
+    setGates() {
 
         const colors = ['green', 'blue'];
 
         for(let i = 0; i < this.gates.length; i ++) {
-            if (i % 2 === 0){
+            if (i % 4 > 1){
                 this.gates[i].color = 'green';
-                this.gates[i].player = players[0];
+                // this.gates[i].player = players[0];
             } else {
                 this.gates[i].color = 'blue';
-                this.gates[i].player = players[1];
+                // this.gates[i].player = players[1];
             }
         }
 
     }
 
     getTiles() {
-        console.log('TileMap: render');
+        // console.log('TileMap: render');
         return this.tiles;
     }
 

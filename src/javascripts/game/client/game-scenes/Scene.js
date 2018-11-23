@@ -40,8 +40,9 @@ export default class Scene {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         // this.backView.forEach(figure => figure.render());
         // this.frontView.forEach(figure => figure.render());
-        console.log('render :', this.figures);
+        // console.log('render :', this.figures);
         Object.keys(this.figures).forEach(key => this.figures[key].render());
+        console.log("FIGURES ", this.figures);
     }
 
     clear() {

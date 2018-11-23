@@ -9,7 +9,9 @@ class GateTile extends Tile {
     }
 
     draw() {
+
         if (!this.zero) {
+            super.draw();
             const ctx = this.ctx;
 
             ctx.beginPath();
@@ -20,9 +22,10 @@ class GateTile extends Tile {
             ctx.closePath();
         }
         else {
+            super.draw();
             this.fillStyle = 'green';
+
         }
-        super.draw();
     }
 }
 

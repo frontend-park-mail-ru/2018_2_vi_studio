@@ -1,13 +1,14 @@
 import {GameCore} from "./GameCore.js";
 import EVENTS from "../../../events.js";
 import bus from "../../../bus.js";
-import {TILE_SIZE} from "../tileSpec.js";
+import {TILE_SIZE} from "../gameConfig.js";
 // import TileSelectScene from "../game-scenes/TileSelectScene.js";
 import Player from "../Player.js";
 import {TileWithWays} from "../graphics/TileWithWays.js";
 import GameScene from "../game-scenes/GameScene.js";
 import Component from "../../../components/Component.js";
 import TileSelectScene from "../game-scenes/TileSelectScene.js";
+import {Emerald} from "../graphics/Emerald.js";
 
 class GameCoreImpl extends GameCore {
     constructor(component) {
@@ -26,6 +27,8 @@ class GameCoreImpl extends GameCore {
         this.userId = null;
         this.currentPlayerIndex = 0;
 
+        this.stones = [];
+
         this.state = {};
     }
 
@@ -38,7 +41,7 @@ class GameCoreImpl extends GameCore {
         console.log(this.players[this.currentPlayerIndex].id, this.userId);
         const currentPlayer = this.players[this.currentPlayerIndex];
         if (currentPlayer.id === this.userId && currentPlayer._active) {
-            console.log('Event: MOUSE1_CLICKED - ', evt);
+            // console.log('Event: MOUSE1_CLICKED - ', evt);
 
             const ctx = this.boardScene.ctx;
             const tiles = this.boardScene.tileMap.tiles;
@@ -47,22 +50,15 @@ class GameCoreImpl extends GameCore {
             for (let i = 0; i < this.boardScene.tileMap.rows; i++) {
                 for (let j = 0; j < this.boardScene.tileMap.columns; j++) {
                     if ((tiles[i][j] instanceof TileWithWays) &&
-                        (!tiles[i][j].ways) &&
+                        (!tiles[i][j].settled) &&
                         (TILE_SIZE.x * TILE_SIZE.x >
                             (tiles[i][j].x - x) * (tiles[i][j].x - x) + (tiles[i][j].y - y) * (tiles[i][j].y - y))) {
 
-                        ctx.beginPath();
-                        ctx.arc(x, y, 5, 0, 2 * Math.PI);
-                        ctx.lineWidth = 5;
-                        ctx.strokeStyle = this.color;
-                        ctx.stroke();
-                        let text = i + " " + j;
-                        ctx.fillText(text, x + 10, y);
-                        ctx.closePath();
-                        console.log(i, j);
-                        console.log(this.boardScene.tileMap.tiles[i][j]);
+                        // console.log(i, j);
+                        // console.log(this.boardScene.tileMap.tiles[i][j]);
                         if (this.tileScene.selectedTile) {
                             this.tileScene.selectedTile.setType(null);
+                            this.tileScene.selectedTile.setRotation(0);
                             this.tileScene.selectedTile.fillStyle = 'yellow';
                         }
                         this.tileScene.selectedTile = this.boardScene.tileMap.tiles[i][j];
@@ -82,17 +78,20 @@ class GameCoreImpl extends GameCore {
 
     onGameStarted(data) {
         alert('Game Started');
-
-        this.players = data.players.map(player => {
-            const result = new Player(player.id, player.username, player.avatar);
-            Component.render(result.component, this.playersRoot);
-            return result;
-        });
+        // console.log("Players", data.players);
+        this.players = data.players.map(player => new Player(player.id, player.nickname, player.avatar));
+        Component.render(this.players.map(player => player.component), this.playersRoot);
 
         console.log(this.players);
 
         this.userId = data.userId;
         this.boardScene.init(data);
+        console.log("TILEE:", this.boardScene.tileMap);
+        data.stones.forEach(stone => {
+           this.boardScene.scene.push(new Emerald(this.boardScene.ctx, stone.gate, this.boardScene.tileMap.tiles[stone.row][stone.col], stone.type));
+        });
+        this.boardScene.addStones();
+
         this.tileScene.init(data);
         this.boardScene.start();
         this.tileScene.start();
@@ -114,16 +113,37 @@ class GameCoreImpl extends GameCore {
 
     onNextTry(evt) {
         console.log('onNext', evt);
+        this.tileScene.selectedTile = null;
+
         if (evt.currentTry.playerId) {
             this.players.forEach(
                 player => evt.currentTry.playerId === player.id ? player.activate() : player.deactivate()
             );
+            if (evt.lastTry.row) {
+                // debugger;
+                const data = evt.lastTry;
+                this.boardScene.tileMap.tiles[data.row][data.col].setType(data.type);
+                this.boardScene.tileMap.tiles[data.row][data.col].setRotation(data.rotation);
+                this.boardScene.tileMap.tiles[data.row][data.col].settled = true;
+
+            }
 
             this.tileScene.tile.setType(evt.currentTry.tileType);
             this.tileScene.renderScene();
+            if (evt.stones[1]) {
+                this.stones.forEach(stone => {
+                    // установить камни
+                });
+            }
         } else {
             this.players.forEach(player => player.deactivate());
         }
+        bus.emit(EVENTS.GAME_STATE_CHANGED, this.state);
+    }
+
+    onWrongTry(ent) {
+        alert('Не стоит закрывать выходы!' +
+            'Поверните ячейку или разместите в другом месте.');
     }
 }
 

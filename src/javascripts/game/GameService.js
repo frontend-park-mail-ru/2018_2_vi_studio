@@ -17,8 +17,8 @@ export default class GameService {
     }
 
     onMessage(message) {
-        console.log('on message: ', message);
         if (EVENTS.includes(message.event)) {
+            console.log(message.event);
             bus.emit('game-event-' + message.event, message.data);
         } else {
             console.debug('Wrong Event', message.event);

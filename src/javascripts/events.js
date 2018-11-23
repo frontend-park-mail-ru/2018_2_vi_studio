@@ -6,6 +6,7 @@ const EVENTS = {
     MOUSE_CLICKED: 'MOUSE_CLICKED',
     GAME_STATE_CHANGED: 'GAME_STATE_CHANGED',
     NEXT_TRY: prefix + 'NextTry',
+    WRONG_TRY: prefix + 'WrongTry',
 };
 
 export default EVENTS;

@@ -1,5 +1,5 @@
 import {Tile} from "./tile.js";
-import {TYPE_WAYS} from "../tileSpec.js";
+import {TYPE_WAYS} from "../gameConfig.js";
 
 
 class TileWithWays extends Tile {
@@ -11,7 +11,12 @@ class TileWithWays extends Tile {
 
     setType(type) {
         this.type = type;
-        this.ways = TYPE_WAYS[type];
+        if (type) {
+            this.ways = Object.assign([], TYPE_WAYS[type]);
+        } else {
+            this.ways = null;
+        }
+
     }
 
     setRotation(rotationCount) {
@@ -26,7 +31,7 @@ class TileWithWays extends Tile {
     }
 
     draw() {
-        console.log('draw_tile');
+        // console.log('draw_tile');
         super.draw();
 
         const ctx = this.ctx;

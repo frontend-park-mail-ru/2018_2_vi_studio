@@ -1,7 +1,7 @@
 import bus from '../../bus.js';
 import GameRPC from "../GameService.js";
 import Player from "../client/Player.js";
-import {TILES} from "../client/tileSpec.js";
+import {TILES} from "../client/gameConfig.js";
 
 export default class OfflineGameService extends GameRPC{
     // TODO: implement
@@ -24,12 +24,12 @@ export default class OfflineGameService extends GameRPC{
     }
 
     onMessage(event) {
-        console.log('message', event);
+        // console.log('message', event);
         bus.emit(event.event, event.data);
     }
 
     onReadyToPlay(data) {
-        console.log('ready_to_play');
+        // console.log('ready_to_play');
         bus.emit('game-event-GameStart', {});
 
     }
@@ -66,7 +66,7 @@ export default class OfflineGameService extends GameRPC{
     }
 
     onDoneTry(data) {
-        console.log(data);
+        // console.log(data);
         this.lastTile.row = data.row;
         this.lastTile.col = data.col;
         this.lastTile.rotationCount = data.rotationCount;
