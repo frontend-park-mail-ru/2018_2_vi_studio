@@ -1,6 +1,9 @@
 import {Base} from "./base.js";
-const DELTA_X = 60;
-const DELTA_Y = Math.sin(Math.PI / 3) * DELTA_X;
+import {TILE_SIZE} from "../gameConfig.js"
+
+// TODO: rewrite
+const DELTA_X = TILE_SIZE.x;
+const DELTA_Y = TILE_SIZE.y;
 
 class Tile extends Base {
     constructor(ctx) {

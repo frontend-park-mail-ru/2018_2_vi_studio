@@ -11,9 +11,11 @@ const TYPES_ON_MAP = {
 
 export const TILES = [6, 14, 14, 6, 14];
 
+const TILE_WIDTH = 115;
+
 export const TILE_SIZE = {
-    x: 60,
-    y: Math.sin(Math.PI / 3) * 60
+    x: TILE_WIDTH,
+    y: Math.sin(Math.PI / 3) * TILE_WIDTH
 };
 
 export const TYPE_WAYS = {

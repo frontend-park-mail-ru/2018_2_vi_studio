@@ -10,9 +10,11 @@ export default class GameScene {
         this.state = null;
         this.requestFrameId = null;
 
-
-        this.canvasRectLen = canvas.getBoundingClientRect().height;
         this.renderScene = this.renderScene.bind(this);
+    }
+
+    get canvasRectLen() {
+        return this.canvas.getBoundingClientRect().height
     }
 
     init(state) {
