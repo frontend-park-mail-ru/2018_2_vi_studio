@@ -128,10 +128,15 @@ class GameCoreImpl extends GameCore {
             // console.log("DEFORE", evt.stones);
             for(let i = 0; i < this.boardScene.tileMap.stones.length; i++) {
                 this.boardScene.tileMap.stones[i].setPos(this.boardScene.tileMap.tiles[evt.stones[i].row][evt.stones[i].col], evt.stones[i].gate);
+                this.boardScene.tileMap.stones[i].isOutOfGame = evt.stones[i].isOutOfGame;
             }
             // console.log("AFTER", this.boardScene.tileMap.stones);
-
-
+            if (evt.gameOver.players) {
+                this.players.forEach(player => player.deactivate());
+                let str = "Player: " + evt.gameOver.players[0].points + "\n Bot: " + evt.gameOver.players[1].points;
+                alert(str);
+                // TODO: points and new game!!!!
+            }
         } else {
             this.players.forEach(player => player.deactivate());
         }

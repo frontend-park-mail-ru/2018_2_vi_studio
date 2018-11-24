@@ -4,13 +4,14 @@ import {Tile} from "./tile.js";
 import {STONE_TYPES, TYPES_ON_MAP} from "../gameConfig.js";
 
 export class Emerald extends Tile {
-    constructor(ctx, gate, tile, type){
+    constructor(ctx, gate, tile, type) {
         super(ctx);
         this.tile = tile;
         this.gate = gate;
         this.x = tile.x;
         this.y = tile.y;
         this.type = type;
+        this.isOutOfGame = false;
         switch (this.type) {
             case STONE_TYPES.YELLOW:
                 this.color = 'black';
@@ -23,40 +24,46 @@ export class Emerald extends Tile {
                 break;
 
         }
-
+        this.setPosOnGate(gate);
+    }
+    setPosOnGate(gate) {
         switch (gate) {
             case 0:
                 this.x += 0;
                 break;
             case 1:
                 this.y += TILE_SIZE.y / 3;
-                this.x += TILE_SIZE.x / 2 ;
+                this.x += TILE_SIZE.x / 2;
                 break;
             case 2:
                 this.y += (TILE_SIZE.y);
-                this.x += TILE_SIZE.x /2;
+                this.x += TILE_SIZE.x / 2;
                 break;
             case 3:
-                this.y += (TILE_SIZE.y + TILE_SIZE.y / 3)  ;
+                this.y += (TILE_SIZE.y + TILE_SIZE.y / 3);
                 break;
             case 4:
                 this.y += (TILE_SIZE.y);
-                this.x -= TILE_SIZE.x /2;
+                this.x -= TILE_SIZE.x / 2;
                 break;
             case 5:
                 this.y += (TILE_SIZE.y / 3);
-                this.x -= TILE_SIZE.x /2;
+                this.x -= TILE_SIZE.x / 2;
                 break;
         }
-
     }
+
     setPos(tile, gate) {
-        this.gate = gate;
         this.x = tile.x;
         this.y = tile.y;
+        this.gate = gate;
+        this.setPosOnGate(gate);
     }
 
     draw() {
+        if (this.isOutOfGame) {
+            return;
+        }
         console.log("EMERALD");
         // super.draw();
         const ctx = this.ctx;
@@ -68,7 +75,7 @@ export class Emerald extends Tile {
         ctx.closePath();
     }
 
-    setup(){
+    setup() {
         const ctx = this.ctx;
 
         ctx.translate(this.x, this.y);

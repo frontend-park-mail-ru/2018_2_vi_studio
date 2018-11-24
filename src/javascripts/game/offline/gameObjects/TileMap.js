@@ -235,6 +235,24 @@ export default class TileMap {
 
     }
 
+    haveCollisions(index) {
+        let i = 0;
+        const stoneTocheck = this.stones[index];
+        while (i < this.stones.length) {
+            if( i !== index) {
+                const stone = this.stones[i];
+               if (stone.gate === stoneTocheck.gate && stone.row === stoneTocheck.row && stone.col === stoneTocheck.col) {
+                   stone.isOutOfGame = true;
+                   stoneTocheck.isOutOfGame = true;
+                   return true;
+               }
+            }
+
+            i++;
+        }
+        return false;
+    }
+
     setGates(players) {
 
         const colors = ['green', 'blue'];

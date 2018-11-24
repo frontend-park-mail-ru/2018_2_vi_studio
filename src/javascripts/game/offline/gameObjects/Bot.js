@@ -1,4 +1,4 @@
-import Player from "../../client/Player.js";
+import Player from "./Player.js";
 import {ROWS_COUNT} from "../../client/gameConfig.js";
 import {COLUMNS_COUNT} from "../../client/gameConfig.js";
 import TileWithWays from "./TileWithWays.js";

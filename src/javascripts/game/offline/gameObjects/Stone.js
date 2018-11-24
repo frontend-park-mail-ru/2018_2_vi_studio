@@ -5,5 +5,6 @@ export default class Stone {
         this.row = row;
         this.col = col;
         this.gate = gate;
+        this.isOutOfGame = false;
     }
 }

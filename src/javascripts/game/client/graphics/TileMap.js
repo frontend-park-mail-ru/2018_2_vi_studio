@@ -243,8 +243,6 @@ export class TileMap {
         stones.forEach(stone => {
             this.stones.push(new Emerald(this.ctx, stone.gate, this.tiles[stone.row][stone.col], stone.type));
         });
-
-
     }
 
     setGates() {
