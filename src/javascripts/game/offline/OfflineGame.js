@@ -54,7 +54,7 @@ export default class OfflineGame {
             return;
         }
         this.tileMap.tiles[data.row][data.col].setType(this.currentTileType);
-        this.tileMap.tiles[data.row][data.col].setRotation(data.rotation);
+        this.tileMap.tiles[data.row][data.col].setRotation(data.rotationCount);
         // console.log("TILE", this.tileMap.tiles[data.row][data.col]);
 
         const tile = this.tileMap.tiles[data.row][data.col];
@@ -65,15 +65,6 @@ export default class OfflineGame {
         for (let i = 0; i < tile.gates.length; i++) {
             const neighbor1 = this.tileMap.tiles[data.row + movement[i].row][data.col + movement[i].col];
             const neighbor2 = this.tileMap.tiles[data.row + movement[tile.gates[i]].row][data.col + movement[tile.gates[i]].col];
-
-            // if (neighbor1 instanceof SideTile && movement[i].gate === neighbor1.stoneGate || neighbor1 instanceof CentralTile ) {
-            //     canGetStone = {
-            //         tile: neighbor1,
-            //         stoneGate: i,
-            //         row: data.row,
-            //         col: data.col,
-            //     };
-            // }
             if (neighbor1 instanceof GateTile && neighbor1.zero === false &&
                 neighbor2 instanceof GateTile && neighbor2.zero === false) {
                 // console.log("Gatessss ", data.row + movement[i].row, data.col + movement[i].col, "-", tile.gates[i]);
@@ -84,6 +75,7 @@ export default class OfflineGame {
 
         }
         tile.settled = true;
+        
         // выдача камней
 
         const stones = this.tileMap.stones;
@@ -215,8 +207,7 @@ export default class OfflineGame {
 
     _getNexTryData() {
         this.currentTileType = this.tileStack.pop();
-        // this.currentTileType = 4;
-
+        // this.currentTileType = 0;
         const data = {
             lastTry: {},
             currentTry: {

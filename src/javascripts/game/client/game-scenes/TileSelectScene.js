@@ -40,7 +40,7 @@ export default class TileSelectScene {
             let data = {
                 row: this.selectedTile.row,
                 col: this.selectedTile.col,
-                rotation: this.selectedTile.rotationCount,
+                rotationCount: this.selectedTile.rotationCount,
             };
             bus.emit('game-event-DoneTry', data);
             bus.emit(EVENTS.GAME_STATE_CHANGED, {});

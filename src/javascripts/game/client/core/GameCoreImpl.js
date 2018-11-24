@@ -118,7 +118,7 @@ class GameCoreImpl extends GameCore {
                 // debugger;
                 const data = evt.lastTry;
                 this.boardScene.tileMap.tiles[data.row][data.col].setType(data.type);
-                this.boardScene.tileMap.tiles[data.row][data.col].setRotation(data.rotation);
+                this.boardScene.tileMap.tiles[data.row][data.col].setRotation(data.rotationCount);
                 this.boardScene.tileMap.tiles[data.row][data.col].settled = true;
 
             }
