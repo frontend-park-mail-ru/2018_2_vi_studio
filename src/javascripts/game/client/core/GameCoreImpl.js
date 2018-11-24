@@ -86,11 +86,6 @@ class GameCoreImpl extends GameCore {
 
         this.userId = data.userId;
         this.boardScene.init(data);
-        console.log("TILEE:", this.boardScene.tileMap);
-        data.stones.forEach(stone => {
-           this.boardScene.scene.push(new Emerald(this.boardScene.ctx, stone.gate, this.boardScene.tileMap.tiles[stone.row][stone.col], stone.type));
-        });
-        this.boardScene.addStones();
 
         this.tileScene.init(data);
         this.boardScene.start();
@@ -130,11 +125,13 @@ class GameCoreImpl extends GameCore {
 
             this.tileScene.tile.setType(evt.currentTry.tileType);
             this.tileScene.renderScene();
-            if (evt.stones[1]) {
-                this.stones.forEach(stone => {
-                    // установить камни
-                });
+            // console.log("DEFORE", evt.stones);
+            for(let i = 0; i < this.boardScene.tileMap.stones.length; i++) {
+                this.boardScene.tileMap.stones[i].setPos(this.boardScene.tileMap.tiles[evt.stones[i].row][evt.stones[i].col], evt.stones[i].gate);
             }
+            // console.log("AFTER", this.boardScene.tileMap.stones);
+
+
         } else {
             this.players.forEach(player => player.deactivate());
         }

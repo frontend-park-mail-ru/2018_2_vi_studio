@@ -197,6 +197,7 @@ export default class OfflineGame {
     }
 
     _getReadyToPlayData() {
+
         return {
             players: this.players,
             userId: USER_ID,
@@ -215,7 +216,7 @@ export default class OfflineGame {
                 tileType: this.currentTileType,
             },
             gameOver: {},
-            stones: [],
+            stones: this.tileMap.stones,
         };
 
         if (this.lastTry) {
@@ -227,14 +228,14 @@ export default class OfflineGame {
         } else {
             this.currentPlayer = USER_ID;
         }
-        this.tileMap.stones.forEach(stone => {
-            data.stones.push({
-                type: stone.type,
-                gate: stone.gate,
-                row: stone.row,
-                col: stone.col,
-            });
-        });
+        // this.tileMap.stones.forEach(stone => {
+        //     data.stones.push({
+        //         type: stone.type,
+        //         gate: stone.gate,
+        //         row: stone.row,
+        //         col: stone.col,
+        //     });
+        // });
 
         return data;
     };

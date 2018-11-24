@@ -17,7 +17,7 @@ const TYPES = {
 };
 
 export class TileMap {
-    constructor(ctx, height) {
+    constructor(ctx) {
         this.ctx = ctx;
         // this.ctx.globalAlpha = 0.45;
         // console.log(height, (height / this.xDelta), height / this.yDelta);
@@ -161,7 +161,7 @@ export class TileMap {
 
     }
 
-    init() {
+    init(stones) {
         this.initSchema();
         // this.gates = [];
         for (let i = 0; i < ROWS_COUNT; i++) {
@@ -239,6 +239,10 @@ export class TileMap {
 
         this.gates.push(this.tiles[1][3]);
         this.gates[11].gates = [null, null, 1, 1, null, null];
+
+        stones.forEach(stone => {
+            this.stones.push(new Emerald(this.ctx, stone.gate, this.tiles[stone.row][stone.col], stone.type));
+        });
 
 
     }

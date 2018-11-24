@@ -182,7 +182,7 @@ export default class TileMap {
                             this.stones.push(stone);
                             tile.stones.push(stone);
                         }
-                        const stone1 = new Stone(STONE_TYPES.BLUE, tile, i, j);
+                        const stone1 = new Stone(STONE_TYPES.GREEN, tile, i, j, 5);  // TODO: must be BLUE type
                         this.stones.push(stone1);
                         tile.stones.push(stone1);
                         // tile = null;
