@@ -9,6 +9,7 @@ import GameScene from "../game-scenes/GameScene.js";
 import Component from "../../../components/Component.js";
 import TileSelectScene from "../game-scenes/TileSelectScene.js";
 import {Emerald} from "../graphics/Emerald.js";
+import {COLORS} from "../gameConfig.js";
 
 class GameCoreImpl extends GameCore {
     constructor(component) {
@@ -59,7 +60,7 @@ class GameCoreImpl extends GameCore {
                         if (this.tileScene.selectedTile) {
                             this.tileScene.selectedTile.setType(null);
                             this.tileScene.selectedTile.setRotation(0);
-                            this.tileScene.selectedTile.fillStyle = 'yellow';
+                            this.tileScene.selectedTile.fillStyle = COLORS.BACKGROUND;
                         }
                         this.tileScene.selectedTile = this.boardScene.tileMap.tiles[i][j];
                         this.tileScene.selectedTile.row = i;

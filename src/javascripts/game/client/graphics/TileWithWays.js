@@ -1,5 +1,7 @@
 import {Tile} from "./tile.js";
 import {TYPE_WAYS} from "../gameConfig.js";
+import {COLORS} from "../gameConfig.js";
+import {WAY_WIDTH} from "../gameConfig.js";
 
 
 class TileWithWays extends Tile {
@@ -35,6 +37,8 @@ class TileWithWays extends Tile {
         super.draw();
 
         const ctx = this.ctx;
+        ctx.strokeStyle = COLORS.WAY;
+        ctx.lineWidth = WAY_WIDTH;
 
         switch (this.type) {
             case 0:
@@ -62,8 +66,8 @@ class TileWithWays extends Tile {
         ctx.beginPath();
 
         ctx.arc(-this.xDelta, 0, this.xDelta / 2, (2 - 2/ 6) * Math.PI , 2 / 6 * Math.PI);
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "red";
+        // ctx.lineWidth = 10;
+        // ctx.strokeStyle = COLORS.WAY;
         ctx.stroke();
 
 
@@ -82,8 +86,8 @@ class TileWithWays extends Tile {
         // ctx.moveTo(this.x, this.y);  // left top
 
         ctx.arc(-this.xDelta, 0, this.xDelta / 2, (2 - 2/ 6) * Math.PI , 2 / 6 * Math.PI);
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "red";
+        // ctx.lineWidth = 10;
+        // ctx.strokeStyle = "red";
         ctx.stroke();
 
 
@@ -102,14 +106,14 @@ class TileWithWays extends Tile {
     _drawType2(ctx) {
         ctx.beginPath();
         ctx.arc(-this.xDelta * 1.5, this.yDelta , this.xDelta * 1.5, (2 - 1 / 3) * Math.PI, 0);
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "red";
+        // ctx.lineWidth = 10;
+        // ctx.strokeStyle = "red";
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(0, this.yDelta * 2 , this.xDelta * 1.5, (1 + 1/3) * Math.PI, (2 - 1/3) * Math.PI);
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "red";
+        // ctx.lineWidth = 10;
+        // ctx.strokeStyle = "red";
         ctx.stroke();
 
         ctx.beginPath();
@@ -119,15 +123,15 @@ class TileWithWays extends Tile {
     }
 
     _drawType3(ctx) {
-        ctx.strokeStyle = "green";
-        ctx.lineWidth = 17;
-        ctx.beginPath();
-        ctx.moveTo(0, -this.yDelta);
-        ctx.lineTo(0, this.yDelta);
-        ctx.stroke();
+        // ctx.strokeStyle = "green";
+        // ctx.lineWidth = 17;
+        // ctx.beginPath();
+        // ctx.moveTo(0, -this.yDelta);
+        // ctx.lineTo(0, this.yDelta);
+        // ctx.stroke();
 
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 11;
+        // ctx.strokeStyle = "red";
+        // ctx.lineWidth = 10;
         ctx.beginPath();
         ctx.moveTo(0, -this.yDelta);
         ctx.lineTo(0, this.yDelta);
@@ -150,14 +154,14 @@ class TileWithWays extends Tile {
     _drawType4(ctx) {
         ctx.beginPath();
         ctx.arc(0, this.yDelta * 2, this.xDelta * 1.5, (1 + 1 / 3) * Math.PI, (2 - 1 / 3) * Math.PI);
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "red";
+        // ctx.lineWidth = 10;
+        // ctx.strokeStyle = "red";
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(0, -this.yDelta * 2, this.xDelta * 1.5,  1 / 3 * Math.PI, 2 / 3 * Math.PI);
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "red";
+        // ctx.lineWidth = 10;
+        // ctx.strokeStyle = "red";
         ctx.stroke();
 
         ctx.beginPath();

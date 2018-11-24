@@ -3,6 +3,7 @@ import bus from '../../../bus.js';
 // import {TileMap} from "../graphics/TileMap.js";
 import {TileWithWays} from "../graphics/TileWithWays.js";
 import EVENTS from "../../../events.js";
+import {COLORS} from "../gameConfig.js";
 
 export default class TileSelectScene {
     constructor(canvas) {
@@ -36,7 +37,7 @@ export default class TileSelectScene {
     submit(){
         console.log('submit');
         if (this.selectedTile) {
-
+            this.selectedTile.fillStyle = COLORS.BACKGROUND;
             let data = {
                 row: this.selectedTile.row,
                 col: this.selectedTile.col,
@@ -44,6 +45,7 @@ export default class TileSelectScene {
             };
             bus.emit('game-event-DoneTry', data);
             bus.emit(EVENTS.GAME_STATE_CHANGED, {});
+
             // this.selectedTile = null;
 
         } else {

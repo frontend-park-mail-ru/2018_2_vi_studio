@@ -1,4 +1,5 @@
 import {Base} from "./base.js";
+import {COLORS} from "../gameConfig.js";
 const DELTA_X = 60;
 const DELTA_Y = Math.sin(Math.PI / 3) * DELTA_X;
 
@@ -12,8 +13,8 @@ class Tile extends Base {
         this.yDelta = DELTA_Y;
         this.width = 0;
         this.height = 0;
-        this.fillStyle = 'yellow';
-        this.lineColor = 'green';
+        this.fillStyle = COLORS.BACKGROUND;
+        this.lineColor = COLORS.BORDER;
     }
 
     rotate() {

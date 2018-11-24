@@ -2,6 +2,7 @@ import {Base} from "./base.js";
 import {TILE_SIZE} from "../gameConfig.js";
 import {Tile} from "./tile.js";
 import {STONE_TYPES, TYPES_ON_MAP} from "../gameConfig.js";
+import {COLORS} from "../gameConfig.js";
 
 export class Emerald extends Tile {
     constructor(ctx, gate, tile, type) {
@@ -14,13 +15,16 @@ export class Emerald extends Tile {
         this.isOutOfGame = false;
         switch (this.type) {
             case STONE_TYPES.YELLOW:
-                this.color = 'black';
+                this.color = COLORS.STONE_YELLOW;
+                this.backgroundColor = COLORS.STONE_YELLOW_BOARD;
                 break;
             case STONE_TYPES.GREEN:
-                this.color = 'green';
+                this.color = COLORS.STONE_GREEN;
+                this.backgroundColor = COLORS.STONE_GREEN_BOARD;
                 break;
             case STONE_TYPES.BLUE:
                 this.color = 'blue';
+                this.backgroundColor = 'green';
                 break;
 
         }
@@ -64,14 +68,20 @@ export class Emerald extends Tile {
         if (this.isOutOfGame) {
             return;
         }
-        console.log("EMERALD");
-        // super.draw();
         const ctx = this.ctx;
         ctx.beginPath();
-        ctx.arc(0, -this.yDelta / 3 * 2, 10, 0, 2 * Math.PI);
+        ctx.arc(0, -this.yDelta / 3 * 2, 15, 0, 2 * Math.PI);
         ctx.lineWidth = 10;
-        ctx.strokeStyle = this.color;
-        ctx.stroke();
+        ctx.fillStyle = this.backgroundColor;
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+
+        ctx.arc(0, -this.yDelta / 3 * 2, 11, 0, 2 * Math.PI);
+        ctx.lineWidth = 10;
+        ctx.fillStyle = this.color;
+        ctx.fill();
         ctx.closePath();
     }
 
