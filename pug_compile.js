@@ -35,7 +35,6 @@ function compilePug(path) {
         list.forEach(filePath => {
             const match = filePath.match(/^(.+\/)(\w+)\.pug$/);
             if (match) {
-
                 const jsFunctionString = pug.compileFileClient(filePath, {
                         name: "render" + match[2],
                         exportMixins: true,
