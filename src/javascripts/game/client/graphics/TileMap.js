@@ -198,9 +198,6 @@ export class TileMap {
 
                 }
                 tile.x += tile.xDelta;
-                // tile.y += tile.yDelta + 20;
-                let num = (i * this.columns + j);
-                tile.text = "(" + num.toString() + ") [" + i.toString() + ": " + j.toString() + "]";
                 this.tiles[i].push(tile);
             }
         }

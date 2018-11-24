@@ -126,7 +126,7 @@ class TileWithWays extends Tile {
         ctx.lineTo(0, this.yDelta);
         ctx.stroke();
 
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "red";
         ctx.lineWidth = 11;
         ctx.beginPath();
         ctx.moveTo(0, -this.yDelta);
