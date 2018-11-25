@@ -78,6 +78,26 @@ export default class OfflineGame {
         
         // выдача камней
 
+
+        // движение каменя
+
+        this.moveStones();
+
+
+        this._setLastTry(data);
+        const nextTryData = this._getNexTryData();
+        this.emitNextTry(nextTryData);
+        const tileFromBot = this.bot.getNextTile(nextTryData.currentTry.tileType); //TODO:
+        this.tileMap.tiles[tileFromBot.row][tileFromBot.col].setType(this.currentTileType);
+        this.tileMap.tiles[tileFromBot.row][tileFromBot.col].setRotation(tileFromBot.rotation);
+        this.tileMap.tiles[tileFromBot.row][tileFromBot.col].settled = true;
+        this.moveStones();
+        this._setLastTry(tileFromBot);
+
+        this.emitNextTry(this._getNexTryData());
+    }
+
+    moveStones() {
         const stones = this.tileMap.stones;
         for (let i = 0; i < stones.length; i++) {
 
@@ -126,8 +146,7 @@ export default class OfflineGame {
                 }
             }
         }
-        console.log('here');
-        // движение каменя
+
         for (let i = 0; i < this.tileMap.stones.length; i++) {
             let stone = this.tileMap.stones[i];
             console.log("STONE ", stone);
@@ -177,18 +196,6 @@ export default class OfflineGame {
             }
 
         }
-
-
-        this._setLastTry(data);
-        const nextTryData = this._getNexTryData();
-        this.emitNextTry(nextTryData);
-        const tileFromBot = this.bot.getNextTile(nextTryData.currentTry.tileType); //TODO:
-        this.tileMap.tiles[tileFromBot.row][tileFromBot.col].setType(this.currentTileType);
-        this.tileMap.tiles[tileFromBot.row][tileFromBot.col].setRotation(tileFromBot.rotation);
-        this.tileMap.tiles[tileFromBot.row][tileFromBot.col].settled = true;
-        this._setLastTry(tileFromBot);
-
-        this.emitNextTry(this._getNexTryData());
     }
 
     _setLastTry(data) {
@@ -224,6 +231,7 @@ export default class OfflineGame {
             }
         });
         if (inGameStones === 0) {
+            debugger;
             data.gameOver = {players: this.players};
         }
 

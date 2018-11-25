@@ -10,10 +10,13 @@ const LEN_X = 60;
 const LEN_Y = Math.sin(Math.PI / 3) * LEN_X;
 
 export default class GameController extends Controller {
-    constructor() {
+    constructor(router) {
         super(GameView);
 
+        this.router = router;
+
         this._onClick = this._handleEvent.bind(this, 'click');
+        this.stop = this.stop.bind(this);
     }
 
     handle(args = []) {
@@ -40,10 +43,14 @@ export default class GameController extends Controller {
     start() {
         console.log("GameControllers: Start");
         this._view.boardCanvas.addEventListener('click', this._onClick);
+        bus.on(EVENTS.GAME_OVER, this.stop)
     }
 
     stop() {
         this._view.boardCanvas.removeEventListener('click', this._onClick);
+        this.router.open('/');
+        bus.off(EVENTS.GAME_OVER, this.stop)
+
     }
 
     _handleEvent(type, event) {

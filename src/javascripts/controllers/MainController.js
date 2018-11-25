@@ -47,7 +47,7 @@ export default class MainController extends Controller {
             sign_out: () => {
                 SessionModel.remove();
                 this.renderNav(true);
-                this.router.open('/')
+                this.router.open('/');
             }
         };
 
@@ -58,7 +58,7 @@ export default class MainController extends Controller {
         const action = args[0];
 
         if (action && this.actions[action]) {
-            this.actions[action]()
+            this.actions[action]();
         } else if (action) {
             this.router.open('/');
         } else {

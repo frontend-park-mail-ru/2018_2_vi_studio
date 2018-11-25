@@ -129,6 +129,9 @@ class Game extends GameCore {
                 this.players.forEach(player => player.deactivate());
                 let str = "Player: " + evt.gameOver.players[0].points + "\n Bot: " + evt.gameOver.players[1].points;
                 alert(str);
+                //destroy
+                debugger;
+                bus.emit(EVENTS.GAME_OVER);
                 // TODO: points and new game!!!!
             }
         } else {
