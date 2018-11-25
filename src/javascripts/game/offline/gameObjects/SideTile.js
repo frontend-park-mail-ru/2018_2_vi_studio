@@ -1,5 +1,5 @@
 import Tile from "./Tile.js";
-import {SPECIAL_TILES} from "../../client/gameConfig.js";
+import {SPECIAL_TILES} from "../../config.js";
 
 class SideTile extends Tile {
     constructor(rotationCount) {

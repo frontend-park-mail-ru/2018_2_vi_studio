@@ -1,6 +1,6 @@
 import Controller from './Controller.js';
 import GameView from "../components/GameView/GameView.js";
-import GameCoreImpl from "../game/client/core/GameCoreImpl.js";
+import Game from "../game/client/Game.js";
 import OnlineGameService from "../game/online/OnlineGameService.js";
 import OfflineGameService from "../game/offline/OfflineGameService.js";
 import EVENTS from "../events.js";
@@ -17,7 +17,7 @@ export default class GameController extends Controller {
     }
 
     handle(args = []) {
-        const gameCore = new GameCoreImpl(this._view);
+        const gameCore = new Game(this._view);
 
         switch (args[0]) {
             case 'offline': {
@@ -49,8 +49,11 @@ export default class GameController extends Controller {
     _handleEvent(type, event) {
         console.log(type, event);
         if (type === 'click') {
-            // this.clickEvent['event'] = event;
-            bus.emit(EVENTS.MOUSE_CLICKED, event);
+            bus.emit(EVENTS.MOUSE_CLICKED, {
+                ...event,
+                x: event.pageX - event.target.offsetLeft,
+                y: event.pageY - event.target.offsetTop,
+            });
         }
     }
 }

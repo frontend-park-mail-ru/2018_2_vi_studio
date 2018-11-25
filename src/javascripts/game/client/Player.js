@@ -15,10 +15,12 @@ export default class Player {
     }
 
     activate() {
+        this._component.activate();
         this._active = true;
     }
 
     deactivate() {
+        this._component.deactivate();
         this._active = false;
     }
 }

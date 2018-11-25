@@ -1,6 +1,6 @@
 import Tile from "./Tile.js";
-import {SPECIAL_TILES} from "../../client/gameConfig.js";
-import {STONE_TYPES} from "../../client/gameConfig.js";
+import {SPECIAL_TILES} from "../../config.js";
+import {STONE_TYPES} from "../../config.js";
 
 
 class CentralTile {

@@ -1,5 +1,5 @@
-import EVENTS from "../../../events.js";
-import bus from "../../../bus.js";
+import EVENTS from "../../events.js";
+import bus from "../../bus.js";
 
 
 class GameCore {
@@ -23,7 +23,6 @@ class GameCore {
         bus.on(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.on(EVENTS.NEXT_TRY, this.onNextTry);
         bus.on(EVENTS.WRONG_TRY, this.onWrongTry);
-        // this.controller.start();
     }
 
     destroy() {

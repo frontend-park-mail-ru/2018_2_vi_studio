@@ -16,8 +16,8 @@ export default class MainView extends Component {
 
         Component.render([
             new Background(),
-            this._contentEl,
-            this._navEl
+            this._navEl,
+            this._contentEl
         ], this._element);
     }
 

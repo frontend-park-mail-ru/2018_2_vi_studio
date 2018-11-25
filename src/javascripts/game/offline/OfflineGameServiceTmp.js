@@ -1,7 +1,7 @@
 import bus from '../../bus.js';
-import GameRPC from "../GameService.js";
+import GameRPC from "../client/GameService.js";
 import Player from "../client/Player.js";
-import {TILES} from "../client/gameConfig.js";
+import {TILES} from "../config.js";
 
 export default class OfflineGameService extends GameRPC{
     // TODO: implement

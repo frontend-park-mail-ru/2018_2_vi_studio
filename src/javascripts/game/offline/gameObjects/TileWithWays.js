@@ -1,5 +1,5 @@
 import Tile from "./Tile.js";
-import {TYPE_WAYS} from "../../client/gameConfig.js";
+import {TYPE_WAYS} from "../../config.js";
 
 class TileWithWays extends Tile {
     constructor() {

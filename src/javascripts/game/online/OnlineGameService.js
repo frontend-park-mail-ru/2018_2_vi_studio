@@ -1,5 +1,5 @@
 import bus from '../../bus.js';
-import GameRPC from "../GameService.js";
+import GameRPC from "../client/GameService.js";
 
 export default class OnlineGameService extends GameRPC{
     constructor() {

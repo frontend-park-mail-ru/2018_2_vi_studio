@@ -1,4 +1,4 @@
-import bus from '../bus.js';
+import bus from '../../bus.js';
 
 const EVENTS = [
     'QueuePosition',

@@ -1,9 +1,9 @@
 import Player from "./Player.js";
-import {ROWS_COUNT} from "../../client/gameConfig.js";
-import {COLUMNS_COUNT} from "../../client/gameConfig.js";
+import {ROWS_COUNT} from "../../config.js";
+import {COLUMNS_COUNT} from "../../config.js";
 import TileWithWays from "./TileWithWays.js";
 import GateTile from "./GateTile.js";
-import {FROM_GATES_MOVEMENT} from "../../client/gameConfig.js";
+import {FROM_GATES_MOVEMENT} from "../../config.js";
 
 export default class Bot extends Player {
     constructor(id) {

@@ -107,12 +107,30 @@ const STONE_TYPES = {
     BLUE: 3,
 };
 
+const COLORS = {
+    BACKGROUND: 'rgb(250, 230, 180)',
+    BORDER: 'rgb(160, 140, 100)',
+    BACKGROUND_SIDE: 'rgb(90, 140, 250)',
+    BACKGROUND_GATE: 'rgb(255, 150, 0)',
+    WAY: 'rgb(40, 40, 120)',
+    STONE_YELLOW: 'rgb(220, 220, 20)',
+    STONE_YELLOW_BOARD: 'rgb(160, 160, 20)',
+    STONE_GREEN: 'rgb(60, 130, 60)',
+    STONE_GREEN_BOARD: 'rgb(25, 100, 40)',
+
+};
+
+const WAY_WIDTH = 20;
+
+
 export {ROWS_COUNT};
 export {COLUMNS_COUNT};
 export {TYPES_ON_MAP};
 export {SPECIAL_TILES};
 export {STONE_TYPES};
 export {FROM_GATES_MOVEMENT};
+export {COLORS};
+export {WAY_WIDTH};
 
 // {
 //     0: {count: 6},

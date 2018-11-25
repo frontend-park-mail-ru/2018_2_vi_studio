@@ -31,8 +31,6 @@ const GUEST_NAV_ITEMS = [
     {title: 'Rules', href: '/rules'},
 ];
 
-const AVATAR_PATH = constants.SERVER_PATH + '/media/images/';
-
 export default class MainController extends Controller {
     constructor(router) {
         super(MainView);
@@ -79,11 +77,9 @@ export default class MainController extends Controller {
                 if (response.error) {
                     Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._view.nav)
                 } else {
+
                     Component.render([
-                        new Profile({
-                            name: response.nickname,
-                            avatar: AVATAR_PATH + response.avatar
-                        }),
+                        new Profile({name: response.nickname, avatar: response.avatar}),
                         new Navigation({items: USER_NAV_ITEMS})
                     ], this._view.nav);
                 }

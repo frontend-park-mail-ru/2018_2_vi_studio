@@ -1,5 +1,6 @@
-import {Base} from "./base.js";
-import {TILE_SIZE} from "../gameConfig.js"
+import Base from "./Base.js";
+import {COLORS} from "../../config.js";
+import {TILE_SIZE} from "../../config.js";
 
 // TODO: rewrite
 const DELTA_X = TILE_SIZE.x;
@@ -11,12 +12,15 @@ class Tile extends Base {
         ctx.font = "15px Arial";
         this.rotation = 0;
         this.rotationCount = 0;
+
+        // TODO: rewrite !!!
         this.xDelta = DELTA_X;
         this.yDelta = DELTA_Y;
+
         this.width = 0;
         this.height = 0;
-        this.fillStyle = 'yellow';
-        this.lineColor = 'green';
+        this.fillStyle = COLORS.BACKGROUND;
+        this.lineColor = COLORS.BORDER;
     }
 
     rotate() {
@@ -73,4 +77,4 @@ class Tile extends Base {
     }
 }
 
-export {Tile};
+export default Tile;

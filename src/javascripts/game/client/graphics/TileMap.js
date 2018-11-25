@@ -1,5 +1,4 @@
-import {Tile} from "./tile.js";
-import {Base} from "./base.js";
+import Base from "./Base.js";
 import {TileWithWays} from "./TileWithWays.js";
 import {SideTile} from "./SideTile.js";
 import {CentralTile} from "./CentralTile.js";
@@ -19,8 +18,6 @@ const TYPES = {
 export class TileMap {
     constructor(ctx) {
         this.ctx = ctx;
-        // this.ctx.globalAlpha = 0.45;
-        // console.log(height, (height / this.xDelta), height / this.yDelta);
         this.x = 80;
         this.y = 40;
         this.tiles = [];
@@ -186,7 +183,7 @@ export class TileMap {
                         tile = new TileWithWays(this.ctx);
                 }
                 if (j !== 0) {
-                    tile.x = (j * 2 - 0.5 * j) * tile.xDelta;
+                    tile.x = 1.5 * j * tile.xDelta;
                 } else {
                     tile.x = j * 2 * tile.xDelta;
                 }
@@ -201,7 +198,8 @@ export class TileMap {
                 this.tiles[i].push(tile);
             }
         }
-        this.gates.push(this.tiles[1][7])
+
+        this.gates.push(this.tiles[1][7]);
         this.gates[0].gates = [null, null, null, 0, 0, null];
 
         this.gates.push(this.tiles[1][8]);

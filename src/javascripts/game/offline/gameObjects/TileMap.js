@@ -1,11 +1,11 @@
-import {ROWS_COUNT} from "../../client/gameConfig.js";
-import {COLUMNS_COUNT} from "../../client/gameConfig.js";
-import {TYPES_ON_MAP} from "../../client/gameConfig.js";
+import {ROWS_COUNT} from "../../config.js";
+import {COLUMNS_COUNT} from "../../config.js";
+import {TYPES_ON_MAP} from "../../config.js";
 import SideTile from "./SideTile.js";
 import TileWithWays from "./TileWithWays.js";
 import GateTile from "./GateTile.js";
 import CentralTile from "./CentralTile.js";
-import {STONE_TYPES} from "../../client/gameConfig.js";
+import {STONE_TYPES} from "../../config.js";
 import Stone from "./Stone.js";
 
 const TYPES = {

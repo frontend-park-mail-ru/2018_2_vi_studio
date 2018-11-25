@@ -1,16 +1,15 @@
 import {GameCore} from "./GameCore.js";
-import EVENTS from "../../../events.js";
-import bus from "../../../bus.js";
-import {TILE_SIZE} from "../gameConfig.js";
-// import TileSelectScene from "../game-scenes/TileSelectScene.js";
-import Player from "../Player.js";
-import {TileWithWays} from "../graphics/TileWithWays.js";
-import GameScene from "../game-scenes/GameScene.js";
-import Component from "../../../components/Component.js";
-import TileSelectScene from "../game-scenes/TileSelectScene.js";
-import {Emerald} from "../graphics/Emerald.js";
+import EVENTS from "../../events.js";
+import bus from "../../bus.js";
+import {TILE_SIZE} from "../config.js";
+import Player from "./Player.js";
+import {TileWithWays} from "./graphics/TileWithWays.js";
+import GameScene from "./game-scenes/GameScene.js";
+import Component from "../../components/Component.js";
+import TileSelectScene from "./game-scenes/TileSelectScene.js";
+import {COLORS} from "../config.js";
 
-class GameCoreImpl extends GameCore {
+class Game extends GameCore {
     constructor(component) {
         super();
 
@@ -27,8 +26,6 @@ class GameCoreImpl extends GameCore {
         this.userId = null;
         this.currentPlayerIndex = 0;
 
-        this.stones = [];
-
         this.state = {};
     }
 
@@ -40,13 +37,12 @@ class GameCoreImpl extends GameCore {
     onMouseClicked(evt) {
         console.log(this.players[this.currentPlayerIndex].id, this.userId);
         const currentPlayer = this.players[this.currentPlayerIndex];
-        if (currentPlayer.id === this.userId && currentPlayer._active) {
-            // console.log('Event: MOUSE1_CLICKED - ', evt);
-
-            const ctx = this.boardScene.ctx;
+        if (currentPlayer.id === this.userId) {
             const tiles = this.boardScene.tileMap.tiles;
-            let x = (evt.pageX - this.boardScene.canvas.offsetLeft) * this.boardScene.canvas.height / this.boardScene.canvasRectLen;
-            let y = (evt.pageY - this.boardScene.canvas.offsetTop) * this.boardScene.canvas.height / this.boardScene.canvasRectLen;
+            const x = evt.x * this.boardScene.canvas.width / this.boardScene.canvasRectLen;
+            const y = evt.y * this.boardScene.canvas.height / this.boardScene.canvasRectLen;
+
+
             for (let i = 0; i < this.boardScene.tileMap.rows; i++) {
                 for (let j = 0; j < this.boardScene.tileMap.columns; j++) {
                     if ((tiles[i][j] instanceof TileWithWays) &&
@@ -54,18 +50,16 @@ class GameCoreImpl extends GameCore {
                         (TILE_SIZE.x * TILE_SIZE.x >
                             (tiles[i][j].x - x) * (tiles[i][j].x - x) + (tiles[i][j].y - y) * (tiles[i][j].y - y))) {
 
-                        // console.log(i, j);
-                        // console.log(this.boardScene.tileMap.tiles[i][j]);
                         if (this.tileScene.selectedTile) {
                             this.tileScene.selectedTile.setType(null);
                             this.tileScene.selectedTile.setRotation(0);
-                            this.tileScene.selectedTile.fillStyle = 'yellow';
+                            this.tileScene.selectedTile.fillStyle = COLORS.BACKGROUND;
                         }
                         this.tileScene.selectedTile = this.boardScene.tileMap.tiles[i][j];
                         this.tileScene.selectedTile.row = i;
                         this.tileScene.selectedTile.col = j;
 
-                        this.tileScene.selectedTile.fillStyle = 'orange';
+                        this.tileScene.selectedTile.fillStyle = '#ffbd57';
                         this.tileScene.selectedTile.setType(this.tileScene.tile.type);
                         this.tileScene.selectedTile.setRotation(this.tileScene.tile.rotationCount);
                         bus.emit(EVENTS.GAME_STATE_CHANGED, this.state);
@@ -77,7 +71,7 @@ class GameCoreImpl extends GameCore {
     }
 
     onGameStarted(data) {
-        alert('Game Started');
+        // alert('Game Started');
         // console.log("Players", data.players);
         this.players = data.players.map(player => new Player(player.id, player.nickname, player.avatar));
         Component.render(this.players.map(player => player.component), this.playersRoot);
@@ -149,4 +143,4 @@ class GameCoreImpl extends GameCore {
     }
 }
 
-export default GameCoreImpl;
+export default Game;

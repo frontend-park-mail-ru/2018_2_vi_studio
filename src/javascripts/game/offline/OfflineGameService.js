@@ -1,4 +1,4 @@
-import GameService from "../GameService.js";
+import GameService from "../client/GameService.js";
 import OfflineGame from "./OfflineGame.js";
 
 export default class OfflineGameService extends GameService {
