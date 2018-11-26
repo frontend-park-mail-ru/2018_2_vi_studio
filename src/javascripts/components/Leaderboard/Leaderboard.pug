@@ -1,5 +1,7 @@
 div(class="leaders")
+    input(class="leaders__page-up" type="image" src="/src/images/up.png")
     each leader in leaders
         div(class="leaders__member")
             div(class="leaders__name")= leader.nickname
             div(class="leaders__points")= leader.points
+    input(class="leaders__page-down" type="image" src="/src/images/down.png")

@@ -23,12 +23,12 @@ router
 
 router.start();
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/build/sw.js', {scope: '/build/'})
-        .then((registration) => {
-            console.log('sw registration on scope:', registration.scope);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
-}
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('/build/sw.js', {scope: '/build/'})
+//         .then((registration) => {
+//             console.log('sw registration on scope:', registration.scope);
+//         })
+//         .catch((err) => {
+//             console.error(err);
+//         });
+// }

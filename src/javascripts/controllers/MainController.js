@@ -193,18 +193,21 @@ export default class MainController extends Controller {
     }
 
     renderLeaders(page = 1) {
-        LeaderModel.getAll(page).then(leaders => {
-                const prev = new Button({label: '<-'});
-                const next = new Button({label: '->'});
+        LeaderModel.getAll(page).then(response => {
+                const leaderboard = new Leaderboard({leaders: response.leaders});
+                Component.render(leaderboard, this._view.content);
 
                 if (page === 1) {
-                    Component.render([new Leaderboard({leaders: leaders}), next], this._view.content);
+                    leaderboard.pageUpButtonDisable()
                 } else {
-                    Component.render([new Leaderboard({leaders: leaders}), prev, next], this._view.content);
+                    leaderboard.pageUpButton.addEventListener('click', () => this.renderLeaders(page - 1));
                 }
 
-                prev.element.addEventListener('click', () => this.renderLeaders(page - 1));
-                next.element.addEventListener('click', () => this.renderLeaders(page + 1));
+                if (page === response.pageCount) {
+                    leaderboard.pageDownButtonDisable();
+                } else {
+                    leaderboard.pageDownButton.addEventListener('click', () => this.renderLeaders(page + 1));
+                }
             }
         );
     }
