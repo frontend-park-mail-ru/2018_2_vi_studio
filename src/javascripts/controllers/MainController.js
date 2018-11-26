@@ -9,9 +9,8 @@ import Video from "../components/Video/Video.js";
 import SessionModel from "../models/SessionModel.js";
 import LeaderModel from "../models/LeaderModel.js";
 import Profile from "../components/Profile/Profile.js";
-import Button from "../components/Button/Button.js";
 import MainView from "../components/MainView/MainView.js";
-import constants from "../constants.js";
+import SignInForm from "../components/SignInForm/Form.js";
 
 const USER_NAV_ITEMS = [
     {title: 'Online Game', href: '/game/online'},
@@ -88,24 +87,12 @@ export default class MainController extends Controller {
     }
 
     renderSignIn() {
-        const inputs = [
-            {label: 'Nickname', name: 'nickname', type: 'text'},
-            {label: 'Password', name: 'password', type: 'password'},
-            {label: 'Sign in', type: 'submit'},
-        ];
-
-        const form = new Form({inputs: inputs});
+        const form = new SignInForm();
         Component.render(form, this._view.content);
 
-        const formEl = form.element;
-        console.log(formEl);
-        formEl.addEventListener("submit", event => {
-            console.log(formEl);
+        form.element.addEventListener("submit", event => {
             event.preventDefault();
-            SessionModel.add({
-                nickname: formEl.nickname.value,
-                password: formEl.password.value
-            }).then(obj => {
+            SessionModel.add(form.getData()).then(obj => {
                 console.log(obj);
                 this.renderNav();
                 this.router.open('/');
