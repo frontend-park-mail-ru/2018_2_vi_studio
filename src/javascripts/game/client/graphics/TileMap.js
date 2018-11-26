@@ -4,6 +4,7 @@ import {SideTile} from "./SideTile.js";
 import {CentralTile} from "./CentralTile.js";
 import {GateTile} from "./GateTile.js";
 import {Emerald} from "./Emerald.js";
+import {TILE_SIZE} from "../../config.js";
 
 const ROWS_COUNT = 10;
 const COLUMNS_COUNT = 11;
@@ -183,18 +184,16 @@ export class TileMap {
                         tile = new TileWithWays(this.ctx);
                 }
                 if (j !== 0) {
-                    tile.x = 1.5 * j * tile.xDelta;
+                    tile.x = 1.5 * j * TILE_SIZE.x;
                 } else {
-                    tile.x = j * 2 * tile.xDelta;
+                    tile.x = j * 2 * TILE_SIZE.x;
                 }
                 if (j % 2 === 0) {
-
-                    tile.y = (i * 2 + 1) * tile.yDelta;
+                    tile.y = (i * 2 + 1) * TILE_SIZE.y;
                 } else {
-                    tile.y = (i * 2) * tile.yDelta;
-
+                    tile.y = (i * 2) * TILE_SIZE.y;
                 }
-                tile.x += tile.xDelta;
+                tile.x += TILE_SIZE.x;
                 this.tiles[i].push(tile);
             }
         }
@@ -241,9 +240,7 @@ export class TileMap {
     }
 
     setGates() {
-
-        const colors = ['green', 'blue'];
-
+        // const colors = ['green', 'blue'];
         for(let i = 0; i < this.gates.length; i ++) {
             if (i % 4 > 1){
                 this.gates[i].color = 'green';
@@ -253,13 +250,27 @@ export class TileMap {
                 // this.gates[i].player = players[1];
             }
         }
-
     }
 
-    getTiles() {
-        // console.log('TileMap: render');
-        return this.tiles;
+    getTile(x, y){
+
+        // if (j !== 0) {
+        //     tile.x = 1.5 * j * TILE_SIZE.x;
+        // } else {
+        //     tile.x = j * 2 * TILE_SIZE.x;
+        // }
+        // if (j % 2 === 0) {
+        //     tile.y = (i * 2 + 1) * TILE_SIZE.y;
+        // } else {
+        //     tile.y = (i * 2) * TILE_SIZE.y;
+        // }
+        // tile.x += TILE_SIZE.x;
     }
+
+    // getTiles() {
+    //     // console.log('TileMap: render');
+    //     return this.tiles;
+    // }
 
     // //
     // setup() {

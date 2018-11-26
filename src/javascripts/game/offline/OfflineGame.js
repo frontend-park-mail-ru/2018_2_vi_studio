@@ -75,7 +75,7 @@ export default class OfflineGame {
 
         }
         tile.settled = true;
-        
+
         // выдача камней
 
 
@@ -98,37 +98,34 @@ export default class OfflineGame {
     }
 
     moveStones() {
-        const stones = this.tileMap.stones;
-        for (let i = 0; i < stones.length; i++) {
-
-            const typeOfMovement = stones[i].col % 2;
+        this.tileMap.stones.forEach((stone, i) => {
+            const typeOfMovement = stone.col % 2;
             const movement = FROM_GATES_MOVEMENT[typeOfMovement];
-            let stone = stones[i];
-            if (stones[i].tile instanceof SideTile && stones[i].tile.stoneGate === stone.gate) {
-                const tile = this.tileMap.tiles[stones[i].row + movement[stones[i].tile.stoneGate].row][stones[i].col + movement[stones[i].tile.stoneGate].col];
-                console.log("POS", stones[i].row + movement[stones[i].tile.stoneGate].row, stones[i].col + movement[stones[i].tile.stoneGate].col);
-                console.log("lay", stones[i].tile);
-                //stones[i].col + movement[stones[i].tile.stoneGate].col
+            if (stone.tile instanceof SideTile && stone.tile.stoneGate === stone.gate) {
+                const tile = this.tileMap.tiles[stone.row + movement[stone.tile.stoneGate].row][stone.col + movement[stone.tile.stoneGate].col];
+                console.log("POS", stone.row + movement[stone.tile.stoneGate].row, stone.col + movement[stone.tile.stoneGate].col);
+                console.log("lay", stone.tile);
+                //stone.col + movement[stone.tile.stoneGate].col
                 if (tile.settled) {
-                    stones[i].gate = movement[stones[i].tile.stoneGate].gate; // стоит на входе тайла
+                    stone.gate = movement[stone.tile.stoneGate].gate; // стоит на входе тайла
 
-                    stones[i].row += movement[stones[i].tile.stoneGate].row;
-                    stones[i].col += movement[stones[i].tile.stoneGate].col;
+                    stone.row += movement[stone.tile.stoneGate].row;
+                    stone.col += movement[stone.tile.stoneGate].col;
 
                     // this.check TODO: CHECK
                     if (this.tileMap.haveCollisions(i)) {
-                        break;
+                        return;
                     }
-                    stones[i].gate = tile.gates[stones[i].gate]; // стоит на выходе из тайла
-                    stones[i].tile = tile;
+                    stone.gate = tile.gates[stone.gate]; // стоит на выходе из тайла
+                    stone.tile = tile;
 
                 }
 
-            } else if (stones[i].tile instanceof CentralTile) {
+            } else if (stone.tile instanceof CentralTile) {
                 // debugger;
-                console.log(movement[stones[i].gate]);
-                console.log(this.tileMap.tiles, stones[i].row + movement[stones[i].gate].row);
-                const tile = this.tileMap.tiles[stones[i].row + movement[stones[i].gate].row][stones[i].col + movement[stones[i].gate].col];
+                console.log(movement[stone.gate]);
+                console.log(this.tileMap.tiles, stone.row + movement[stone.gate].row);
+                const tile = this.tileMap.tiles[stone.row + movement[stone.gate].row][stone.col + movement[stone.gate].col];
                 if (tile.settled) {
 
 
@@ -137,35 +134,34 @@ export default class OfflineGame {
                     stone.gate = movement[stone.gate].gate; // стоит на входе тайла
                     // this.check TODO: CHECK
                     if (this.tileMap.haveCollisions(i)) {
-                        break;
+                        return;
                     }
                     stone.gate = tile.gates[stone.gate]; // стоит на входе тайла
                     stone.tile = tile;
 
-                    // stones[i].tile = tile.stonesOnGate[movement[j].gate];
+                    // stone.tile = tile.stonesOnGate[movement[j].gate];
                 }
             }
-        }
+        });
 
-        for (let i = 0; i < this.tileMap.stones.length; i++) {
-            let stone = this.tileMap.stones[i];
+        this.tileMap.stones.forEach((stone, i) => {
             console.log("STONE ", stone);
             for (; ;) {
                 const typeOfMovement = stone.col % 2;
                 const movement = FROM_GATES_MOVEMENT[typeOfMovement];
                 if (!stone.isOutOfGame && (stone.tile instanceof TileWithWays || stone.tile instanceof SideTile)) {
                     // stone.gate = stone.tile.gates[stone.gate];
-                    let gate = movement[stone.gate];
-                    let row = stone.row + movement[stone.gate].row;
-                    let col = stone.col + movement[stone.gate].col;
+                    // let gate = movement[stone.gate];
+                    // let row = stone.row + movement[stone.gate].row;
+                    // let col = stone.col + movement[stone.gate].col;
                     let neighbor = this.tileMap.tiles[stone.row + movement[stone.gate].row][stone.col + movement[stone.gate].col];
                     console.log("SOSED", neighbor);
                     if (neighbor instanceof TileWithWays && neighbor.settled === false) {
                         break;
                     } else if (neighbor instanceof TileWithWays && neighbor.settled === true || neighbor instanceof SideTile) {
                         stone.tile = neighbor;
-                        let m = movement[stone.gate].row;
-                        let n = movement[stone.gate].col;
+                        // let m = movement[stone.gate].row;
+                        // let n = movement[stone.gate].col;
                         stone.row += movement[stone.gate].row;
                         stone.col += movement[stone.gate].col;
                         stone.gate = movement[stone.gate].gate; // на входе
@@ -174,8 +170,7 @@ export default class OfflineGame {
                             break;
                         }
                         stone.gate = neighbor.gates[stone.gate]; // на выходе
-                    }
-                    else if (neighbor instanceof GateTile) {
+                    } else if (neighbor instanceof GateTile) {
                         if (neighbor.zero) {
                             stone.isOutOfGame = true;
                             break;
@@ -195,7 +190,7 @@ export default class OfflineGame {
                 }
             }
 
-        }
+        });
     }
 
     _setLastTry(data) {

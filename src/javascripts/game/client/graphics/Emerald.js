@@ -1,4 +1,4 @@
-import Base from "./Base.js";
+// import Base from "./Base.js";
 import {TILE_SIZE} from "../../config.js";
 import Tile from "./Tile.js";
 import {STONE_TYPES, TYPES_ON_MAP} from "../../config.js";
@@ -73,7 +73,7 @@ export class Emerald extends Tile {
         }
         const ctx = this.ctx;
         ctx.beginPath();
-        ctx.arc(0, -this.yDelta / 3 * 2, EMERALD_RADIUS_BORDER, 0, 2 * Math.PI);
+        ctx.arc(0, -TILE_SIZE.y / 3 * 2, EMERALD_RADIUS_BORDER, 0, 2 * Math.PI);
         ctx.lineWidth = 10;
         ctx.fillStyle = this.backgroundColor;
         ctx.fill();
@@ -81,7 +81,7 @@ export class Emerald extends Tile {
 
         ctx.beginPath();
 
-        ctx.arc(0, -this.yDelta / 3 * 2, EMERALD_RADIUS, 0, 2 * Math.PI);
+        ctx.arc(0, -TILE_SIZE.y / 3 * 2, EMERALD_RADIUS, 0, 2 * Math.PI);
         ctx.lineWidth = 10;
         ctx.fillStyle = this.color;
         ctx.fill();

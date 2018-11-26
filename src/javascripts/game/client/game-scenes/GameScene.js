@@ -28,28 +28,26 @@ export default class GameScene {
         this.tileMap.x = 0;
         this.tileMap.y = 5;
         this.tileMap.init(state.stones);
-        for (let i = 0; i < this.tileMap.rows; i++) {
-            for (let j = 0; j < this.tileMap.columns; j++) {
-
-                scene.push(this.tileMap.tiles[i][j]);
-            }
-        }
-        this.tileMap.stones.forEach(stone => {
-            scene.push(stone);
-        });
+        this.tileMap.tiles.forEach(tileLine => tileLine.forEach(tile => scene.push(tile)));
+        // for (let i = 0; i < this.tileMap.rows; i++) {
+        //     for (let j = 0; j < this.tileMap.columns; j++) {
+        //         scene.push(this.tileMap.tiles[i][j]);
+        //     }
+        // }
+        this.tileMap.stones.forEach(stone => scene.push(stone));
     }
 
 
     setState(state) {
-        const scene = this.scene;
+        // const scene = this.scene;
         this.state = state;
-
     }
 
     renderScene() {
-        const ctx = this.ctx;
-        const scene = this.scene;
-        scene.render();
+        // const ctx = this.ctx;
+        // const scene = this.scene;
+        // scene.render();
+        this.scene.render();
     }
 
     start() {

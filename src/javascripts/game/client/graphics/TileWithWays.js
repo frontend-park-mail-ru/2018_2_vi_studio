@@ -1,13 +1,12 @@
 import Tile from "./Tile.js";
 import {TYPE_WAYS} from "../../config.js";
 import {COLORS} from "../../config.js";
-import {WAY_WIDTH} from "../../config.js";
-
+import {WAY_WIDTH, TILE_SIZE} from "../../config.js";
 
 class TileWithWays extends Tile {
     constructor(ctx, ways) {
         super(ctx);
-        this.ways = ways;
+        // this.ways = ways;
         this.type = null;
     }
 
@@ -65,18 +64,18 @@ class TileWithWays extends Tile {
     _drawType0(ctx) {
         ctx.beginPath();
 
-        ctx.arc(-this.xDelta, 0, this.xDelta / 2, (2 - 2/ 6) * Math.PI , 2 / 6 * Math.PI);
+        ctx.arc(-TILE_SIZE.x, 0, TILE_SIZE.x / 2, (2 - 2/ 6) * Math.PI , 2 / 6 * Math.PI);
         // ctx.lineWidth = 10;
         // ctx.strokeStyle = COLORS.WAY;
         ctx.stroke();
 
 
         ctx.beginPath();
-        ctx.arc(this.xDelta/2,  - this.yDelta, this.xDelta / 2, Math.PI , 1 / 3 * Math.PI, true);
+        ctx.arc(TILE_SIZE.x/2,  - TILE_SIZE.y, TILE_SIZE.x / 2, Math.PI , 1 / 3 * Math.PI, true);
         ctx.stroke();
         //
         ctx.beginPath();
-        ctx.arc(this.xDelta/2, this.yDelta, this.xDelta / 2, Math.PI , (2 - 1/ 3) * Math.PI);
+        ctx.arc(TILE_SIZE.x/2, TILE_SIZE.y, TILE_SIZE.x / 2, Math.PI , (2 - 1/ 3) * Math.PI);
         ctx.stroke();
         ctx.closePath();
     }
@@ -85,19 +84,19 @@ class TileWithWays extends Tile {
         ctx.beginPath();
         // ctx.moveTo(this.x, this.y);  // left top
 
-        ctx.arc(-this.xDelta, 0, this.xDelta / 2, (2 - 2/ 6) * Math.PI , 2 / 6 * Math.PI);
+        ctx.arc(-TILE_SIZE.x, 0, TILE_SIZE.x / 2, (2 - 2/ 6) * Math.PI , 2 / 6 * Math.PI);
         // ctx.lineWidth = 10;
         // ctx.strokeStyle = "red";
         ctx.stroke();
 
 
         ctx.beginPath();
-        ctx.arc(this.xDelta, 0, this.xDelta / 2, (2 / 3) * Math.PI , (1 + 1 / 3) * Math.PI);
+        ctx.arc(TILE_SIZE.x, 0, TILE_SIZE.x / 2, (2 / 3) * Math.PI , (1 + 1 / 3) * Math.PI);
         ctx.stroke();
         //
         ctx.beginPath();
-        ctx.moveTo(0, -this.yDelta);
-        ctx.lineTo(0, this.yDelta);
+        ctx.moveTo(0, -TILE_SIZE.y);
+        ctx.lineTo(0, TILE_SIZE.y);
         ctx.stroke();
         ctx.closePath();
 
@@ -105,19 +104,19 @@ class TileWithWays extends Tile {
 
     _drawType2(ctx) {
         ctx.beginPath();
-        ctx.arc(-this.xDelta * 1.5, this.yDelta , this.xDelta * 1.5, (2 - 1 / 3) * Math.PI, 0);
+        ctx.arc(-TILE_SIZE.x * 1.5, TILE_SIZE.y , TILE_SIZE.x * 1.5, (2 - 1 / 3) * Math.PI, 0);
         // ctx.lineWidth = 10;
         // ctx.strokeStyle = "red";
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(0, this.yDelta * 2 , this.xDelta * 1.5, (1 + 1/3) * Math.PI, (2 - 1/3) * Math.PI);
+        ctx.arc(0, TILE_SIZE.y * 2 , TILE_SIZE.x * 1.5, (1 + 1/3) * Math.PI, (2 - 1/3) * Math.PI);
         // ctx.lineWidth = 10;
         // ctx.strokeStyle = "red";
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(this.xDelta/2,  - this.yDelta, this.xDelta / 2, Math.PI , 1 / 3 * Math.PI, true);
+        ctx.arc(TILE_SIZE.x/2,  - TILE_SIZE.y, TILE_SIZE.x / 2, Math.PI , 1 / 3 * Math.PI, true);
         ctx.stroke();
         ctx.closePath();
     }
@@ -126,47 +125,47 @@ class TileWithWays extends Tile {
         // ctx.strokeStyle = "green";
         // ctx.lineWidth = 17;
         // ctx.beginPath();
-        // ctx.moveTo(0, -this.yDelta);
-        // ctx.lineTo(0, this.yDelta);
+        // ctx.moveTo(0, -TILE_SIZE.y);
+        // ctx.lineTo(0, TILE_SIZE.y);
         // ctx.stroke();
 
         // ctx.strokeStyle = "red";
         // ctx.lineWidth = 10;
         ctx.beginPath();
-        ctx.moveTo(0, -this.yDelta);
-        ctx.lineTo(0, this.yDelta);
+        ctx.moveTo(0, -TILE_SIZE.y);
+        ctx.lineTo(0, TILE_SIZE.y);
         ctx.stroke();
 
         ctx.beginPath();
         ctx.rotate(Math.PI / 3);
-        ctx.moveTo(0, -this.yDelta);
-        ctx.lineTo(0, this.yDelta);
+        ctx.moveTo(0, -TILE_SIZE.y);
+        ctx.lineTo(0, TILE_SIZE.y);
         ctx.stroke();
 
         ctx.beginPath();
         ctx.rotate(Math.PI / 3);
-        ctx.moveTo(0, -this.yDelta);
-        ctx.lineTo(0, this.yDelta);
+        ctx.moveTo(0, -TILE_SIZE.y);
+        ctx.lineTo(0, TILE_SIZE.y);
         ctx.stroke();
         ctx.closePath();
     }
 
     _drawType4(ctx) {
         ctx.beginPath();
-        ctx.arc(0, this.yDelta * 2, this.xDelta * 1.5, (1 + 1 / 3) * Math.PI, (2 - 1 / 3) * Math.PI);
+        ctx.arc(0, TILE_SIZE.y * 2, TILE_SIZE.x * 1.5, (1 + 1 / 3) * Math.PI, (2 - 1 / 3) * Math.PI);
         // ctx.lineWidth = 10;
         // ctx.strokeStyle = "red";
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(0, -this.yDelta * 2, this.xDelta * 1.5,  1 / 3 * Math.PI, 2 / 3 * Math.PI);
+        ctx.arc(0, -TILE_SIZE.y * 2, TILE_SIZE.x * 1.5,  1 / 3 * Math.PI, 2 / 3 * Math.PI);
         // ctx.lineWidth = 10;
         // ctx.strokeStyle = "red";
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(0, -this.yDelta);
-        ctx.lineTo(0, this.yDelta);
+        ctx.moveTo(0, -TILE_SIZE.y);
+        ctx.lineTo(0, TILE_SIZE.y);
         ctx.stroke();
         ctx.closePath();
     }

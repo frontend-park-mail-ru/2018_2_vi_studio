@@ -1,4 +1,4 @@
-const path = '127.0.0.1:8000';
+const path = '95.163.180.8:80';
 
 export default {
     SERVER_WS_PATH: `ws://${path}/game-ws`,

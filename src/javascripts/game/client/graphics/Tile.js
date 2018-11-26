@@ -3,8 +3,8 @@ import {COLORS} from "../../config.js";
 import {TILE_SIZE} from "../../config.js";
 
 // TODO: rewrite
-const DELTA_X = TILE_SIZE.x;
-const DELTA_Y = TILE_SIZE.y;
+// const DELTA_X = TILE_SIZE.x;
+// const DELTA_Y = TILE_SIZE.y;
 
 class Tile extends Base {
     constructor(ctx) {
@@ -13,9 +13,8 @@ class Tile extends Base {
         this.rotation = 0;
         this.rotationCount = 0;
 
-        // TODO: rewrite !!!
-        this.xDelta = DELTA_X;
-        this.yDelta = DELTA_Y;
+        // TILE_SIZE.x = DELTA_X;
+        // TILE_SIZE.y = DELTA_Y;
 
         this.width = 0;
         this.height = 0;
@@ -38,26 +37,26 @@ class Tile extends Base {
         ctx.strokeStyle = this.lineColor; // цвет линии
         ctx.fillStyle = this.fillStyle;
         ctx.beginPath();
-        let startX = - this.xDelta / 2;
-        let startY = - this.yDelta;
+        let startX = - TILE_SIZE.x / 2;
+        let startY = - TILE_SIZE.y;
         let pointerX = startX;
         let pointerY = startY;
         ctx.moveTo(pointerX, pointerY);  // left top
 
-        pointerX += this.xDelta;
+        pointerX += TILE_SIZE.x;
         ctx.lineTo(pointerX , pointerY);  // right top
 
-        pointerY += this.yDelta;
-        ctx.lineTo(pointerX + this.xDelta / 2, pointerY); // right middle
+        pointerY += TILE_SIZE.y;
+        ctx.lineTo(pointerX + TILE_SIZE.x / 2, pointerY); // right middle
 
-        pointerY += this.yDelta;
+        pointerY += TILE_SIZE.y;
         ctx.lineTo(pointerX, pointerY); // right bottom
 
-        pointerX -= this.xDelta;
+        pointerX -= TILE_SIZE.x;
         ctx.lineTo(pointerX, pointerY); // left bottom
 
-        pointerX -= this.xDelta / 2;
-        pointerY -= this.yDelta;
+        pointerX -= TILE_SIZE.x / 2;
+        pointerY -= TILE_SIZE.y;
         ctx.lineTo(pointerX, pointerY); // left middle
         ctx.lineTo(startX, startY);
         ctx.closePath();
