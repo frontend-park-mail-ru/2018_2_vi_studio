@@ -71,15 +71,15 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
-        new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, 'src/sw.js'),
-        }),
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, 'src/sw.js'),
+        // }),
         // new UglifyJsPlugin()
     ] : [
         new ExtractTextPlugin('[name].bundle.css'),
-        new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, 'src/sw.js'),
-        }),
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, 'src/sw.js'),
+        // }),
     ],
     node: {
         fs: 'empty'

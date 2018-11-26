@@ -7,6 +7,16 @@ import bus from './bus.js';
 
 // import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', {scope: '/build/'})
+        .then((registration) => {
+            console.log('sw registration on scope:', registration.scope);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+}
+
 
 const root = document.getElementById('root');
 const router = new Router(root);
@@ -22,13 +32,3 @@ router
     .register('/', MainController);
 
 router.start();
-
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('/build/sw.js', {scope: '/build/'})
-//         .then((registration) => {
-//             console.log('sw registration on scope:', registration.scope);
-//         })
-//         .catch((err) => {
-//             console.error(err);
-//         });
-// }
