@@ -10,7 +10,8 @@ import SessionModel from "../models/SessionModel.js";
 import LeaderModel from "../models/LeaderModel.js";
 import Profile from "../components/Profile/Profile.js";
 import MainView from "../components/MainView/MainView.js";
-import SignInForm from "../components/SignInForm/Form.js";
+import SignInForm from "../components/SignInForm/SignInForm.js";
+import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 
 const USER_NAV_ITEMS = [
     {title: 'Online Game', href: '/game/online'},
@@ -68,7 +69,7 @@ export default class MainController extends Controller {
     renderNav(ignoreAuth) {
         if (ignoreAuth) {
             Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._view.nav);
-            return
+            return;
         }
 
         UserModel.get().then(
@@ -92,10 +93,20 @@ export default class MainController extends Controller {
 
         form.element.addEventListener("submit", event => {
             event.preventDefault();
+
+            if (!form.isValid()) {
+                return;
+            }
+
             SessionModel.add(form.getData()).then(obj => {
                 console.log(obj);
-                this.renderNav();
-                this.router.open('/');
+                if (obj.error) {
+                    // console.log('ERROR');
+                    form.showError(obj.error);
+                } else {
+                    this.renderNav();
+                    this.router.open('/');
+                }
             }).catch(error => {
                 console.log(error);
                 form.showError('Wrong username or password');
@@ -104,28 +115,23 @@ export default class MainController extends Controller {
     };
 
     renderSignUp() {
-        const inputs = [
-            {label: 'Nickname', name: 'nickname', type: 'text'},
-            {label: 'E-mail', name: 'email', type: 'email'},
-            {label: 'Password', name: 'password', type: 'password'},
-            {label: 'Repeat password', name: 'rep_password', type: 'password'},
-            {label: 'Sign up', type: 'submit'},
-        ];
 
-        const form = new Form({inputs: inputs});
+
+        const form = new SignUpForm();
         Component.render(form, this._view.content);
 
         const formEl = form.element;
         formEl.addEventListener("submit", event => {
             event.preventDefault();
+
+            if (!form.isValid()) {
+                return;
+            }
+
             if (formEl.password.value === formEl.rep_password.value) {
-                UserModel.add({
-                    nickname: formEl.nickname.value,
-                    email: formEl.email.value,
-                    password: formEl.password.value,
-                }).then(obj => {
+                UserModel.add(form.getData()).then(obj => {
                     console.log(obj);
-                    this.router.open('sign_in');
+                    this.router.open('/sign_in');
                 }).catch(error => {
                     console.log(error);
                     form.showError('Error');
@@ -133,7 +139,7 @@ export default class MainController extends Controller {
             } else {
                 form.showError('Passwords do not match');
             }
-        })
+        });
     }
 
     renderProfile() {
@@ -176,7 +182,7 @@ export default class MainController extends Controller {
             }).catch(error => {
                 // TODO: handle
             });
-        })
+        });
     }
 
     renderLeaders(page = 1) {
