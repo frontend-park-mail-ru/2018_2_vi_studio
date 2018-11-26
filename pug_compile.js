@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const pug = require('pug');
 
+compilePug('src');
 
 function walk(dir, done) {
     let results = [];
@@ -38,11 +39,10 @@ function compilePug(path) {
 
                 const jsFunctionString = pug.compileFileClient(filePath, {
                         name: "render" + match[2],
-                        exportMixins: true
+                        exportMixins: true,
+                        compileDebug: false
                     })
-                    + ` import Component from "../Component.js";`
-                    + ` export default class ${match[2]} extends Component`
-                    + ` {constructor(props){super(props);this.getHTML = render${match[2]}.bind(this, props);}}`;
+                    + ` export default render${match[2]};`;
 
                 fs.writeFileSync(match[1] + match[2] + ".pug.js", jsFunctionString);
             }
@@ -50,4 +50,8 @@ function compilePug(path) {
     })
 }
 
-module.exports = compilePug;
+if (require.main === module) {
+    compilePug(process.argv[2])
+} else {
+    module.exports = compilePug;
+}

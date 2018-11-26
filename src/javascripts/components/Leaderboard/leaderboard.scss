@@ -1,0 +1,41 @@
+.leaders {
+  .leaders__member {
+    color: $main-color;
+    font-family: sans-serif;
+    font-size: 18pt;
+    margin-bottom: 25px;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    &:nth-child(1) {
+      color: #3c301e;
+    }
+
+    &:nth-child(2) {
+      color: #504328;
+    }
+
+    &:nth-child(3) {
+      color: #645732;
+    }
+
+    .leaders__name {
+      display: inline-block;
+      width: 240px;
+    }
+
+    .leaders__points {
+      display: inline-block;
+    }
+  }
+
+  .leaders__page-up, .leaders__page-down {
+    margin: -15px 130px;
+
+    &_disabled {
+      opacity: 0.2;
+    }
+  }
+}

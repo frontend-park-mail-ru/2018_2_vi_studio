@@ -2,6 +2,9 @@ const webpack = require('webpack');
 const isProd = process.env.NODE_ENV === 'production';
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const path = require('path');
+
 
 console.log(`Is Production: ${isProd}`);
 
@@ -18,12 +21,17 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015'],
+                    plugins: ["transform-es2015-destructuring", "transform-object-rest-spread"],
+                }
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader', use: [
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
                         {
                             loader: 'css-loader',
                             options: {
@@ -63,9 +71,15 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, 'src/sw.js'),
+        // }),
         // new UglifyJsPlugin()
     ] : [
         new ExtractTextPlugin('[name].bundle.css'),
+        // new ServiceWorkerWebpackPlugin({
+        //     entry: path.join(__dirname, 'src/sw.js'),
+        // }),
     ],
     node: {
         fs: 'empty'

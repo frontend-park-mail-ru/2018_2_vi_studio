@@ -3,17 +3,16 @@ export default class Router {
         this.routes = [];
 
         this.root = root;
-        this.views = new Map();
+        this.controllers = new Map();
     }
 
     /**
      * @param {string} pattern
-     * @param {View} View
+     * @param {Controller} Controller
      */
-    register(pattern, View) {
+    register(pattern, Controller) {
         this.routes.push({
-            View: View,
-            // view: null,
+            Controller: Controller,
             pattern: new RegExp('^' + pattern.replace(/:\w+/, '(\\w+)') + '$')
         });
 
@@ -24,49 +23,40 @@ export default class Router {
      * @param {string} path
      */
     open(path) {
-        // cannot use forEach
+        const routes = this.routes.filter(route => route.pattern.test(path));
 
-        for (let i = 0; i < this.routes.length; i++) {
-            const route = this.routes[i];
-            const args = path.match(route.pattern);
-
-            if (!args) {
-                continue;
+        if (routes.length === 0) {
+            if (path === '/') {
+                throw new Error('There must be a default router');
             }
 
-            if (window.location.pathname !== path) {
-                window.history.pushState(null, '', path);
-            }
-
-            let view;
-
-            if (this.views.has(route.View)) {
-                view = this.views.get(route.View);
-            } else {
-                const el = document.createElement('section');
-                this.root.appendChild(el);
-                view = new route.View(el, this);
-                this.views.set(route.View, view);
-            }
-
-
-            if (!view.active) {
-                for (let [_, v] of this.views) {
-                    if (v.active) {
-                        v.hide();
-                    }
-                }
-                view.show();
-            }
-
-            this.routes[i] = route;
-
-            view.handle(args.slice(1));
-
-            return;
+            this.open('/');
         }
 
-        this.open('/');
+        const route = routes[0];
+
+        const args = path.match(route.pattern);
+
+        if (window.location.pathname !== path) {
+            window.history.pushState(null, '', path);
+        }
+
+        let controller;
+
+        if (this.controllers.has(route.Controller)) {
+            controller = this.controllers.get(route.Controller);
+        } else {
+            controller = new route.Controller(this);
+            this.root.appendChild(controller.element);
+            this.controllers.set(route.Controller, controller);
+        }
+
+        for (let [, c] of this.controllers) {
+            c.element.classList.add('hidden')
+        }
+        controller.element.classList.remove('hidden');
+
+        controller.handle(args.slice(1));
     }
 
     start() {

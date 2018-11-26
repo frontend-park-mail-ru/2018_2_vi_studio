@@ -9,37 +9,19 @@ class UserModel extends Model {
         this.getAll = undefined;
         this.remove = undefined;
     }
-
     update(obj) {
         return fetch(
             this.path,
             {
                 method: 'PUT',
                 headers: {
-                    // 'Accept': 'application/json',
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(obj),
                 credentials: "include"
             }
-        )
-        // ).then(response => response.json())
-    }
-
-    addAvatar(file) {
-        return fetch(
-            this.path + '/avatar',
-            {
-                method: 'POST',
-                headers: {
-                    // 'Accept': 'application/json',
-                    'Content-Type': 'image/jpeg'
-                },
-                body: file,
-                credentials: "include"
-            }
-        )
-        // ).then(response => response.json())
+        ).then(response => response.json());
     }
 }
 

@@ -1,0 +1,21 @@
+.navigation {
+  .navigation__item {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 20pt;
+    font-weight: bold;
+    padding: 15px 50px;
+
+    &_active {
+      padding-left: 45px;
+      border-left: 6px solid white;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+}

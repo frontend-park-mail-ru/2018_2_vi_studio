@@ -6,7 +6,7 @@ const sassMiddleware = require('node-sass-middleware');
 
 const compilePug = require('./pug_compile');
 
-compilePug('public');
+compilePug('src');
 
 const app = express();
 
@@ -20,6 +20,7 @@ app.use(sassMiddleware({
         indentedSyntax: false, // true = .sass and false = .scss
         sourceMap: true,
     }));
+app.use('/sw.js', express.static(path.join(__dirname, 'src/sw.js')));
 app.use('/src', express.static(path.join(__dirname, 'src')));
 app.use('/build', express.static(path.join(__dirname, 'build')));
 

@@ -1,17 +1,17 @@
 @import "consts";
 /* components */
-@import "../javascripts/components/root/root";
-@import "../javascripts/components/background/background";
-@import "../javascripts/components/header/header";
-@import "../javascripts/components/navigation/navigation";
-@import "../javascripts/components/video/video";
-@import "../javascripts/components/form/form";
-@import "../javascripts/components/leaderboard/leaderboard";
-@import "../javascripts/components/rules/rules";
-@import "../javascripts/components/profile/profile";
-/* views */
-@import "../javascripts/views/MainView/main-view";
-@import "../javascripts/views/GameView/game-view";
+@import "../javascripts/components/Background/background";
+@import "../javascripts/components/FileInput/file-input";
+@import "../javascripts/components/Navigation/navigation";
+@import "../javascripts/components/Video/video";
+@import "../javascripts/components/Form/form";
+@import "../javascripts/components/Leaderboard/leaderboard";
+@import "../javascripts/components/Rules/rules";
+@import "../javascripts/components/Profile/profile";
+@import "../javascripts/components/Player/player";
+/* controllers */
+@import "../javascripts/components/MainView/main-view";
+@import "../javascripts/components/GameView/game-view";
 
 html {
   height: 100%;
