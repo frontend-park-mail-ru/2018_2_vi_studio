@@ -1,9 +1,9 @@
 import Component from "../Component.js";
 import VirtualDOM from "../VirtualDOM.js";
 import renderProfile from "./Profile.pug.js";
-import constants from "../../constants.js";
+import {SERVER_PATH} from "../../constants.js";
 
-const AVATAR_PATH = constants.SERVER_PATH + '/media/images/';
+const AVATAR_PATH = SERVER_PATH + '/media/images/';
 
 export default class Profile extends Component {
     constructor(props = {}) {

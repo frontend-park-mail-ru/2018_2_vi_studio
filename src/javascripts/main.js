@@ -3,6 +3,7 @@
 import Router from './Router.js';
 import MainController from './controllers/MainController.js';
 import GameController from './controllers/GameController.js';
+import EVENTS from './events.js'
 import bus from './bus.js';
 
 // import runtime from 'serviceworker-webpack-plugin/lib/runtime';
@@ -21,9 +22,9 @@ if ('serviceWorker' in navigator) {
 const root = document.getElementById('root');
 const router = new Router(root);
 
-bus.on('GameController-event-QueuePosition', info => alert('QUEUE POSITION: ' + info));
-bus.on('GameController-event-GameStart', () => alert('GAME START'));
-bus.on('GameController-event-GameOver', () => alert('GAME OVER'));
+bus.on(EVENTS.QUEUE_POSITION, info => alert('QUEUE POSITION: ' + info));
+bus.on(EVENTS.GAME_START, () => alert('GAME START'));
+bus.on(EVENTS.GAME_OVER, () => alert('GAME OVER'));
 
 
 router

@@ -5,11 +5,7 @@ export default class OfflineGameService extends GameService {
     constructor() {
         super();
 
-        const game = new OfflineGame();
-        game.emitGameStart = data => this.onMessage({data: data, event: 'GameStart'});
-        game.emitNextTry = data => this.onMessage({data: data, event: 'NextTry'});
-        game.emitWrongTry = data => this.onMessage({data: data, event: 'WrongTry'});
-        this.game = game;
+        this.game = new OfflineGame(this.onMessage.bind(this));
     }
 
     onReadyToPlay(data) {

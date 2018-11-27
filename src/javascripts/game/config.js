@@ -37,7 +37,7 @@ const SPECIAL_TILES = {
 const FROM_GATES_MOVEMENT = {
     0: {
         0: {
-            row :-1,
+            row: -1,
             col: 0,
             gate: 3,
         },
@@ -69,7 +69,7 @@ const FROM_GATES_MOVEMENT = {
     },
     1: {
         0: {
-            row :-1,
+            row: -1,
             col: 0,
             gate: 3,
         },
@@ -117,7 +117,7 @@ const COLORS = {
     STONE_YELLOW_BOARD: 'rgb(160, 160, 20)',
     STONE_GREEN: 'rgb(60, 130, 60)',
     STONE_GREEN_BOARD: 'rgb(25, 100, 40)',
-
+    SELECTED_TILE: 'rgb(255, 200, 80)'
 };
 
 const WAY_WIDTH = 20;

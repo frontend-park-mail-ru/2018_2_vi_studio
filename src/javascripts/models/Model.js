@@ -1,8 +1,8 @@
-import constants from "../constants.js"
+import {SERVER_PATH} from "../constants.js"
 
 export default class Model {
     constructor() {
-        this.path = constants.SERVER_PATH;
+        this.path = SERVER_PATH;
     }
 
     getAll() {

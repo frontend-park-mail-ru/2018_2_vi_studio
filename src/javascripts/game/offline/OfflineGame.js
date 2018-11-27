@@ -7,22 +7,18 @@ import Bot from "./gameObjects/Bot.js";
 import SideTile from "./gameObjects/SideTile.js";
 import CentralTile from "./gameObjects/CentralTile.js";
 import TileWithWays from "./gameObjects/TileWithWays.js";
-
+import EVENTS from "../../events.js";
 
 const USER_ID = 1;
 const BOT_ID = 2;
-const noop = () => {
-};
 
 export default class OfflineGame {
-    constructor() {
-        // this.emitQueuePosition = noop();
-        this.emitGameStart = noop();
-        this.emitNextTry = noop();
-        this.emitWrongTry = noop();
+    constructor(emit) {
+        this.emitGameStart = data => emit({data: data, event: EVENTS.GAME_START});
+        this.emitNextTry = data => emit({data: data, event: EVENTS.NEXT_TRY});
+        this.emitWrongTry = data => emit({data: data, event: EVENTS.WRONG_TRY});
 
         this.currentPlayer = USER_ID;
-
 
         //    GameObjects
         this.players = [new Player(USER_ID, 'nickname', ''), new Bot(BOT_ID)];

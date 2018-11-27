@@ -21,6 +21,8 @@ export default class Bot extends Player {
     getNextTile(type) {
         let tempTile = new TileWithWays();
         tempTile.setType(type);
+
+        // TODO: make same logic
         for (let i = 0; i < ROWS_COUNT; i++) {
             for (let j = 0; j < COLUMNS_COUNT; j++) {
                 const tile = this.tileMap.tiles[i][j];

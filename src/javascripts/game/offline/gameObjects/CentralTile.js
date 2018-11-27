@@ -1,8 +1,8 @@
-import Tile from "./Tile.js";
-import {SPECIAL_TILES} from "../../config.js";
+// import Tile from "./Tile.js";
+// import {SPECIAL_TILES} from "../../config.js";
 import {STONE_TYPES} from "../../config.js";
 
-
+// TODO: write
 class CentralTile {
     constructor() {
         this.stonesTypes = [

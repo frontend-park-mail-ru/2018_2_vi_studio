@@ -10,10 +10,11 @@ export default class Tile {
             for(let i = 0; i < rotationCount; i++) {
                 const last = this.gates.pop();
                 this.gates.unshift(last);
-                for(let i = 0; i < this.gates.length; i++) {
-                    this.gates[i] += 1;
-                    this.gates[i] %= 6;
-                }
+                this.gates.forEach(gate => gate = (gate + 1) % 6);
+                // for(let i = 0; i < this.gates.length; i++) {
+                //     this.gates[i] += 1;
+                //     this.gates[i] %= 6;
+                // }
             }
         }
         this.rotationCount = rotationCount;

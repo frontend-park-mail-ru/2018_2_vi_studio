@@ -1,4 +1,4 @@
-import {GameCore} from "./GameCore.js";
+import GameCore from "./GameCore.js";
 import EVENTS from "../../events.js";
 import bus from "../../bus.js";
 import {TILE_SIZE} from "../config.js";
@@ -31,41 +31,34 @@ class Game extends GameCore {
 
     start() {
         super.start();
-        bus.emit('game-event-ReadyToPlay', {});
+        bus.emit(EVENTS.READY_TO_PLAY, {});
     }
 
     onMouseClicked(evt) {
         console.log(this.players[this.currentPlayerIndex].id, this.userId);
         const currentPlayer = this.players[this.currentPlayerIndex];
         if (currentPlayer.id === this.userId) {
-            const tiles = this.boardScene.tileMap.tiles;
+            // const tiles = this.boardScene.tileMap.tiles;
             const x = evt.x * this.boardScene.canvas.width / this.boardScene.canvasRectLen;
             const y = evt.y * this.boardScene.canvas.height / this.boardScene.canvasRectLen;
+            const tile = this.boardScene.tileMap.getTile(x, y);
 
+            if ((tile instanceof TileWithWays) &&
+                (!tile.settled) &&
+                (TILE_SIZE.x * TILE_SIZE.x >
+                    (tile.x - x) * (tile.x - x) + (tile.y - y) * (tile.y - y))) {
 
-            for (let i = 0; i < this.boardScene.tileMap.rows; i++) {
-                for (let j = 0; j < this.boardScene.tileMap.columns; j++) {
-                    if ((tiles[i][j] instanceof TileWithWays) &&
-                        (!tiles[i][j].settled) &&
-                        (TILE_SIZE.x * TILE_SIZE.x >
-                            (tiles[i][j].x - x) * (tiles[i][j].x - x) + (tiles[i][j].y - y) * (tiles[i][j].y - y))) {
-
-                        if (this.tileScene.selectedTile) {
-                            this.tileScene.selectedTile.setType(null);
-                            this.tileScene.selectedTile.setRotation(0);
-                            this.tileScene.selectedTile.fillStyle = COLORS.BACKGROUND;
-                        }
-                        this.tileScene.selectedTile = this.boardScene.tileMap.tiles[i][j];
-                        this.tileScene.selectedTile.row = i;
-                        this.tileScene.selectedTile.col = j;
-
-                        this.tileScene.selectedTile.fillStyle = '#ffbd57';
-                        this.tileScene.selectedTile.setType(this.tileScene.tile.type);
-                        this.tileScene.selectedTile.setRotation(this.tileScene.tile.rotationCount);
-                        bus.emit(EVENTS.GAME_STATE_CHANGED, this.state);
-                        return;
-                    }
+                if (this.tileScene.selectedTile) {
+                    this.tileScene.selectedTile.setType(null);
+                    this.tileScene.selectedTile.setRotation(0);
+                    this.tileScene.selectedTile.fillStyle = COLORS.BACKGROUND;
                 }
+                this.tileScene.selectedTile = tile;
+
+                this.tileScene.selectedTile.fillStyle = COLORS.SELECTED_TILE;
+                this.tileScene.selectedTile.setType(this.tileScene.tile.type);
+                this.tileScene.selectedTile.setRotation(this.tileScene.tile.rotationCount);
+                bus.emit(EVENTS.GAME_STATE_CHANGED, this.state);
             }
         }
     }
@@ -120,7 +113,7 @@ class Game extends GameCore {
             this.tileScene.tile.setType(evt.currentTry.tileType);
             this.tileScene.renderScene();
             // console.log("DEFORE", evt.stones);
-            for(let i = 0; i < this.boardScene.tileMap.stones.length; i++) {
+            for (let i = 0; i < this.boardScene.tileMap.stones.length; i++) {
                 this.boardScene.tileMap.stones[i].setPos(this.boardScene.tileMap.tiles[evt.stones[i].row][evt.stones[i].col], evt.stones[i].gate);
                 this.boardScene.tileMap.stones[i].isOutOfGame = evt.stones[i].isOutOfGame;
             }

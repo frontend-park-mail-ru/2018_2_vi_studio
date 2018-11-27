@@ -1,8 +1,7 @@
 import EVENTS from "../../events.js";
 import bus from "../../bus.js";
 
-
-class GameCore {
+export default class GameCore {
     constructor() {
         this.onGameStarted = this.onGameStarted.bind(this);
         this.onGameFinished = this.onGameFinished.bind(this);
@@ -15,10 +14,9 @@ class GameCore {
     }
 
 
-    // TODO: rewrite EVENTS
     start() {
         bus.on(EVENTS.GAME_START, this.onGameStarted);
-        bus.on(EVENTS.FINISH_GAME, this.onGameFinished);
+        bus.on(EVENTS.GAME_OVER, this.onGameFinished);
         bus.on(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
         bus.on(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.on(EVENTS.NEXT_TRY, this.onNextTry);
@@ -29,7 +27,7 @@ class GameCore {
         clearInterval(this.controllersLoopIntervalId);
 
         bus.off(EVENTS.GAME_START, this.onGameStarted);
-        bus.off(EVENTS.FINISH_GAME, this.onGameFinished);
+        bus.off(EVENTS.GAME_OVER, this.onGameFinished);
         bus.off(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
         bus.off(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.off(EVENTS.NEXT_TRY, this.onNextTry);

@@ -7,7 +7,7 @@ export default class GameScene {
         const ctx = canvas.getContext('2d');
         this.ctx = ctx;
         this.scene = new Scene(ctx);
-        this.state = null;
+        // this.state = null;
         this.requestFrameId = null;
 
         this.renderScene = this.renderScene.bind(this);
