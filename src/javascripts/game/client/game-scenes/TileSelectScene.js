@@ -1,29 +1,30 @@
 import Scene from "./Scene.js";
 import bus from '../../../bus.js';
-// import {TileMap} from "../graphics/TileMap.js";
 import {TileWithWays} from "../graphics/TileWithWays.js";
 import EVENTS from "../../../events.js";
+import {COLORS} from "../../config.js";
 
 export default class TileSelectScene {
     constructor(canvas) {
         this.canvas = canvas;
+
         const ctx = canvas.getContext('2d');
         this.ctx = ctx;
         this.scene = new Scene(ctx);
-        this.state = null;
-        this.requestFrameId = null;
+        // this.state = null;
+        // this.requestFrameId = null;
 
         this.rotate = this.rotate.bind(this);
         this.submit = this.submit.bind(this);
         this.selectedTile = null;
         this.tile = null;
 
-        this.canvasRectLen = canvas.getBoundingClientRect().height;
+        // this.canvasRectLen = canvas.getBoundingClientRect().height;
         this.renderScene = this.renderScene.bind(this);
     }
 
     rotate(){
-        console.log('rotate');
+        // console.log('rotate');
         if (this.selectedTile) {
             this.selectedTile.rotate();
         }
@@ -34,17 +35,18 @@ export default class TileSelectScene {
     };
 
     submit(){
-        console.log('submit');
+        // console.log('submit');
         if (this.selectedTile) {
-
+            this.selectedTile.fillStyle = COLORS.BACKGROUND;
             let data = {
                 row: this.selectedTile.row,
                 col: this.selectedTile.col,
-                rotation: this.selectedTile.rotationCount,
+                rotationCount: this.selectedTile.rotationCount,
             };
-            bus.emit('GameController-event-DoneTry', data);
+            bus.emit(EVENTS.DONE_TRY, data);
             bus.emit(EVENTS.GAME_STATE_CHANGED, {});
-            this.selectedTile = null;
+
+            // this.selectedTile = null;
 
         } else {
             alert('Select tile position, please!');
@@ -54,7 +56,7 @@ export default class TileSelectScene {
 
     init(state) {
         // Установка начальных данных
-        const ctx = this.ctx;
+        // const ctx = this.ctx;
         const scene = this.scene;
 
         this.state = state;
@@ -62,7 +64,7 @@ export default class TileSelectScene {
         this.tile.x = 200;
         this.tile.y = 200;
         this.tile.id = scene.push(this.tile);
-        console.log('MINI-Scene: INIT', state);
+        // console.log('MINI-Scene: INIT', state);
         // this.tileMap.id = scene.push(this.tileMap);
 
     }
@@ -70,17 +72,18 @@ export default class TileSelectScene {
     setState(state) {
         this.tile.x = 200;
         this.tile.y = 200;
-        const scene = this.scene;
+        // const scene = this.scene;
         this.state = state;
-        console.log('MINI-Scene: setState', this.tile);
+        // console.log('MINI-Scene: setState', this.tile);
         // обратотать данные пришедшие с сервера
 
     }
 
     renderScene() {
-        const ctx = this.ctx;
-        const scene = this.scene;
-        scene.render();
+        // const ctx = this.ctx;
+        // const scene = this.scene;
+        // scene.render();
+        this.scene.render();
 
     }
 
@@ -89,7 +92,7 @@ export default class TileSelectScene {
         // this.requestFrameId = requestAnimationFrame(this.renderScene);
 
         this.renderScene();
-        console.log('MINI-Scene: start', this.tile);
+        // console.log('MINI-Scene: start', this.tile);
     }
 
     stop() {

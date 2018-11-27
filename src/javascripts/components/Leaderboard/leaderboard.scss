@@ -30,4 +30,12 @@
       display: inline-block;
     }
   }
+
+  .leaders__page-up, .leaders__page-down {
+    margin: -15px 130px;
+
+    &_disabled {
+      opacity: 0.2;
+    }
+  }
 }

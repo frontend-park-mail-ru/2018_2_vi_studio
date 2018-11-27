@@ -1,11 +1,13 @@
-const prefix = 'game-event-';
-
 const EVENTS = {
-    GAME_START: prefix + 'GameStart',
-    FINISH_GAME: 'FINISH_GAME',
+    QUEUE_POSITION: 'QUEUE_POSITION',
+    GAME_START: 'GameStart',
+    GAME_OVER: 'GameOver',
     MOUSE_CLICKED: 'MOUSE_CLICKED',
     GAME_STATE_CHANGED: 'GAME_STATE_CHANGED',
-    NEXT_TRY: prefix + 'NextTry',
+    NEXT_TRY: 'NextTry',
+    WRONG_TRY: 'WrongTry',
+    READY_TO_PLAY: 'READY_TO_PLAY',
+    DONE_TRY: 'DONE_TRY'
 };
 
 export default EVENTS;

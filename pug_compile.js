@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const pug = require('pug');
 
+compilePug('src');
 
 function walk(dir, done) {
     let results = [];
@@ -48,4 +49,8 @@ function compilePug(path) {
     })
 }
 
-module.exports = compilePug;
+if (require.main === module) {
+    compilePug(process.argv[2])
+} else {
+    module.exports = compilePug;
+}

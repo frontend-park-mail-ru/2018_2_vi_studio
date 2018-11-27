@@ -1,4 +1,7 @@
-import {Tile} from "./tile.js";
+import Tile from "./Tile.js";
+import {COLORS} from "../../config.js";
+
+const GATE_TILE_RADIUS = 30;
 
 class GateTile extends Tile {
     constructor(ctx, zero) {
@@ -9,20 +12,22 @@ class GateTile extends Tile {
     }
 
     draw() {
+        this.fillStyle = COLORS.BACKGROUND_GATE;
         if (!this.zero) {
-            const ctx = this.ctx;
 
+            super.draw();
+            const ctx = this.ctx;
             ctx.beginPath();
-            ctx.arc(0, 0, 15, 0, 2 * Math.PI);
+            ctx.arc(0, 0, GATE_TILE_RADIUS, 0, 2 * Math.PI);
             ctx.lineWidth = 20;
-            ctx.strokeStyle = this.color;
-            ctx.stroke();
+            ctx.fillStyle = this.color;
+            ctx.fill();
             ctx.closePath();
         }
         else {
-            this.fillStyle = 'green';
+            super.draw();
+
         }
-        super.draw();
     }
 }
 

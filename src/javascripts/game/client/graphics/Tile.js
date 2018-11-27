@@ -1,20 +1,25 @@
-import {Base} from "./base.js";
-const DELTA_X = 60;
-const DELTA_Y = Math.sin(Math.PI / 3) * DELTA_X;
+import Base from "./Base.js";
+import {COLORS} from "../../config.js";
+import {TILE_SIZE} from "../../config.js";
+
+// TODO: rewrite
+// const DELTA_X = TILE_SIZE.x;
+// const DELTA_Y = TILE_SIZE.y;
 
 class Tile extends Base {
     constructor(ctx) {
         super(ctx);
         ctx.font = "15px Arial";
-        this.text = "";
         this.rotation = 0;
         this.rotationCount = 0;
-        this.xDelta = DELTA_X;
-        this.yDelta = DELTA_Y;
+
+        // TILE_SIZE.x = DELTA_X;
+        // TILE_SIZE.y = DELTA_Y;
+
         this.width = 0;
         this.height = 0;
-        this.fillStyle = 'yellow';
-        this.lineColor = 'green';
+        this.fillStyle = COLORS.BACKGROUND;
+        this.lineColor = COLORS.BORDER;
     }
 
     rotate() {
@@ -32,26 +37,26 @@ class Tile extends Base {
         ctx.strokeStyle = this.lineColor; // цвет линии
         ctx.fillStyle = this.fillStyle;
         ctx.beginPath();
-        let startX = - this.xDelta / 2;
-        let startY = - this.yDelta;
+        let startX = - TILE_SIZE.x / 2;
+        let startY = - TILE_SIZE.y;
         let pointerX = startX;
         let pointerY = startY;
         ctx.moveTo(pointerX, pointerY);  // left top
 
-        pointerX += this.xDelta;
+        pointerX += TILE_SIZE.x;
         ctx.lineTo(pointerX , pointerY);  // right top
 
-        pointerY += this.yDelta;
-        ctx.lineTo(pointerX + this.xDelta / 2, pointerY); // right middle
+        pointerY += TILE_SIZE.y;
+        ctx.lineTo(pointerX + TILE_SIZE.x / 2, pointerY); // right middle
 
-        pointerY += this.yDelta;
+        pointerY += TILE_SIZE.y;
         ctx.lineTo(pointerX, pointerY); // right bottom
 
-        pointerX -= this.xDelta;
+        pointerX -= TILE_SIZE.x;
         ctx.lineTo(pointerX, pointerY); // left bottom
 
-        pointerX -= this.xDelta / 2;
-        pointerY -= this.yDelta;
+        pointerX -= TILE_SIZE.x / 2;
+        pointerY -= TILE_SIZE.y;
         ctx.lineTo(pointerX, pointerY); // left middle
         ctx.lineTo(startX, startY);
         ctx.closePath();
@@ -59,7 +64,6 @@ class Tile extends Base {
         ctx.stroke();
         this.ctx.globalAlpha = 1;
         ctx.fillStyle = 'red';
-        ctx.fillText(this.text, -15, 0);
 
     }
 
@@ -72,4 +76,4 @@ class Tile extends Base {
     }
 }
 
-export {Tile};
+export default Tile;

@@ -7,47 +7,47 @@ export default class GameScene {
         const ctx = canvas.getContext('2d');
         this.ctx = ctx;
         this.scene = new Scene(ctx);
-        this.state = null;
+        // this.state = null;
         this.requestFrameId = null;
 
-
-        this.canvasRectLen = canvas.getBoundingClientRect().height;
         this.renderScene = this.renderScene.bind(this);
+    }
+
+    get canvasRectLen() {
+        return this.canvas.getBoundingClientRect().height
     }
 
     init(state) {
         // Установка начальных данных
         const ctx = this.ctx;
         const scene = this.scene;
-        console.log('GameController-Scenes: INIT');
+        console.log('GameController-Scenes: init');
         this.state = state;
 
         this.tileMap = new TileMap(ctx);
         this.tileMap.x = 0;
         this.tileMap.y = 5;
-        this.tileMap.init();
-        for (let i = 0; i < this.tileMap.rows; i++) {
-            for (let j = 0; j < this.tileMap.columns; j++) {
-
-                this.scene.push(this.tileMap.tiles[i][j]);
-            }
-        }
-
-        // this.tileMap.id = scene.push(this.tileMap);
-
+        this.tileMap.init(state.stones);
+        this.tileMap.tiles.forEach(tileLine => tileLine.forEach(tile => scene.push(tile)));
+        // for (let i = 0; i < this.tileMap.rows; i++) {
+        //     for (let j = 0; j < this.tileMap.columns; j++) {
+        //         scene.push(this.tileMap.tiles[i][j]);
+        //     }
+        // }
+        this.tileMap.stones.forEach(stone => scene.push(stone));
     }
 
-    setState(state) {
-        const scene = this.scene;
-        this.state = state;
-        // обратотать данные пришедшие с сервера
 
+    setState(state) {
+        // const scene = this.scene;
+        this.state = state;
     }
 
     renderScene() {
-        const ctx = this.ctx;
-        const scene = this.scene;
-        scene.render();
+        // const ctx = this.ctx;
+        // const scene = this.scene;
+        // scene.render();
+        this.scene.render();
     }
 
     start() {

@@ -1,27 +1,22 @@
-import bus from '../bus.js';
+import bus from '../../bus.js';
+import EVENTS from '../../events.js';
 
-const EVENTS = [
-    'QueuePosition',
-    'GameStart',
-    'NextTry',
-    'WrongTry',
-];
 
 export default class GameService {
     constructor() {
         this.onReadyToPlay = this.onReadyToPlay.bind(this);
         this.onDoneTry = this.onDoneTry.bind(this);
 
-        bus.on('game-event-ReadyToPlay', this.onReadyToPlay);
-        bus.on('game-event-DoneTry', this.onDoneTry);
+        bus.on(EVENTS.READY_TO_PLAY, this.onReadyToPlay);
+        bus.on(EVENTS.DONE_TRY, this.onDoneTry);
     }
 
     onMessage(message) {
-        console.log('on message: ', message);
-        if (EVENTS.includes(message.event)) {
-            bus.emit('game-event-' + message.event, message.data);
+        if (Object.values(EVENTS).includes(message.event)) {
+            console.log(message.event);
+            bus.emit(message.event, message.data);
         } else {
-            console.debug('Wrong Event', message.event);
+            console.log('Wrong Event', message.event);
         }
     }
 
@@ -34,20 +29,19 @@ export default class GameService {
     }
 
     destroy() {
-        bus.off('game-event-ReadyToPlay', this.onReadyToPlay);
-        bus.off('game-event-DoneTry', this.onDoneTry);
+        bus.off(EVENTS.READY_TO_PLAY, this.onReadyToPlay);
+        bus.off(EVENTS.DONE_TRY, this.onDoneTry);
     }
 }
 
 /*
 ------------------------------------------ RESPONSES ------------------------------------------
-// game-event-QueuePosition
-event: QueuePosition
+event: QUEUE_POSITION
 data: {
     position int
 }
-// game-event-GameStart
-event: GameStart
+
+event: GAME_START
 data: {
     players: [
         {   id int // local (game) id
@@ -56,8 +50,8 @@ data: {
         }
     ]
 }
-// game-event-NextTry
-event: NextTry
+
+event: NEXT_TRY
 data: {
     lastTry: {
         row int
@@ -75,15 +69,15 @@ data: {
         ]
     }
 }
-// game-event-WrongTry
-event: WrongTry
+
+event: WRONG_TRY
 data: {}
+
 ------------------------------------------ REQUESTS ------------------------------------------
-// game-event-ReadyToPlay
-event: ReadyToPlay
+event: READY_TO_PLAY
 data: {}
-// game-event-DoneTry
-event: DoneTry
+
+event: DONE_TRY
 data: {
     row int
     col int

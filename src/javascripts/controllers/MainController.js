@@ -9,9 +9,9 @@ import Video from "../components/Video/Video.js";
 import SessionModel from "../models/SessionModel.js";
 import LeaderModel from "../models/LeaderModel.js";
 import Profile from "../components/Profile/Profile.js";
-import Button from "../components/Button/Button.js";
 import MainView from "../components/MainView/MainView.js";
-import constants from "../constants.js";
+import SignInForm from "../components/SignInForm/SignInForm.js";
+import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 
 const USER_NAV_ITEMS = [
     {title: 'Online Game', href: '/game/online'},
@@ -31,8 +31,6 @@ const GUEST_NAV_ITEMS = [
     {title: 'Rules', href: '/rules'},
 ];
 
-const AVATAR_PATH = constants.SERVER_PATH + '/media/images/';
-
 export default class MainController extends Controller {
     constructor(router) {
         super(MainView);
@@ -49,7 +47,7 @@ export default class MainController extends Controller {
             sign_out: () => {
                 SessionModel.remove();
                 this.renderNav(true);
-                this.router.open('/')
+                this.router.open('/');
             }
         };
 
@@ -60,7 +58,7 @@ export default class MainController extends Controller {
         const action = args[0];
 
         if (action && this.actions[action]) {
-            this.actions[action]()
+            this.actions[action]();
         } else if (action) {
             this.router.open('/');
         } else {
@@ -71,7 +69,7 @@ export default class MainController extends Controller {
     renderNav(ignoreAuth) {
         if (ignoreAuth) {
             Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._view.nav);
-            return
+            return;
         }
 
         UserModel.get().then(
@@ -79,11 +77,9 @@ export default class MainController extends Controller {
                 if (response.error) {
                     Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._view.nav)
                 } else {
+
                     Component.render([
-                        new Profile({
-                            name: response.nickname,
-                            avatar: AVATAR_PATH + response.avatar
-                        }),
+                        new Profile({name: response.nickname, avatar: response.avatar}),
                         new Navigation({items: USER_NAV_ITEMS})
                     ], this._view.nav);
                 }
@@ -92,27 +88,25 @@ export default class MainController extends Controller {
     }
 
     renderSignIn() {
-        const inputs = [
-            {label: 'Nickname', name: 'nickname', type: 'text'},
-            {label: 'Password', name: 'password', type: 'password'},
-            {label: 'Sign in', type: 'submit'},
-        ];
-
-        const form = new Form({inputs: inputs});
+        const form = new SignInForm();
         Component.render(form, this._view.content);
 
-        const formEl = form.element;
-        console.log(formEl);
-        formEl.addEventListener("submit", event => {
-            console.log(formEl);
+        form.element.addEventListener("submit", event => {
             event.preventDefault();
-            SessionModel.add({
-                nickname: formEl.nickname.value,
-                password: formEl.password.value
-            }).then(obj => {
+
+            if (!form.isValid()) {
+                return;
+            }
+
+            SessionModel.add(form.getData()).then(obj => {
                 console.log(obj);
-                this.renderNav();
-                this.router.open('/');
+                if (obj.error) {
+                    // console.log('ERROR');
+                    form.showError(obj.error);
+                } else {
+                    this.renderNav();
+                    this.router.open('/');
+                }
             }).catch(error => {
                 console.log(error);
                 form.showError('Wrong username or password');
@@ -121,28 +115,23 @@ export default class MainController extends Controller {
     };
 
     renderSignUp() {
-        const inputs = [
-            {label: 'Nickname', name: 'nickname', type: 'text'},
-            {label: 'E-mail', name: 'email', type: 'email'},
-            {label: 'Password', name: 'password', type: 'password'},
-            {label: 'Repeat password', name: 'rep_password', type: 'password'},
-            {label: 'Sign up', type: 'submit'},
-        ];
 
-        const form = new Form({inputs: inputs});
+
+        const form = new SignUpForm();
         Component.render(form, this._view.content);
 
         const formEl = form.element;
         formEl.addEventListener("submit", event => {
             event.preventDefault();
+
+            if (!form.isValid()) {
+                return;
+            }
+
             if (formEl.password.value === formEl.rep_password.value) {
-                UserModel.add({
-                    nickname: formEl.nickname.value,
-                    email: formEl.email.value,
-                    password: formEl.password.value,
-                }).then(obj => {
+                UserModel.add(form.getData()).then(obj => {
                     console.log(obj);
-                    this.router.open('sign_in');
+                    this.router.open('/sign_in');
                 }).catch(error => {
                     console.log(error);
                     form.showError('Error');
@@ -150,7 +139,7 @@ export default class MainController extends Controller {
             } else {
                 form.showError('Passwords do not match');
             }
-        })
+        });
     }
 
     renderProfile() {
@@ -193,22 +182,25 @@ export default class MainController extends Controller {
             }).catch(error => {
                 // TODO: handle
             });
-        })
+        });
     }
 
     renderLeaders(page = 1) {
-        LeaderModel.getAll(page).then(leaders => {
-                const prev = new Button({label: '<-'});
-                const next = new Button({label: '->'});
+        LeaderModel.getAll(page).then(response => {
+                const leaderboard = new Leaderboard({leaders: response.leaders});
+                Component.render(leaderboard, this._view.content);
 
                 if (page === 1) {
-                    Component.render([new Leaderboard({leaders: leaders}), next], this._view.content);
+                    leaderboard.pageUpButtonDisable()
                 } else {
-                    Component.render([new Leaderboard({leaders: leaders}), prev, next], this._view.content);
+                    leaderboard.pageUpButton.addEventListener('click', () => this.renderLeaders(page - 1));
                 }
 
-                prev.element.addEventListener('click', () => this.renderLeaders(page - 1));
-                next.element.addEventListener('click', () => this.renderLeaders(page + 1));
+                if (page === response.pageCount) {
+                    leaderboard.pageDownButtonDisable();
+                } else {
+                    leaderboard.pageDownButton.addEventListener('click', () => this.renderLeaders(page + 1));
+                }
             }
         );
     }

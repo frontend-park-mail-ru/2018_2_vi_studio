@@ -1,6 +1,6 @@
 import Controller from './Controller.js';
 import GameView from "../components/GameView/GameView.js";
-import GameCoreImpl from "../game/client/core/GameCoreImpl.js";
+import Game from "../game/client/Game.js";
 import OnlineGameService from "../game/online/OnlineGameService.js";
 import OfflineGameService from "../game/offline/OfflineGameService.js";
 import EVENTS from "../events.js";
@@ -10,14 +10,17 @@ const LEN_X = 60;
 const LEN_Y = Math.sin(Math.PI / 3) * LEN_X;
 
 export default class GameController extends Controller {
-    constructor() {
+    constructor(router) {
         super(GameView);
 
+        this.router = router;
+
         this._onClick = this._handleEvent.bind(this, 'click');
+        this.stop = this.stop.bind(this);
     }
 
     handle(args = []) {
-        const gameCore = new GameCoreImpl(this._view);
+        const gameCore = new Game(this._view);
 
         switch (args[0]) {
             case 'offline': {
@@ -40,17 +43,24 @@ export default class GameController extends Controller {
     start() {
         console.log("GameControllers: Start");
         this._view.boardCanvas.addEventListener('click', this._onClick);
+        bus.on(EVENTS.GAME_OVER, this.stop)
     }
 
     stop() {
         this._view.boardCanvas.removeEventListener('click', this._onClick);
+        this.router.open('/');
+        bus.off(EVENTS.GAME_OVER, this.stop)
+
     }
 
     _handleEvent(type, event) {
         console.log(type, event);
         if (type === 'click') {
-            // this.clickEvent['event'] = event;
-            bus.emit(EVENTS.MOUSE_CLICKED, event);
+            bus.emit(EVENTS.MOUSE_CLICKED, {
+                ...event,
+                x: event.pageX - event.target.offsetLeft,
+                y: event.pageY - event.target.offsetTop,
+            });
         }
     }
 }
