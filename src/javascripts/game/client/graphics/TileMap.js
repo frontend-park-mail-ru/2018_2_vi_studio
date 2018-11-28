@@ -5,6 +5,7 @@ import {CentralTile} from "./CentralTile.js";
 import {GateTile} from "./GateTile.js";
 import {Emerald} from "./Emerald.js";
 import {TILE_SIZE} from "../../config.js";
+import TileMapGO from "../../offline/gameObjects/TileMap.js";
 
 const ROWS_COUNT = 10;
 const COLUMNS_COUNT = 11;
@@ -18,6 +19,7 @@ const TYPES = {
 
 export class TileMap {
     constructor(ctx) {
+        this.gameObject = new TileMapGO();
         this.ctx = ctx;
         this.x = 80;
         this.y = 40;
@@ -167,7 +169,8 @@ export class TileMap {
 
     }
 
-    init(stones) {
+    init() {
+        this.gameObject.init();
         this.initSchema();
         // this.gates = [];
         this.tiles = this.schema.map((schemaLine, i) => {
@@ -200,44 +203,11 @@ export class TileMap {
                 tile.x += TILE_SIZE.x;
 
                 return tile;
-            })
+            });
+
+
         });
-        // for (let i = 0; i < ROWS_COUNT; i++) {
-        //     this.tiles.push([]);
-        //     for (let j = 0; j < COLUMNS_COUNT; j++) {
-        //         let tile = null;
-        //         switch (this.schema[i][j].type) {
-        //             case TYPES.UNDEF:
-        //                 tile = new Base(this.ctx);
-        //                 break;
-        //             case TYPES.SIDE:
-        //                 tile = new SideTile(this.ctx, this.schema[i][j].rotation);
-        //                 // this.emeralds.push(new Emerald(this.ctx, tile, row, col, tile.get_gate));
-        //                 break;
-        //             case TYPES.CENTRAL:
-        //                 tile = new CentralTile(this.ctx);
-        //                 break;
-        //             case TYPES.GATE:
-        //                 tile = new GateTile(this.ctx, this.schema[i][j].zero);
-        //                 break;
-        //             default:
-        //                 tile = new TileWithWays(this.ctx);
-        //         }
-        //         // if (j !== 0) {
-        //         //     tile.x = 1.5 * j * TILE_SIZE.x;
-        //         // } else {
-        //         //     tile.x = j * 2 * TILE_SIZE.x;
-        //         // }
-        //         tile.x = 1.5 * j * TILE_SIZE.x;
-        //         if (j % 2 === 0) {
-        //             tile.y = (i * 2 + 1) * TILE_SIZE.y;
-        //         } else {
-        //             tile.y = (i * 2) * TILE_SIZE.y;
-        //         }
-        //         tile.x += TILE_SIZE.x;
-        //         this.tiles[i].push(tile);
-        //     }
-        // }
+
 
         this.gates.push(this.tiles[1][7]);
         this.gates[0].gates = [null, null, null, 0, 0, null];
@@ -275,9 +245,9 @@ export class TileMap {
         this.gates.push(this.tiles[1][3]);
         this.gates[11].gates = [null, null, 1, 1, null, null];
 
-        this.stones = stones.map(stone => new Emerald(this.ctx, stone.gate, this.tiles[stone.row][stone.col], stone.type));
+        this.stones = this.gameObject.stones.map(stone => new Emerald(this.ctx, stone.gate, this.tiles[stone.row][stone.col], stone.type));
 
-        // stones.forEach(stone => {
+        // this.gameObject.stones.forEach(stone => {
         //     this.stones.push(new Emerald(this.ctx, stone.gate, this.tiles[stone.row][stone.col], stone.type));
         // });
     }
@@ -306,17 +276,6 @@ export class TileMap {
 
         return tile;
 
-        // if (j !== 0) {
-        //     tile.x = 1.5 * j * TILE_SIZE.x;
-        // } else {
-        //     tile.x = j * 2 * TILE_SIZE.x;
-        // }
-        // if (j % 2 === 0) {
-        //     tile.y = (i * 2 + 1) * TILE_SIZE.y;
-        // } else {
-        //     tile.y = (i * 2) * TILE_SIZE.y;
-        // }
-        // tile.x += TILE_SIZE.x;
     }
 
     // getTiles() {
