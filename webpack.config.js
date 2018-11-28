@@ -77,9 +77,9 @@ module.exports = {
         // new UglifyJsPlugin()
     ] : [
         new ExtractTextPlugin('[name].bundle.css'),
-        // new ServiceWorkerWebpackPlugin({
-        //     entry: path.join(__dirname, 'src/sw.js'),
-        // }),
+        new ServiceWorkerWebpackPlugin({
+            entry: path.join(__dirname, 'src/sw.js'),
+        }),
     ],
     node: {
         fs: 'empty'

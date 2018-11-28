@@ -6,16 +6,17 @@ import GameController from './controllers/GameController.js';
 import EVENTS from './events.js'
 import bus from './bus.js';
 
-// import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', {scope: '/build/'})
-        .then((registration) => {
-            console.log('sw registration on scope:', registration.scope);
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+    const registration = runtime.register();
+    // navigator.serviceWorker.register('/sw.js', {scope: '/build/'})
+    //     .then((registration) => {
+    //         console.log('sw registration on scope:', registration.scope);
+    //     })
+    //     .catch((err) => {
+    //         console.error(err);
+    //     });
 }
 
 

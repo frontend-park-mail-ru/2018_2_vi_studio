@@ -3,17 +3,17 @@
 const CACHE_NAME = 'indigo_serviceworker_v_1';
 // const MAX_AGE = 300;
 
-// const { assets } = global.serviceWorkerOption;
+const { assets } = global.serviceWorkerOption;
 //
-// let assetsToCache = [...assets.map( asset => "/build" + asset)];
-let assetsToCache = [
-    '/',
-    '/sign_up',
-    '/sign_in',
-    '/leaders',
-
-    '/build/main.bundle.js',
-];
+let assetsToCache = [...assets.map( asset => "/build" + asset), '/'];
+// let assetsToCache = [
+//     '/',
+//     '/sign_up',
+//     '/sign_in',
+//     '/leaders',
+//
+//     '/build/main.bundle.js',
+// ];
 
 
 // assetsToCache = assetsToCache.map(path => {
