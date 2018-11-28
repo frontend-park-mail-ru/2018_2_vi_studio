@@ -232,8 +232,6 @@ export default class TileMap {
 
         this.gates.push(this.tiles[1][3]);
         this.gates[11].gates = [null, null, 1, 1, null, null];
-
-
     }
 
     haveCollisions(index) {

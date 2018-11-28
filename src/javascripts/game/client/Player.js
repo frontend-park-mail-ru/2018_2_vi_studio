@@ -6,6 +6,7 @@ export default class Player {
         this.nickname = nickname;
         this.avatar = avatar;
         this._active = false;
+        this.points = 0;
 
         this._component = new PlayerComponent({nickname: nickname, avatar: avatar});
     }
