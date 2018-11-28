@@ -169,7 +169,7 @@ export default class MainController extends Controller {
             event.preventDefault();
             if (formEl.password.value !== formEl.rep_password.value) {
                 form.showError('Passwords do not match');
-                return
+                return;
             }
 
             UserModel.update({
@@ -193,7 +193,7 @@ export default class MainController extends Controller {
                 Component.render(leaderboard, this._view.content);
 
                 if (page === 1) {
-                    leaderboard.pageUpButtonDisable()
+                    leaderboard.pageUpButtonDisable();
                 } else {
                     leaderboard.pageUpButton.addEventListener('click', () => this.renderLeaders(page - 1));
                 }

@@ -10,10 +10,10 @@ export default class SignInForm extends Form {
     constructor(props = {}) {
         super({inputs: inputs});
         this._element.nickname.addEventListener('blur', event => {
+            if (this.errors.indexOf('Wrong username or password') !== -1) {
+                this.hideError('Wrong username or password');
+            }
             if (this._element.nickname.value.length === 0) {
-                if (this.errors.indexOf('Wrong username or password') !== -1) {
-                    this.hideError('Wrong username or password');
-                }
                 this.showError('Fill nickname field');
             } else {
                 this.hideError('Fill nickname field');
@@ -21,11 +21,11 @@ export default class SignInForm extends Form {
         });
 
         this._element.password.addEventListener('blur', event => {
+            if (this.errors.indexOf('Wrong username or password') !== -1) {
+                this.hideError('Wrong username or password');
+            }
             if (this._element.password.value.length === 0) {
                 this.showError('Fill password field');
-                if (this.errors.indexOf('Wrong username or password') !== -1) {
-                    this.hideError('Wrong username or password');
-                }
             } else {
                 this.hideError('Fill password field');
             }
