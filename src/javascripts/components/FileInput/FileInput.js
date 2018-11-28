@@ -10,15 +10,16 @@ export default class FileInput extends Component {
         })));
 
         console.log(this.element);
-        const nameEl = this._element.getElementsByClassName('file-input__name')[0];
+        const nameEl = this._element.getElementsByClassName('file-input__file-name')[0];
+        const inputEl = this._element.getElementsByClassName('file-input__input')[0];
 
         this._element.getElementsByClassName('file-input__button')[0].addEventListener('click', event => {
             event.preventDefault();
-            this.nextSibling.click();
+            inputEl.click();
         });
 
-        this._element.getElementsByClassName('file-input__input')[0].addEventListener('change', () => {
-            nameEl.innerText = this.value.replace('C:\\\\fakepath\\\\', '');
+        inputEl.addEventListener('change', () => {
+            nameEl.innerText = inputEl.value.replace('C:\\fakepath\\', '');
         });
     }
 }

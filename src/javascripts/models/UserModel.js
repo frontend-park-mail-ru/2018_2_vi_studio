@@ -23,6 +23,20 @@ class UserModel extends Model {
             }
         ).then(response => response.json());
     }
+
+    addAvatar(file) {
+        return fetch(
+            this.path + '/avatar',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                body: file,
+                credentials: "include"
+            }
+        ).then(response => response.json());
+    }
 }
 
 export default new UserModel();
