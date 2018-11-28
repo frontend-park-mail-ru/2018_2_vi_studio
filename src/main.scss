@@ -1,0 +1,46 @@
+@import "constants";
+/* components */
+@import "components/Background/background";
+@import "components/FileInput/file-input";
+@import "components/Navigation/navigation";
+@import "components/Video/video";
+@import "components/Form/form";
+@import "components/Leaderboard/leaderboard";
+@import "components/Rules/rules";
+@import "components/Profile/profile";
+@import "components/Player/player";
+/* controllers */
+@import "components/MainView/main-view";
+@import "components/GameView/game-view";
+
+html {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  display: flex;
+
+  #root {
+    min-height: 100%;
+    width: 100%;
+
+    .main-view {
+      min-height: 100%;
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}
