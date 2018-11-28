@@ -27,7 +27,11 @@ export default class GameScene {
         this.tileMap = new TileMap(ctx);
         this.tileMap.x = 0;
         this.tileMap.y = 5;
+        // this.tileMap.init(state.stones);
+
+        // TODO: rewrite
         this.tileMap.init(state.stones);
+
         this.tileMap.tiles.forEach(tileLine => tileLine.forEach(tile => scene.push(tile)));
         // for (let i = 0; i < this.tileMap.rows; i++) {
         //     for (let j = 0; j < this.tileMap.columns; j++) {

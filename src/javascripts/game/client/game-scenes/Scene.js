@@ -42,7 +42,6 @@ export default class Scene {
         // this.frontView.forEach(figure => figure.render());
         // console.log('render :', this.figures);
         Object.keys(this.figures).forEach(key => this.figures[key].render());
-        console.log("FIGURES ", this.figures);
     }
 
     clear() {

@@ -196,6 +196,7 @@ export default class TileMap {
                 this.tiles[i].push(tile);
             }
         }
+
         this.gates.push(this.tiles[1][7]);
         this.gates[0].gates = [null, null, null, 0, 0, null];
 

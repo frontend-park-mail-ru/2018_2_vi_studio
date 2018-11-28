@@ -1,4 +1,4 @@
-const path = '95.163.180.8:80';
+const path = '127.0.0.1';
 
-export const SERVER_WS_PATH = `ws://${path}/game-ws`;
-export const SERVER_PATH = `http://${path}`;
+export const SERVER_WS_PATH = `ws://${path}:8001`;
+export const SERVER_PATH = `http://${path}:8000`;

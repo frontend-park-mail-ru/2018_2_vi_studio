@@ -1,27 +1,37 @@
 @import '../../../stylesheets/consts';
 
 .player {
+  display: flex;
   background: #deceb3;
   margin: 20px;
   padding: 10px;
   border-radius: 40px;
+  max-width: 360px;
 
-  .player__avatar{
-    display: inline-block;
-    vertical-align: middle;
+  .player__avatar {
     width: 60px;
     height: 60px;
     border-radius: 30px;
   }
 
-  .player__name{
-    display: inline-block;
-    vertical-align: middle;
-    text-decoration: none;
-    font-family: sans-serif;
-    font-size: 20pt;
-    color: #343434;
-    padding-left: 20px;
+  .player__content {
+    flex-grow: 1;
+    padding: 5px 30px  5px 20px;
+
+    .player__name {
+      text-decoration: none;
+      font-family: sans-serif;
+      font-size: 20pt;
+      color: #343434;
+    }
+
+    .player__progress {
+      width: 100%;
+
+      &_hidden {
+        display: none;
+      }
+    }
   }
 
   &_active {

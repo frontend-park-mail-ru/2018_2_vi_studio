@@ -14,8 +14,12 @@ export default class Player {
         return this._component;
     }
 
-    activate() {
-        this._component.activate();
+    isActive() {
+        return this._active;
+    }
+
+    activate(showProgress = false) {
+        this._component.activate(showProgress);
         this._active = true;
     }
 

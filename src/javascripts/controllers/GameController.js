@@ -20,14 +20,18 @@ export default class GameController extends Controller {
     }
 
     handle(args = []) {
-        const gameCore = new Game(this._view);
+        bus.on(EVENTS.SERVICE_START, () => {
+            this.start();
+        });
 
         switch (args[0]) {
             case 'offline': {
+                this.gameCore = new Game(this._view);
                 this.servise = new OfflineGameService();
                 break;
             }
             case 'online': {
+                this.gameCore = new Game(this._view, true);
                 this.servise = new OnlineGameService();
                 break;
             }
@@ -35,22 +39,22 @@ export default class GameController extends Controller {
                 // TODO: handle differently
                 throw new Error('PAGE NOT FOUND');
         }
-
-        this.start();
-        gameCore.start();
     }
 
     start() {
+        bus.off(EVENTS.SERVICE_START, this.start);
+        bus.on(EVENTS.GAME_OVER, this.stop);
+
         console.log("GameControllers: Start");
         this._view.boardCanvas.addEventListener('click', this._onClick);
-        bus.on(EVENTS.GAME_OVER, this.stop)
+        this.gameCore.start();
     }
 
     stop() {
+        bus.off(EVENTS.GAME_OVER, this.stop);
+
         this._view.boardCanvas.removeEventListener('click', this._onClick);
         this.router.open('/');
-        bus.off(EVENTS.GAME_OVER, this.stop)
-
     }
 
     _handleEvent(type, event) {

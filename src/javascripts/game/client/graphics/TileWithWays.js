@@ -17,7 +17,10 @@ class TileWithWays extends Tile {
         } else {
             this.ways = null;
         }
+    }
 
+    getType() {
+        return this.type;
     }
 
     setRotation(rotationCount) {
@@ -25,11 +28,11 @@ class TileWithWays extends Tile {
         this.rotation = Math.PI / 3 * this.rotationCount;
     }
 
-    setTile() {
-        for (let i = 0; i < this.rotationCount; i++) {
-
-        }
-    }
+    // setTile() {
+    //     for (let i = 0; i < this.rotationCount; i++) {
+    //
+    //     }
+    // }
 
     draw() {
         // console.log('draw_tile');

@@ -9,8 +9,8 @@ import CentralTile from "./gameObjects/CentralTile.js";
 import TileWithWays from "./gameObjects/TileWithWays.js";
 import EVENTS from "../../events.js";
 
-const USER_ID = 1;
-const BOT_ID = 2;
+const USER_ID = 0;
+const BOT_ID = 1;
 
 export default class OfflineGame {
     constructor(emit) {

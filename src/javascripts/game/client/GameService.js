@@ -1,7 +1,6 @@
 import bus from '../../bus.js';
 import EVENTS from '../../events.js';
 
-
 export default class GameService {
     constructor() {
         this.onReadyToPlay = this.onReadyToPlay.bind(this);
@@ -16,7 +15,7 @@ export default class GameService {
             console.log(message.event);
             bus.emit(message.event, message.data);
         } else {
-            console.log('Wrong Event', message.event);
+            console.log('Wrong Event', message);
         }
     }
 

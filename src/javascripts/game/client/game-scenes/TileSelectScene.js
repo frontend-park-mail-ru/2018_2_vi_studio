@@ -61,8 +61,8 @@ export default class TileSelectScene {
 
         this.state = state;
         this.tile = new TileWithWays(this.ctx, state.type);
-        this.tile.x = 200;
-        this.tile.y = 200;
+        this.tile.x = 500;
+        this.tile.y = 500;
         this.tile.id = scene.push(this.tile);
         // console.log('MINI-Scene: INIT', state);
         // this.tileMap.id = scene.push(this.tileMap);
@@ -70,8 +70,8 @@ export default class TileSelectScene {
     }
 
     setState(state) {
-        this.tile.x = 200;
-        this.tile.y = 200;
+        this.tile.x = 500;
+        this.tile.y = 500;
         // const scene = this.scene;
         this.state = state;
         // console.log('MINI-Scene: setState', this.tile);

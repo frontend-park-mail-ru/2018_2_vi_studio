@@ -22,8 +22,7 @@ if ('serviceWorker' in navigator) {
 const root = document.getElementById('root');
 const router = new Router(root);
 
-bus.on(EVENTS.QUEUE_POSITION, info => alert('QUEUE POSITION: ' + info));
-bus.on(EVENTS.GAME_START, () => alert('GAME START'));
+bus.on(EVENTS.QUEUE_POSITION, data => alert('QUEUE POSITION: ' + data.position));
 bus.on(EVENTS.GAME_OVER, () => alert('GAME OVER'));
 
 

@@ -9,8 +9,8 @@ export default class Bot extends Player {
     constructor(id) {
         super(id);
         this.id = id;
-        this.nickname = 'Bot';
-        this.avatar = '';
+        this.nickname = 'Bot '+ id;
+        this.avatar = '/src/images/bot-avatar.png';
         // this.active = false;
     }
 

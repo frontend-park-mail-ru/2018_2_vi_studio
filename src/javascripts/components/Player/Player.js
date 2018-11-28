@@ -1,20 +1,38 @@
 import Component from "../Component.js";
 import VirtualDOM from "../VirtualDOM.js";
+import renderPlayer from "./Player.pug.js";
 
 export default class Player extends Component {
     constructor(props = {}) {
         super(VirtualDOM.createElementByHtml(
-            `<div class="player"><img src="/src/images/32c74035bac6fb7636c12d51130e846f.png" class="player__avatar"/><div class="player__name">${props.nickname || ''}</div></div>`
+            renderPlayer({
+                avatar: props.avatar || '/src/images/no-avatar.jpg',
+                nickname: props.nickname || '',
+            })
         ));
+
+        this._progressEl = this._element.getElementsByClassName('player__progress')[0];
     }
 
-    activate() {
-        this._element.classList.add('player_active');
+    activate(showProgress = false) {
+        this._element.classList.toggle('player_active', true);
+
+        if (showProgress) {
+            this._progressEl.classList.toggle('player__progress_hidden', false);
+            this._progressEl.value = 0;
+            const intervalId = setInterval(() => {
+                if (this._progressEl.value < 100) {
+                    this._progressEl.value++
+                } else {
+                    clearInterval(intervalId)
+                }
+            }, 150);
+        }
     }
 
     deactivate() {
-        this._element.classList.remove('player_active');
+        this._element.classList.toggle('player_active', false);
+
+        this._progressEl.classList.toggle('player__progress_hidden', true);
     }
-
-
 }
