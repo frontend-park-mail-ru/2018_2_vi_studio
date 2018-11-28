@@ -156,6 +156,8 @@ export default class MainController extends Controller {
         Component.render(form, this._view.content);
 
         const formEl = form.element;
+        const avatarEl = formEl.getElementsByClassName('file-input__input')[0];
+
         UserModel.get().then(obj => {
             formEl.nickname.value = obj.nickname;
             formEl.email.value = obj.email;
@@ -175,10 +177,10 @@ export default class MainController extends Controller {
                 email: formEl.email.value,
                 password: formEl.password.value,
             }).then(() =>
-                formEl.avatar.value !== '' ? UserModel.addAvatar(formEl.avatar.files[0]) : null
+                avatarEl.value !== '' ? UserModel.addAvatar(avatarEl.files[0]) : null
             ).then(() => {
                 this.renderNav();
-                this.router.open('/Profile');
+                this.router.open('/profile');
             }).catch(error => {
                 // TODO: handle
             });
