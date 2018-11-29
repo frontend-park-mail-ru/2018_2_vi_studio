@@ -14,8 +14,8 @@ import SignInForm from "../components/SignInForm/SignInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
 
 const USER_NAV_ITEMS = [
-    {title: 'Online Game', href: '/game/online'},
-    {title: 'Offline Game', href: '/game/offline'},
+    {title: 'Single player', href: '/game/offline'},
+    {title: 'Multi player', href: '/game/online'},
     {title: 'Home', href: '/'},
     {title: 'Profile', href: '/profile'},
     {title: 'Leaders', href: '/leaders'},
@@ -25,6 +25,7 @@ const USER_NAV_ITEMS = [
 
 const GUEST_NAV_ITEMS = [
     {title: 'Home', href: '/'},
+    {title: 'Single player', href: '/game/offline'},
     {title: 'Sign in', href: '/sign_in'},
     {title: 'Sign up', href: '/sign_up'},
     {title: 'Leaders', href: '/leaders'},

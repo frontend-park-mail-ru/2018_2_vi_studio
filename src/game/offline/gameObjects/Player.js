@@ -4,6 +4,5 @@ export default class Player {
         this.nickname = 'Player';
         this.avatar = '';
         this.points = 0;
-        // this.active = false;
     }
 }

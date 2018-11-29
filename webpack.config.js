@@ -1,11 +1,8 @@
 const isProd = process.env.NODE_ENV === 'production';
 const webpack = require('webpack');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
-
 
 console.log(`Is Production: ${isProd}`);
 
@@ -44,25 +41,17 @@ module.exports = {
             },
         ]
     },
-    plugins: isProd ? [
+    plugins: [
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
         }),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production')
+            'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
+            'process.env.SERVER_IP': JSON.stringify(process.env.SERVER_IP),
         }),
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'src/sw.js'),
         }),
-        // new UglifyJsPlugin()
-    ] : [
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
-        }),
-        new ServiceWorkerWebpackPlugin({
-            entry: path.join(__dirname, 'src/sw.js'),
-        }),
-    ],
+    ]
 };

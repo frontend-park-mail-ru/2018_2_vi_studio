@@ -63,4 +63,4 @@ typings/
 node_modules
 .idea
 build
-src/javascripts/components/*/*.pug.js
+*.pug.js

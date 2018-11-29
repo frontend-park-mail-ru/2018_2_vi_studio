@@ -2,6 +2,8 @@ import Component from "../Component.js";
 import renderFileInput from "./FileInput.pug.js"
 import VirtualDOM from "../VirtualDOM.js";
 
+const FILE_NAME_PATERN = /\/([^\/]+)$/;
+
 export default class FileInput extends Component {
     constructor(props = {}) {
         super(VirtualDOM.createElementByHtml(renderFileInput({
@@ -9,7 +11,6 @@ export default class FileInput extends Component {
             label: props.label || '',
         })));
 
-        console.log(this.element);
         const nameEl = this._element.getElementsByClassName('file-input__file-name')[0];
         const inputEl = this._element.getElementsByClassName('file-input__input')[0];
 
@@ -19,7 +20,7 @@ export default class FileInput extends Component {
         });
 
         inputEl.addEventListener('change', () => {
-            nameEl.innerText = inputEl.value.replace('C:\\fakepath\\', '');
+            nameEl.innerText = inputEl.value.match(FILE_NAME_PATERN)[1];
         });
     }
 }
