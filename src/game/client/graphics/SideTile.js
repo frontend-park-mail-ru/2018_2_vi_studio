@@ -6,9 +6,16 @@ export default class SideTile extends Tile {
     constructor(rotationCount, x, y) {
         super(x, y);
         this.fillStyle = COLORS.BACKGROUND_SIDE;
-        this.gates = SPECIAL_TILES.SIDE.gates.slice();
         // this.gates = [0, null, null, null, null, null];
         this._rotation = Math.PI / 3 * rotationCount;
+        let gates = SPECIAL_TILES.SIDE.gates.slice();
+        for (let i = 0; i < rotationCount; i++) {
+            gates.unshift(gates.pop()); // push last element to start
+            gates = gates.map(gate => (gate + 1) % 6);
+        }
+        this.gates = gates;
+
+
     }
 
     _draw(ctx) {

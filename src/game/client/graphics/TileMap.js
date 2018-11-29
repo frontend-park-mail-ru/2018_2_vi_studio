@@ -28,6 +28,7 @@ export class TileMap {
         this.stones = [];
 
         this.moveStones = this.moveStones.bind(this);
+        this.haveCollisions = this.haveCollisions.bind(this);
         this._moveStone = this._moveStone.bind(this);
     }
 
@@ -249,8 +250,10 @@ export class TileMap {
     }
 
     haveCollisions(stoneToCheck) {
-        const collisionStones = this.stones.filter(stone => stone.gate === stoneToCheck.gate && stone.row === stoneToCheck.row && stone.col === stoneToCheck.col);
-        if (collisionStones > 1) {
+        const collisionStones = this.stones
+            .filter(stone => !stone.isOutOfGame)
+            .filter(stone => stone.gate === stoneToCheck.gate && stone.row === stoneToCheck.row && stone.col === stoneToCheck.col);
+        if (collisionStones.length > 1) {
             collisionStones[0].isOutOfGame = true;
             collisionStones[1].isOutOfGame = true;
             return true;
@@ -259,7 +262,7 @@ export class TileMap {
     }
 
     moveStones() {
-        this.stones.filter(stone => !stone.move).forEach(stone => this._moveStone(stone));
+        this.stones.filter(stone => !stone.move && !stone.isOutOfGame).forEach(stone => this._moveStone(stone));
     }
 
     _moveStone(stone) {
@@ -277,15 +280,15 @@ export class TileMap {
         stone.setPos(neighbor, movement[stone.gate].gate);
         bus.emit(EVENTS.GAME_STATE_CHANGED);
 
-        if (this.haveCollisions(stone)) {
-            return;
-        }
-
         setTimeout((neighbor, gate) => {
             stone.setPos(neighbor, gate);
             bus.emit(EVENTS.GAME_STATE_CHANGED);
+
+            if (!this.haveCollisions(stone)) {
+                setTimeout(this._moveStone, 200, stone);
+            }
+
         }, 200, neighbor, neighbor.gates[stone.gate]);
 
-        setTimeout(this._moveStone, 400, stone);
     }
 }

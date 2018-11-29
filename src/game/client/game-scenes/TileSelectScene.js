@@ -45,18 +45,11 @@ export default class TileSelectScene extends Scene {
     };
 
     init(state) {
-        // this.state = state;
         this.tile = new TileWithWays(this.ctx, state.type);
         this.tile.x = 500;
         this.tile.y = 500;
         this.tile.id = this.push(this.tile);
     }
-
-    // setState(state) {
-    //     // this.tile.x = 500;
-    //     // this.tile.y = 500;
-    //     this.state = state;
-    // }
 
     start() {
         this.render();
