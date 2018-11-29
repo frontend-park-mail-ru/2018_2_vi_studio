@@ -100,8 +100,6 @@ export default class OfflineGame {
             const movement = FROM_GATES_MOVEMENT[typeOfMovement];
             if (stone.tile instanceof SideTile && stone.tile.stoneGate === stone.gate) {
                 const tile = this.tileMap.tiles[stone.row + movement[stone.tile.stoneGate].row][stone.col + movement[stone.tile.stoneGate].col];
-                console.log("POS", stone.row + movement[stone.tile.stoneGate].row, stone.col + movement[stone.tile.stoneGate].col);
-                console.log("lay", stone.tile);
                 //stone.col + movement[stone.tile.stoneGate].col
                 if (tile.settled) {
                     stone.gate = movement[stone.tile.stoneGate].gate; // стоит на входе тайла
@@ -115,17 +113,12 @@ export default class OfflineGame {
                     }
                     stone.gate = tile.gates[stone.gate]; // стоит на выходе из тайла
                     stone.tile = tile;
-
                 }
 
             } else if (stone.tile instanceof CentralTile) {
                 // debugger;
-                console.log(movement[stone.gate]);
-                console.log(this.tileMap.tiles, stone.row + movement[stone.gate].row);
                 const tile = this.tileMap.tiles[stone.row + movement[stone.gate].row][stone.col + movement[stone.gate].col];
                 if (tile.settled) {
-
-
                     stone.row += movement[stone.gate].row;
                     stone.col += movement[stone.gate].col;
                     stone.gate = movement[stone.gate].gate; // стоит на входе тайла
@@ -142,7 +135,6 @@ export default class OfflineGame {
         });
 
         this.tileMap.stones.forEach((stone, i) => {
-            console.log("STONE ", stone);
             for (; ;) {
                 const typeOfMovement = stone.col % 2;
                 const movement = FROM_GATES_MOVEMENT[typeOfMovement];
@@ -152,7 +144,6 @@ export default class OfflineGame {
                     // let row = stone.row + movement[stone.gate].row;
                     // let col = stone.col + movement[stone.gate].col;
                     let neighbor = this.tileMap.tiles[stone.row + movement[stone.gate].row][stone.col + movement[stone.gate].col];
-                    console.log("SOSED", neighbor);
                     if (neighbor instanceof TileWithWays && neighbor.settled === false) {
                         break;
                     } else if (neighbor instanceof TileWithWays && neighbor.settled === true || neighbor instanceof SideTile) {

@@ -1,9 +1,6 @@
 export default class Scene {
     constructor(ctx) {
         this.ctx = ctx;
-        // this.frontView = [];
-        // this.backView = [];
-
         this.figures = {};
 
         this._id = 0;
@@ -38,10 +35,7 @@ export default class Scene {
     render() {
         const ctx = this.ctx;
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        // this.backView.forEach(figure => figure.render());
-        // this.frontView.forEach(figure => figure.render());
-        // console.log('render :', this.figures);
-        Object.keys(this.figures).forEach(key => this.figures[key].render());
+        Object.keys(this.figures).forEach(key => this.figures[key].render(ctx));
     }
 
     clear() {

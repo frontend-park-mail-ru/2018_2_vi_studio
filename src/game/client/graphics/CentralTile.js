@@ -2,11 +2,9 @@ import Tile from "./Tile.js";
 import {COLORS} from "../../config.js";
 
 
-class CentralTile extends Tile {
-    constructor(ctx) {
-        super(ctx);
+export default class CentralTile extends Tile {
+    constructor(x, y) {
+        super(x, y);
         this.fillStyle = COLORS.BACKGROUND_SIDE;
     }
 }
-
-export {CentralTile};

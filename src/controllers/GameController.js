@@ -6,9 +6,6 @@ import OfflineGameService from "../game/offline/OfflineGameService.js";
 import {EVENTS} from "../constants.js";
 import bus from "../bus.js"
 
-const LEN_X = 60;
-const LEN_Y = Math.sin(Math.PI / 3) * LEN_X;
-
 export default class GameController extends Controller {
     constructor(router) {
         super(GameView);

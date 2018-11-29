@@ -55,10 +55,6 @@ export default class GameCore {
     onGameStateChanged(evt) {
         throw new Error('This method must be overridden');
     }
-
-    // _pressed(name, data) {
-    //     return KEYS[name].some(k => data[k.toLowerCase()]);
-    // }
 }
 
 export {GameCore};

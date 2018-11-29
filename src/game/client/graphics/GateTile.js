@@ -3,20 +3,19 @@ import {COLORS} from "../../config.js";
 
 const GATE_TILE_RADIUS = 30;
 
-class GateTile extends Tile {
-    constructor(ctx, zero) {
-        super(ctx);
+export default class GateTile extends Tile {
+    constructor(zero, x, y) {
+        super(x, y);
         this.zero = zero;
         this.color = 'black';
         this.gates = [];
     }
 
-    draw() {
+    _draw(ctx) {
         this.fillStyle = COLORS.BACKGROUND_GATE;
         if (!this.zero) {
+            super._draw(ctx);
 
-            super.draw();
-            const ctx = this.ctx;
             ctx.beginPath();
             ctx.arc(0, 0, GATE_TILE_RADIUS, 0, 2 * Math.PI);
             ctx.lineWidth = 20;
@@ -25,10 +24,7 @@ class GateTile extends Tile {
             ctx.closePath();
         }
         else {
-            super.draw();
-
+            super._draw(ctx);
         }
     }
 }
-
-export {GateTile};

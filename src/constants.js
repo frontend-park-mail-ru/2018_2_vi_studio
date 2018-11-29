@@ -16,3 +16,7 @@ export const EVENTS = {
     SERVICE_START: 'SERVICE_START',
     SUBMIT: 'SUBMIT'
 };
+
+export const IMAGES_PATH = SERVER_PATH + '/media/images/';
+export const NO_AVATAR_PATH = '/build/images/no-avatar.jpg';
+export const BOT_AVATAR_PATH = '/build/images/bot-avatar.png';

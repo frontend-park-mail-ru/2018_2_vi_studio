@@ -173,10 +173,11 @@ export default class TileMap {
                         const stone = new Stone(STONE_TYPES.YELLOW, tile, i, j, tile.stoneGate);
                         this.stones.push(stone);
                         tile.stone = stone;
-                        // this.emeralds.push(new Emerald(this.ctx, tile, row, col, tile.get_gate));
+                        // this.emeralds.push(new Stone(this.ctx, tile, row, col, tile.get_gate));
                         break;
                     case TYPES_ON_MAP.CENTRAL:
                         tile = new CentralTile();
+
                         for(let k =0; k < 5; k ++){
                             const stone = new Stone(STONE_TYPES.GREEN, tile, i, j, k);
                             this.stones.push(stone);

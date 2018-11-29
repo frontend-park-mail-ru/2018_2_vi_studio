@@ -1,17 +1,15 @@
 import Player from "./Player.js";
-import {ROWS_COUNT} from "../../config.js";
-import {COLUMNS_COUNT} from "../../config.js";
 import TileWithWays from "./TileWithWays.js";
 import GateTile from "./GateTile.js";
-import {FROM_GATES_MOVEMENT} from "../../config.js";
+import {ROWS_COUNT, COLUMNS_COUNT, FROM_GATES_MOVEMENT} from "../../config.js";
+import {BOT_AVATAR_PATH} from "../../../constants.js";
 
 export default class Bot extends Player {
     constructor(id) {
         super(id);
         this.id = id;
-        this.nickname = 'Bot '+ id;
-        this.avatar = '/src/images/bot-avatar.png';
-        // this.active = false;
+        this.nickname = 'Bot ' + id;
+        this.avatar = BOT_AVATAR_PATH;
     }
 
     setGame(tileMap) {

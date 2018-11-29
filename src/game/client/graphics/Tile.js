@@ -1,20 +1,14 @@
-import Base from "./Base.js";
-import {COLORS} from "../../config.js";
-import {TILE_SIZE} from "../../config.js";
+import Drawable from "./Drawable.js";
+import {COLORS, TILE_SIZE} from "../../config.js";
 
-// TODO: rewrite
-// const DELTA_X = TILE_SIZE.x;
-// const DELTA_Y = TILE_SIZE.y;
+export default class Tile extends Drawable {
+    constructor(x, y) {
+        super();
+        this._rotation = 0;
+        this._rotationCount = 0;
 
-class Tile extends Base {
-    constructor(ctx) {
-        super(ctx);
-        ctx.font = "15px Arial";
-        this.rotation = 0;
-        this.rotationCount = 0;
-
-        // TILE_SIZE.x = DELTA_X;
-        // TILE_SIZE.y = DELTA_Y;
+        this.x = x;
+        this.y = y;
 
         this.width = 0;
         this.height = 0;
@@ -22,25 +16,31 @@ class Tile extends Base {
         this.lineColor = COLORS.BORDER;
     }
 
-    rotate() {
-        this.rotationCount++;
-        this.rotationCount %= 6;
-        this.rotation = Math.PI / 3 * this.rotationCount;
+    get rotation() {
+        return this._rotation;
     }
 
-    // /**
-    //  * @private
-    //  */
-    draw() {
-        const ctx = this.ctx;
+    get rotationCount() {
+        return this._rotationCount;
+    }
+
+    rotate() {
+        this._rotationCount++;
+        this._rotationCount %= 6;
+        this._rotation = Math.PI / 3 * this.rotationCount;
+    }
+
+    _draw(ctx) {
         ctx.lineWidth=5;
         ctx.strokeStyle = this.lineColor; // цвет линии
         ctx.fillStyle = this.fillStyle;
         ctx.beginPath();
-        let startX = - TILE_SIZE.x / 2;
-        let startY = - TILE_SIZE.y;
+
+        const startX = - TILE_SIZE.x / 2;
+        const startY = - TILE_SIZE.y;
         let pointerX = startX;
         let pointerY = startY;
+
         ctx.moveTo(pointerX, pointerY);  // left top
 
         pointerX += TILE_SIZE.x;
@@ -62,18 +62,13 @@ class Tile extends Base {
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
-        this.ctx.globalAlpha = 1;
+        ctx.globalAlpha = 1;
         ctx.fillStyle = 'red';
-
     }
 
-    setup() {
-        const ctx = this.ctx;
-
+    _setup(ctx) {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         ctx.fillStyle = this.fillStyle;
     }
 }
-
-export default Tile;

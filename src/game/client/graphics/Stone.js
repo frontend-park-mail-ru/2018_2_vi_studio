@@ -1,21 +1,22 @@
-// import Base from "./Base.js";
-import {TILE_SIZE} from "../../config.js";
-import Tile from "./Tile.js";
-import {STONE_TYPES, TYPES_ON_MAP} from "../../config.js";
+import {TILE_SIZE, STONE_TYPES} from "../../config.js";
 import {COLORS} from "../../config.js";
+import Drawable from "./Drawable.js";
 
 const EMERALD_RADIUS_BORDER = 28;
 const EMERALD_RADIUS = 22;
 
-export class Emerald extends Tile {
-    constructor(ctx, gate, tile, type) {
-        super(ctx);
+export default class Stone extends Drawable {
+    constructor(type, tile, row, col, gate) {
+        super();
         this.tile = tile;
         this.gate = gate;
+        this.row = row;
+        this.col = col;
         this.x = tile.x;
         this.y = tile.y;
         this.type = type;
         this.isOutOfGame = false;
+        this.move = false;
         switch (this.type) {
             case STONE_TYPES.YELLOW:
                 this.color = COLORS.STONE_YELLOW;
@@ -29,10 +30,12 @@ export class Emerald extends Tile {
                 this.color = 'blue';
                 this.backgroundColor = 'green';
                 break;
-
         }
+
         this.setPosOnGate(gate);
+        this.setPos= this.setPos.bind(this);
     }
+
     setPosOnGate(gate) {
         switch (gate) {
             case 0:
@@ -63,15 +66,21 @@ export class Emerald extends Tile {
     setPos(tile, gate) {
         this.x = tile.x;
         this.y = tile.y;
+        this.tile = tile;
         this.gate = gate;
         this.setPosOnGate(gate);
     }
 
-    draw() {
+    _setup(ctx) {
+        ctx.translate(this.x, this.y);
+        ctx.fillStyle = this.fillStyle;
+    }
+
+    _draw(ctx) {
         if (this.isOutOfGame) {
             return;
         }
-        const ctx = this.ctx;
+
         ctx.beginPath();
         ctx.arc(0, -TILE_SIZE.y / 3 * 2, EMERALD_RADIUS_BORDER, 0, 2 * Math.PI);
         ctx.lineWidth = 10;
@@ -80,18 +89,10 @@ export class Emerald extends Tile {
         ctx.closePath();
 
         ctx.beginPath();
-
         ctx.arc(0, -TILE_SIZE.y / 3 * 2, EMERALD_RADIUS, 0, 2 * Math.PI);
         ctx.lineWidth = 10;
         ctx.fillStyle = this.color;
         ctx.fill();
         ctx.closePath();
-    }
-
-    setup() {
-        const ctx = this.ctx;
-
-        ctx.translate(this.x, this.y);
-        ctx.fillStyle = this.fillStyle;
     }
 }
