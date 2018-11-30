@@ -309,7 +309,7 @@ export class TileMap {
 
     _checkGameOver() {
         if (this.stones.length === 0) {
-            bus.emit(EVENTS.NEXT_TRY, {gameOver:{players:this.players}});
+            bus.emit(EVENTS.NEXT_TRY, {gameOver:{players:this.players}, lastTry: {}, currentTry: {tileType: null}});
         }
     }
 }
