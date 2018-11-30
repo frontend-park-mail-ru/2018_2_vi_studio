@@ -20,7 +20,7 @@ const root = document.getElementById('root');
 const router = new Router(root);
 
 bus.on(EVENTS.QUEUE_POSITION, data => alert('QUEUE POSITION: ' + data.position));
-bus.on(EVENTS.GAME_OVER, () => alert('GAME OVER'));
+// bus.on(EVENTS.GAME_OVER, () => alert('GAME OVER'));
 
 router
     .register('/error', ErrorController)

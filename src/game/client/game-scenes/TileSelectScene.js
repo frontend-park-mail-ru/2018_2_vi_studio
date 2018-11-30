@@ -4,17 +4,23 @@ import TileWithWays from "../graphics/TileWithWays.js";
 import {EVENTS} from "../../../constants.js";
 import {COLORS} from "../../config.js";
 
+const TILE_SELECT_SCENE_CENTER = 500;
+
 export default class TileSelectScene extends Scene {
     constructor(canvas) {
         super(canvas.getContext('2d'));
         this.canvas = canvas;
 
-        this.tile = null;
         this.selectedTile = null;
 
         this.rotate = this.rotate.bind(this);
         this.submit = this.submit.bind(this);
         this.render = this.render.bind(this);
+
+        this.tile = new TileWithWays(this._ctx, null);
+        this.tile.x = TILE_SELECT_SCENE_CENTER;
+        this.tile.y = TILE_SELECT_SCENE_CENTER;
+        this.tile.id = this.push(this.tile);
     }
 
     rotate() {
@@ -41,21 +47,9 @@ export default class TileSelectScene extends Scene {
         } else {
             alert('Select tile position, please!');
         }
-
     };
 
-    init(state) {
-        this.tile = new TileWithWays(this.ctx, state.type);
-        this.tile.x = 500;
-        this.tile.y = 500;
-        this.tile.id = this.push(this.tile);
-    }
-
-    start() {
-        this.render();
-    }
-
-    stop() {
+    destroy() {
         this.clear();
     }
 };

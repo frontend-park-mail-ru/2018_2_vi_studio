@@ -18,4 +18,8 @@ export default class OfflineGameService extends GameService {
     onDoneTry(data) {
         this.game.doneTry(data);
     }
+
+    destroy() {
+        super.destroy();
+    }
 }

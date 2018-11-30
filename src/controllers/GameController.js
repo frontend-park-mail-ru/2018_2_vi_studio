@@ -14,22 +14,21 @@ export default class GameController extends Controller {
 
         this._onClick = this._handleEvent.bind(this, 'click');
         this.stop = this.stop.bind(this);
+        this.start = this.start.bind(this);
     }
 
     handle(args = []) {
-        bus.on(EVENTS.SERVICE_START, () => {
-            this.start();
-        });
+        bus.on(EVENTS.SERVICE_START, this.start);
 
         switch (args[0]) {
             case 'offline': {
-                this.gameCore = new Game(this._view);
-                this.servise = new OfflineGameService();
+                this._gameCore = new Game(this._view);
+                this._servise = new OfflineGameService();
                 break;
             }
             case 'online': {
-                this.gameCore = new Game(this._view, true);
-                this.servise = new OnlineGameService();
+                this._gameCore = new Game(this._view, true);
+                this._servise = new OnlineGameService();
                 break;
             }
             default:
@@ -44,13 +43,15 @@ export default class GameController extends Controller {
 
         console.log("GameControllers: Start");
         this._view.boardCanvas.addEventListener('click', this._onClick);
-        this.gameCore.start();
+        this._gameCore.start();
     }
 
     stop() {
         bus.off(EVENTS.GAME_OVER, this.stop);
 
         this._view.boardCanvas.removeEventListener('click', this._onClick);
+        this._servise.destroy();
+
         this.router.open('/');
     }
 

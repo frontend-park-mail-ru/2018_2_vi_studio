@@ -20,8 +20,6 @@ const TYPES = {
 export class TileMap {
     constructor(players) {
         this.players = players;
-        this.x = 80;
-        this.y = 40;
         this.tiles = [];
         this.gateTiles = [];
         this.rows = ROWS_COUNT;
@@ -31,6 +29,11 @@ export class TileMap {
         this.moveStones = this.moveStones.bind(this);
         this.haveCollisions = this.haveCollisions.bind(this);
         this._moveStone = this._moveStone.bind(this);
+
+
+        this.initSchema();
+        this.setGates(players);
+        this.initTiles();
     }
 
     initSchema() {
@@ -155,10 +158,7 @@ export class TileMap {
         this.schema[9][6] = {type: TYPES.GATE, zero: true};
     }
 
-    init(state) {
-        this.initSchema();
-        this.setGates(state.players);
-
+    initTiles() {
         this.tiles = this.schema.map((schemaLine, i) => {
             return schemaLine.map((schema, j) => {
                 let tile = null;
@@ -278,7 +278,10 @@ export class TileMap {
                 return;
             } else {
                 const playerIndex = neighbor.gates[movement[stone.gate].gate];
-                this.players[playerIndex].points += stone.type;
+
+                if (playerIndex !== undefined) {
+                    this.players[playerIndex].points += stone.type;
+                }
                 this.stones = this.stones.filter(s => s !== stone && s !== stone);
                 this._checkGameOver();
                 return;
@@ -309,7 +312,7 @@ export class TileMap {
 
     _checkGameOver() {
         if (this.stones.length === 0) {
-            bus.emit(EVENTS.NEXT_TRY, {gameOver:{players:this.players}, lastTry: {}, currentTry: {tileType: null}});
+            bus.emit(EVENTS.NEXT_TRY, {gameOver: {players: this.players}, lastTry: {}, currentTry: {tileType: null}});
         }
     }
 }

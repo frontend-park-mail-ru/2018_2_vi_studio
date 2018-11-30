@@ -28,31 +28,22 @@ export default class OfflineGame {
         this.tileMap.init();
         this.bot = new Bot();
         this.bot.setGame(this.tileMap);
-        this.stones = [];
-
         this.lastTry = null;
     }
 
-    readyToPlay(data) {
-        // console.log('redy to play');
+    readyToPlay() {
         this.emitGameStart(this._getReadyToPlayData());
         this.emitNextTry(this._getNexTryData());
     }
 
     doneTry(data) {
-        // if (/* */) {
-        //     this.emitWrongTry();
-        //     return
-        // }
         // TODO: checking
-        // console.log("DONE TRY", data);
         if (this.tileMap.tiles[data.row][data.col].settled) {
             this.emitWrongTry(); // TODO: message
             return;
         }
         this.tileMap.tiles[data.row][data.col].setType(this.currentTileType);
         this.tileMap.tiles[data.row][data.col].setRotation(data.rotationCount);
-        // console.log("TILE", this.tileMap.tiles[data.row][data.col]);
 
         const tile = this.tileMap.tiles[data.row][data.col];
         const typeOfMovement = data.col % 2;
@@ -73,14 +64,7 @@ export default class OfflineGame {
         }
         tile.settled = true;
 
-        // выдача камней
-
-
-        // движение каменя
-
         this.moveStones();
-
-
         this._setLastTry(data);
         const nextTryData = this._getNexTryData();
         this.emitNextTry(nextTryData);
@@ -197,7 +181,7 @@ export default class OfflineGame {
 
     _getNexTryData() {
         this.currentTileType = this.tileStack.pop();
-        // this.currentTileType = 0;
+
         const data = {
             lastTry: {},
             currentTry: {
@@ -207,13 +191,8 @@ export default class OfflineGame {
             gameOver: {},
             stones: this.tileMap.stones,
         };
-        let inGameStones = 0;
-        this.tileMap.stones.forEach(stone => {
-            if (!stone.isOutOfGame) {
-                inGameStones++;
-            }
-        });
-        if (inGameStones === 0) {
+
+        if (this.tileMap.stones.filter(stone => !stone.isOutOfGame).length === 0) {
             debugger;
             data.gameOver = {players: this.players};
         }
@@ -228,14 +207,6 @@ export default class OfflineGame {
         } else {
             this.currentPlayer = USER_ID;
         }
-        // this.tileMap.stones.forEach(stone => {
-        //     data.stones.push({
-        //         type: stone.type,
-        //         gate: stone.gate,
-        //         row: stone.row,
-        //         col: stone.col,
-        //     });
-        // });
 
         return data;
     };
@@ -244,6 +215,9 @@ export default class OfflineGame {
         this.tileStack = []
             .concat.apply([], TILES.map((count, i) => Array(count).fill(i)))
             .sort(() => Math.random() - 0.5);
-        // console.log(this.tileStack);
+    }
+
+    stop() {
+
     }
 }

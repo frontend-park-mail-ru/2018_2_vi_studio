@@ -33,6 +33,15 @@ class Game extends GameCore {
         bus.emit(EVENTS.READY_TO_PLAY, {});
     }
 
+    destroy() {
+        super.destroy();
+        this.boardScene.destroy();
+        this.tileScene.destroy();
+
+        this.rotateButton.removeEventListener('click', this.tileScene.rotate);
+        this.submitButton.removeEventListener('click', this.tileScene.submit);
+    }
+
     onMouseClicked(evt) {
         console.log(this.players[this.userId].isActive());
         if (this.players[this.userId].isActive()) {
@@ -64,21 +73,16 @@ class Game extends GameCore {
 
         this.userId = data.userId;
 
-        this.boardScene.init(data, this.players);
-
-        this.tileScene.init(data);
-        this.boardScene.start();
-        this.tileScene.start();
+        this.boardScene.init(this.players);
         this.boardScene.tileMap.setGates(this.players);
     }
 
-    onGameFinished(evt) {
-        bus.emit('Event: CLOSE_GAME');
+    onGameOver() {
+        this.destroy();
     }
 
-    onGameStateChanged(evt) {
-        console.log('StateChanged');
-        // this.boardScene.setState(evt);
+    onGameStateChanged() {
+        console.log('STATE CHANGED');
         this.boardScene.render();
     }
 

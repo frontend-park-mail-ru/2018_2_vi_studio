@@ -12,6 +12,21 @@ export default class GameScene extends Scene{
         this.render = this.render.bind(this);
     }
 
+    init(players) {
+        this.tileMap = new TileMap(players);
+        this.tileMap.tiles.forEach(tileLine => tileLine.filter(tile => tile).forEach(tile => this.push(tile)));
+        this.tileMap.stones.forEach(stone => this.push(stone));
+    }
+
+    destroy() {
+        if (this.requestFrameId) {
+            window.cancelAnimationFrame(this.requestFrameId);
+            this.requestFrameId = null;
+        }
+
+        this.clear();
+    }
+
     get canvasSize() {
         return this._canvasSize;
     }
@@ -22,32 +37,5 @@ export default class GameScene extends Scene{
 
     get height() {
         return this._height;
-    }
-
-    init(state, players) {
-        console.log('Game-Scenes: init');
-
-        this.tileMap = new TileMap(players);
-        this.tileMap.x = 0;
-        this.tileMap.y = 5;
-
-        this.tileMap.init(state);
-
-        this.tileMap.tiles.forEach(tileLine => tileLine.filter(tile => tile).forEach(tile => this.push(tile)));
-        this.tileMap.stones.forEach(stone => this.push(stone));
-    }
-
-    start() {
-        console.log('mainScene: start');
-        this.render();
-    }
-
-    stop() {
-        if (this.requestFrameId) {
-            window.cancelAnimationFrame(this.requestFrameId);
-            this.requestFrameId = null;
-        }
-
-        this.clear();
     }
 };

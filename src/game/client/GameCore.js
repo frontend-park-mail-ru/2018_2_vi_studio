@@ -4,19 +4,17 @@ import bus from "../../bus.js";
 export default class GameCore {
     constructor() {
         this.onGameStarted = this.onGameStarted.bind(this);
-        this.onGameFinished = this.onGameFinished.bind(this);
+        this.onGameOver = this.onGameOver.bind(this);
         this.onMouseClicked = this.onMouseClicked.bind(this);
         this.onGameStateChanged = this.onGameStateChanged.bind(this);
         this.onWrongTry = this.onWrongTry.bind(this);
         this.onNextTry = this.onNextTry.bind(this);
-
-        this.controllersLoopIntervalId = null;
     }
 
 
     start() {
         bus.on(EVENTS.GAME_START, this.onGameStarted);
-        bus.on(EVENTS.GAME_OVER, this.onGameFinished);
+        bus.on(EVENTS.GAME_OVER, this.onGameOver);
         bus.on(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
         bus.on(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.on(EVENTS.NEXT_TRY, this.onNextTry);
@@ -24,10 +22,8 @@ export default class GameCore {
     }
 
     destroy() {
-        clearInterval(this.controllersLoopIntervalId);
-
         bus.off(EVENTS.GAME_START, this.onGameStarted);
-        bus.off(EVENTS.GAME_OVER, this.onGameFinished);
+        bus.off(EVENTS.GAME_OVER, this.onGameOver);
         bus.off(EVENTS.MOUSE_CLICKED, this.onMouseClicked);
         bus.off(EVENTS.GAME_STATE_CHANGED, this.onGameStateChanged);
         bus.off(EVENTS.NEXT_TRY, this.onNextTry);
@@ -48,7 +44,7 @@ export default class GameCore {
         throw new Error('This method must be overridden');
     }
 
-    onGameFinished(evt) {
+    onGameOver(evt) {
         throw new Error('This method must be overridden');
     }
 
@@ -56,5 +52,3 @@ export default class GameCore {
         throw new Error('This method must be overridden');
     }
 }
-
-export {GameCore};
