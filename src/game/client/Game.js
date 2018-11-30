@@ -78,7 +78,7 @@ class Game extends GameCore {
 
     onGameStateChanged(evt) {
         console.log('StateChanged');
-        this.boardScene.setState(evt);
+        // this.boardScene.setState(evt);
         this.boardScene.render();
     }
 
