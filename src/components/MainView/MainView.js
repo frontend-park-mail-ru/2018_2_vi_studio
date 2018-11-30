@@ -1,24 +1,18 @@
 import Component from "../Component.js";
-import Background from "../Background/Background.js"
+import VirtualDOM from "../VirtualDOM.js";
+import renderMainView from "./MainView.pug.js";
 
 export default class MainView extends Component {
     constructor() {
-        super();
+        super(VirtualDOM.createElementByHtml(renderMainView()));
 
-        this._element = document.createElement('section');
-        this._element.className = 'main-view';
+        this._contentEl = this._element.getElementsByClassName('main-view__content')[0];
+        this._navEl = this._element.getElementsByClassName('main-view__nav-container')[0];
+        this._asideToggleButton = this._element.getElementsByClassName('main-view__aside-toggle')[0];
 
-        this._contentEl = document.createElement('div');
-        this._contentEl .className = 'main-view__content';
+        this._asideToggleButton.addEventListener('click', this._toggleNav.bind(this));
 
-        this._navEl = document.createElement('nav');
-        this._navEl.className = 'main-view__aside';
-
-        Component.render([
-            new Background(),
-            this._navEl,
-            this._contentEl
-        ], this._element);
+        this._navEl.addEventListener('click', this._toggleNav.bind(this));
     }
 
     get content() {
@@ -27,5 +21,10 @@ export default class MainView extends Component {
 
     get nav() {
         return this._navEl;
+    }
+
+    _toggleNav () {
+        this._navEl.classList.toggle('main-view__nav-container_show');
+        this._contentEl.classList.toggle('main-view__content_hide');
     }
 }

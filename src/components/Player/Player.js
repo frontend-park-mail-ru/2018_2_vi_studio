@@ -12,6 +12,9 @@ export default class Player extends Component {
             })
         ));
 
+        this._iconEl = this._element.getElementsByClassName('player__icon')[0];
+        this._iconEl.style.backgroundColor = props.iconColor || 'blue';
+
         this._progressEl = this._element.getElementsByClassName('player__progress')[0];
     }
 

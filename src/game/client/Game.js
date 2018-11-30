@@ -8,6 +8,8 @@ import Component from "../../components/Component.js";
 import TileSelectScene from "./game-scenes/TileSelectScene.js";
 import {COLORS} from "../config.js";
 
+const PLAYERS_COLORS = ['blue', 'green'];
+
 class Game extends GameCore {
     constructor(component, showProgress = false) {
         super();
@@ -68,7 +70,7 @@ class Game extends GameCore {
     }
 
     onGameStarted(data) {
-        this.players = data.players.map(player => new Player(player.id, player.nickname, player.avatar));
+        this.players = data.players.map((player, i) => new Player(player.id, player.nickname, player.avatar, PLAYERS_COLORS[i]));
         Component.render(this.players.map(player => player.component), this.playersRoot);
 
         this.userId = data.userId;
@@ -112,8 +114,8 @@ class Game extends GameCore {
         this.tileScene.render();
         if (evt.gameOver.players) {
             this.players.forEach(player => player.deactivate());
-            let str = "Player: " + evt.gameOver.players[0].points + "\n Bot: " + evt.gameOver.players[1].points;
-            alert(str);
+            const msg = this.players.map(player => `${player.nickname}: ${player.points}`);
+            alert(msg);
             bus.emit(EVENTS.GAME_OVER);
         }
 
