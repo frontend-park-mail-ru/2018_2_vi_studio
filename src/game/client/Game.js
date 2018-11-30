@@ -64,7 +64,7 @@ class Game extends GameCore {
 
         this.userId = data.userId;
 
-        this.boardScene.init(data);
+        this.boardScene.init(data, this.players);
 
         this.tileScene.init(data);
         this.boardScene.start();

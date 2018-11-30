@@ -24,11 +24,10 @@ export default class GameScene extends Scene{
         return this._height;
     }
 
-    init(state) {
+    init(state, players) {
         console.log('Game-Scenes: init');
-        this.state = state;
 
-        this.tileMap = new TileMap(this.ctx);
+        this.tileMap = new TileMap(players);
         this.tileMap.x = 0;
         this.tileMap.y = 5;
 
@@ -36,11 +35,6 @@ export default class GameScene extends Scene{
 
         this.tileMap.tiles.forEach(tileLine => tileLine.filter(tile => tile).forEach(tile => this.push(tile)));
         this.tileMap.stones.forEach(stone => this.push(stone));
-    }
-
-
-    setState(state) {
-        this.state = state;
     }
 
     start() {

@@ -18,7 +18,8 @@ const TYPES = {
 };
 
 export class TileMap {
-    constructor() {
+    constructor(players) {
+        this.players = players;
         this.x = 80;
         this.y = 40;
         this.tiles = [];
@@ -251,23 +252,38 @@ export class TileMap {
 
     haveCollisions(stoneToCheck) {
         const collisionStones = this.stones
-            .filter(stone => !stone.isOutOfGame)
             .filter(stone => stone.gate === stoneToCheck.gate && stone.row === stoneToCheck.row && stone.col === stoneToCheck.col);
         if (collisionStones.length > 1) {
-            collisionStones[0].isOutOfGame = true;
-            collisionStones[1].isOutOfGame = true;
+            collisionStones[0].visible = false;
+            collisionStones[1].visible = false;
+            this.stones = this.stones.filter(stone => stone !== collisionStones[0] && stone !== collisionStones[1]);
+            this._checkGameOver();
             return true;
         }
         return false;
     }
 
     moveStones() {
-        this.stones.filter(stone => !stone.move && !stone.isOutOfGame).forEach(stone => this._moveStone(stone));
+        this.stones.filter(stone => !stone.move).forEach(stone => this._moveStone(stone));
     }
 
     _moveStone(stone) {
         const movement = FROM_GATES_MOVEMENT[stone.col % 2];
         const neighbor = this.tiles[stone.row + movement[stone.gate].row][stone.col + movement[stone.gate].col];
+
+        if (neighbor instanceof GateTile) {
+            if (neighbor.zero) {
+                this.stones = this.stones.filter(s => s !== stone && s !== stone);
+                this._checkGameOver();
+                return;
+            } else {
+                const playerIndex = neighbor.gates[movement[stone.gate].gate];
+                this.players[playerIndex].points += stone.type;
+                this.stones = this.stones.filter(s => s !== stone && s !== stone);
+                this._checkGameOver();
+                return;
+            }
+        }
 
         if (!(neighbor && (neighbor instanceof TileWithWays && neighbor.settled || neighbor instanceof SideTile))) {
             stone.move = false;
@@ -289,6 +305,11 @@ export class TileMap {
             }
 
         }, 200, neighbor, neighbor.gates[stone.gate]);
+    }
 
+    _checkGameOver() {
+        if (this.stones.length === 0) {
+            bus.emit(EVENTS.NEXT_TRY, {gameOver:{players:this.players}});
+        }
     }
 }

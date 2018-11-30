@@ -15,7 +15,7 @@ export default class Stone extends Drawable {
         this.x = tile.x;
         this.y = tile.y;
         this.type = type;
-        this.isOutOfGame = false;
+        this.visible = true;
         this.move = false;
         switch (this.type) {
             case STONE_TYPES.YELLOW:
@@ -77,7 +77,7 @@ export default class Stone extends Drawable {
     }
 
     _draw(ctx) {
-        if (this.isOutOfGame) {
+        if (!this.visible) {
             return;
         }
 

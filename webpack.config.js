@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 
 console.log(`Is Production: ${isProd}`);
+console.log(`Server IP: ${process.env.SERVER_IP}`);
 
 module.exports = {
     mode: isProd ? 'production' : 'development',
