@@ -8,6 +8,7 @@ export default class MainView extends Component {
 
         this._contentEl = this._element.getElementsByClassName('main-view__content')[0];
         this._navEl = this._element.getElementsByClassName('main-view__nav-container')[0];
+        this._asideEl = this._element.getElementsByClassName('main-view__aside')[0];
         this._asideToggleButton = this._element.getElementsByClassName('main-view__aside-toggle')[0];
 
         this._asideToggleButton.addEventListener('click', this._toggleNav.bind(this));
@@ -24,7 +25,7 @@ export default class MainView extends Component {
     }
 
     _toggleNav () {
-        this._navEl.classList.toggle('main-view__nav-container_show');
+        this._asideEl.classList.toggle('main-view__aside_show');
         this._contentEl.classList.toggle('main-view__content_hide');
     }
 }
