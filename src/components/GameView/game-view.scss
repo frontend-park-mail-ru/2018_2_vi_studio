@@ -62,6 +62,11 @@
 
         .game-view__tile-manager {
           flex: 1;
+
+          .game-view__submit-button {
+            font-size: 12pt;
+            padding: 10px 15px;
+          }
         }
       }
 
