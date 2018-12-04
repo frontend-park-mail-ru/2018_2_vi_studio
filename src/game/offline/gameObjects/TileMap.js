@@ -16,16 +16,15 @@ const TYPES = {
     STD: 'STD',
 };
 
+const CENTRAL_GREEN_STONES_COUNT = 5;
+
 export default class TileMap {
     constructor() {
         this.stones = [];
-        this.centralStonesCount = 6;
-
         this.tiles = [];
         this.gates = [];
         this.rows = ROWS_COUNT;
         this.columns = COLUMNS_COUNT;
-        this.emeralds = [];
     }
 
     initSchema() {
@@ -40,7 +39,6 @@ export default class TileMap {
         this._setSidesTiles();
         this._setCentralTile();
         this._setGateTiles();
-
     }
 
     _setUndefTiles() {
@@ -172,21 +170,16 @@ export default class TileMap {
                         tile = new SideTile(this.schema[i][j].rotation);
                         const stone = new Stone(STONE_TYPES.YELLOW, tile, i, j, tile.stoneGate);
                         this.stones.push(stone);
-                        tile.stone = stone;
-                        // this.emeralds.push(new Stone(this._ctx, tile, row, col, tile.get_gate));
                         break;
                     case TYPES_ON_MAP.CENTRAL:
                         tile = new CentralTile();
 
-                        for(let k =0; k < 5; k ++){
+                        for(let k =0; k < CENTRAL_GREEN_STONES_COUNT; k ++){
                             const stone = new Stone(STONE_TYPES.GREEN, tile, i, j, k);
                             this.stones.push(stone);
-                            tile.stones.push(stone);
                         }
-                        const stone1 = new Stone(STONE_TYPES.GREEN, tile, i, j, 5);  // TODO: must be BLUE type
+                        const stone1 = new Stone(STONE_TYPES.GREEN, tile, i, j, CENTRAL_GREEN_STONES_COUNT);  // TODO: must be BLUE type i-gataullin
                         this.stones.push(stone1);
-                        tile.stones.push(stone1);
-                        // tile = null;
                         break;
                     case TYPES_ON_MAP.GATE:
                         tile = new GateTile(this.schema[i][j].zero);
@@ -237,35 +230,18 @@ export default class TileMap {
 
     haveCollisions(index) {
         let i = 0;
-        const stoneTocheck = this.stones[index];
+        const stoneToCheck = this.stones[index];
         while (i < this.stones.length) {
             if( i !== index) {
                 const stone = this.stones[i];
-               if (stone.gate === stoneTocheck.gate && stone.row === stoneTocheck.row && stone.col === stoneTocheck.col) {
+               if (stone.gate === stoneToCheck.gate && stone.row === stoneToCheck.row && stone.col === stoneToCheck.col) {
                    stone.isOutOfGame = true;
-                   stoneTocheck.isOutOfGame = true;
+                   stoneToCheck.isOutOfGame = true;
                    return true;
                }
             }
-
             i++;
         }
         return false;
-    }
-
-    setGates(players) {
-
-        const colors = ['green', 'blue'];
-
-        for(let i = 0; i < this.gates.length; i ++) {
-            if (i % 2 === 0){
-                this.gates[i].color = 'green';
-                this.gates[i].player = players[0];
-            } else {
-                this.gates[i].color = 'blue';
-                this.gates[i].player = players[1];
-            }
-        }
-
     }
 }

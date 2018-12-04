@@ -13,10 +13,6 @@ class SideTile extends Tile {
         this.stoneGate += rotationCount;
         this.stoneGate %= 6;
     }
-
-    getStone(){
-        return this.stone;
-    }
 }
 
 export default SideTile;
