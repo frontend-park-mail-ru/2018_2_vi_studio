@@ -16,7 +16,8 @@ export default class Bot extends Player {
         this.tileMap = tileMap;
     }
 
-    getNextTile(type) {
+    getNextTile(nextTryData) {
+        const type = nextTryData.currentTry.tileType;
         let tempTile = new TileWithWays();
         tempTile.setType(type);
 

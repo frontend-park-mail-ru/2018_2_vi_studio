@@ -21,13 +21,15 @@ export default class OfflineGame {
 
         this.currentPlayer = USER_ID;
 
-        //    GameObjects
         this.players = [new Player(USER_ID, 'nickname', ''), new Bot(BOT_ID)];
+
         this._setTileStack();
         this.tileMap = new TileMap();
         this.tileMap.init();
-        this.bot = new Bot();
+
+        this.bot = this.players.filter(player => player.id === BOT_ID)[0];
         this.bot.setGame(this.tileMap);
+
         this.lastTry = null;
     }
 
@@ -49,7 +51,6 @@ export default class OfflineGame {
         const typeOfMovement = data.col % 2;
         const movement = FROM_GATES_MOVEMENT[typeOfMovement];
 
-        let canGetStone = null;
         for (let i = 0; i < tile.gates.length; i++) {
             const neighbor1 = this.tileMap.tiles[data.row + movement[i].row][data.col + movement[i].col];
             const neighbor2 = this.tileMap.tiles[data.row + movement[tile.gates[i]].row][data.col + movement[tile.gates[i]].col];
@@ -57,18 +58,19 @@ export default class OfflineGame {
                 neighbor2 instanceof GateTile && neighbor2.zero === false) {
                 // console.log("Gatessss ", data.row + movement[i].row, data.col + movement[i].col, "-", tile.gates[i]);
                 this.emitWrongTry();
-                canGetStone = null;
                 return;
             }
-
         }
         tile.settled = true;
 
         this.moveStones();
         this._setLastTry(data);
+
         const nextTryData = this._getNexTryData();
         this.emitNextTry(nextTryData);
-        const tileFromBot = this.bot.getNextTile(nextTryData.currentTry.tileType); //TODO:
+
+        // Bot's try
+        const tileFromBot = this.bot.getNextTile(nextTryData);
         this.tileMap.tiles[tileFromBot.row][tileFromBot.col].setType(this.currentTileType);
         this.tileMap.tiles[tileFromBot.row][tileFromBot.col].setRotation(tileFromBot.rotation);
         this.tileMap.tiles[tileFromBot.row][tileFromBot.col].settled = true;
