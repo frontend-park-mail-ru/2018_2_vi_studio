@@ -22,6 +22,14 @@ export default class TileWithWays extends Tile {
             this.gates = [];
         }
     }
+    
+    static get halfHeight() {
+        return TILE_SIZE.y;
+    }
+    
+    static get halfWidth() {
+        return TILE_SIZE.x;
+    }
 
     getType() {
         return this._type;
@@ -52,17 +60,18 @@ export default class TileWithWays extends Tile {
         }
     }
 
+    // TODO: PEREDELAT i-gataullin
     static drawType0(ctx) {
         ctx.beginPath();
-        ctx.arc(-TILE_SIZE.x, 0, TILE_SIZE.x / 2, (2 - 2 / 6) * Math.PI, 2 / 6 * Math.PI);
+        ctx.arc(-this.halfWidth, 0, this.halfWidth / 2, (2 - 2 / 6) * Math.PI, 2 / 6 * Math.PI);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(TILE_SIZE.x / 2, -TILE_SIZE.y, TILE_SIZE.x / 2, Math.PI, 1 / 3 * Math.PI, true);
+        ctx.arc(this.halfWidth / 2, -this.halfHeight, this.halfWidth / 2, Math.PI, 1 / 3 * Math.PI, true);
         ctx.stroke();
         //
         ctx.beginPath();
-        ctx.arc(TILE_SIZE.x / 2, TILE_SIZE.y, TILE_SIZE.x / 2, Math.PI, (2 - 1 / 3) * Math.PI);
+        ctx.arc(this.halfWidth / 2, this.halfHeight, this.halfWidth / 2, Math.PI, (2 - 1 / 3) * Math.PI);
         ctx.stroke();
 
         ctx.closePath();
@@ -70,16 +79,16 @@ export default class TileWithWays extends Tile {
 
     static drawType1(ctx) {
         ctx.beginPath();
-        ctx.arc(-TILE_SIZE.x, 0, TILE_SIZE.x / 2, (2 - 2 / 6) * Math.PI, 2 / 6 * Math.PI);
+        ctx.arc(-this.halfWidth, 0, this.halfWidth / 2, (2 - 2 / 6) * Math.PI, 2 / 6 * Math.PI);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(TILE_SIZE.x, 0, TILE_SIZE.x / 2, (2 / 3) * Math.PI, (1 + 1 / 3) * Math.PI);
+        ctx.arc(this.halfWidth, 0, this.halfWidth / 2, (2 / 3) * Math.PI, (1 + 1 / 3) * Math.PI);
         ctx.stroke();
         //
         ctx.beginPath();
-        ctx.moveTo(0, -TILE_SIZE.y);
-        ctx.lineTo(0, TILE_SIZE.y);
+        ctx.moveTo(0, -this.halfHeight);
+        ctx.lineTo(0, this.halfHeight);
         ctx.stroke();
 
         ctx.closePath();
@@ -87,15 +96,15 @@ export default class TileWithWays extends Tile {
 
     static drawType2(ctx) {
         ctx.beginPath();
-        ctx.arc(-TILE_SIZE.x * 1.5, TILE_SIZE.y, TILE_SIZE.x * 1.5, (2 - 1 / 3) * Math.PI, 0);
+        ctx.arc(-this.halfWidth * 1.5, this.halfHeight, this.halfWidth * 1.5, (2 - 1 / 3) * Math.PI, 0);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(0, TILE_SIZE.y * 2, TILE_SIZE.x * 1.5, (1 + 1 / 3) * Math.PI, (2 - 1 / 3) * Math.PI);
+        ctx.arc(0, this.halfHeight * 2, this.halfWidth * 1.5, (1 + 1 / 3) * Math.PI, (2 - 1 / 3) * Math.PI);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(TILE_SIZE.x / 2, -TILE_SIZE.y, TILE_SIZE.x / 2, Math.PI, 1 / 3 * Math.PI, true);
+        ctx.arc(this.halfWidth / 2, -this.halfHeight, this.halfWidth / 2, Math.PI, 1 / 3 * Math.PI, true);
         ctx.stroke();
 
         ctx.closePath();
@@ -103,20 +112,20 @@ export default class TileWithWays extends Tile {
 
     static drawType3(ctx) {
         ctx.beginPath();
-        ctx.moveTo(0, -TILE_SIZE.y);
-        ctx.lineTo(0, TILE_SIZE.y);
+        ctx.moveTo(0, -this.halfHeight);
+        ctx.lineTo(0, this.halfHeight);
         ctx.stroke();
 
         ctx.beginPath();
         ctx.rotate(Math.PI / 3);
-        ctx.moveTo(0, -TILE_SIZE.y);
-        ctx.lineTo(0, TILE_SIZE.y);
+        ctx.moveTo(0, -this.halfHeight);
+        ctx.lineTo(0, this.halfHeight);
         ctx.stroke();
 
         ctx.beginPath();
         ctx.rotate(Math.PI / 3);
-        ctx.moveTo(0, -TILE_SIZE.y);
-        ctx.lineTo(0, TILE_SIZE.y);
+        ctx.moveTo(0, -this.halfHeight);
+        ctx.lineTo(0, this.halfHeight);
         ctx.stroke();
 
         ctx.closePath();
@@ -124,16 +133,16 @@ export default class TileWithWays extends Tile {
 
     static drawType4(ctx) {
         ctx.beginPath();
-        ctx.arc(0, TILE_SIZE.y * 2, TILE_SIZE.x * 1.5, (1 + 1 / 3) * Math.PI, (2 - 1 / 3) * Math.PI);
+        ctx.arc(0, this.halfHeight * 2, this.halfWidth * 1.5, (1 + 1 / 3) * Math.PI, (2 - 1 / 3) * Math.PI);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(0, -TILE_SIZE.y * 2, TILE_SIZE.x * 1.5, 1 / 3 * Math.PI, 2 / 3 * Math.PI);
+        ctx.arc(0, -this.halfHeight * 2, this.halfWidth * 1.5, 1 / 3 * Math.PI, 2 / 3 * Math.PI);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(0, -TILE_SIZE.y);
-        ctx.lineTo(0, TILE_SIZE.y);
+        ctx.moveTo(0, -this.halfHeight);
+        ctx.lineTo(0, this.halfHeight);
         ctx.stroke();
         ctx.closePath();
     }
