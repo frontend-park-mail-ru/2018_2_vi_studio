@@ -163,7 +163,7 @@ export class TileMap {
             return schemaLine.map((schema, j) => {
                 let tile = null;
 
-                const x = 1.5 * (j + 1) * TILE_SIZE.x;
+                const x = 1.5 * (j + 1) * TILE_SIZE.x - 40;
                 const y = j % 2 === 0 ? (i * 2 + 1) * TILE_SIZE.y : i * 2 * TILE_SIZE.y;
 
                 switch (schema.type) {

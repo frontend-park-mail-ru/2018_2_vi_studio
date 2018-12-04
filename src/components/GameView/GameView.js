@@ -8,10 +8,11 @@ export default class GameView extends Component {
 
         this._playersEl = this.element.getElementsByClassName('game-view__players')[0];
         this._tileCanvas = this.element.getElementsByClassName('game-view__tile-view')[0];
-        // TODO: rewrite style name
         this._boardCanvas = this.element.getElementsByClassName('game-view__area')[0];
         this._rotateButton = this.element.getElementsByClassName('game-view__rotate-button')[0];
         this._submitButton = this.element.getElementsByClassName('game-view__submit-button')[0];
+
+        this.resize = this.resize.bind(this);
     }
 
     get boardCanvas() {
@@ -32,5 +33,22 @@ export default class GameView extends Component {
 
     get submitButton() {
         return this._submitButton;
+    }
+
+    resize() {
+        const height = this._element.offsetHeight;
+        const width = this._element.offsetWidth;
+
+        let step;
+        if (width > height) {
+            step = Math.floor(Math.min(width / 3, height / 2));
+        } else {
+            step = Math.floor(Math.min(width / 2, height / 3));
+        }
+
+        this._boardCanvas.width = 2 * step;
+        this._boardCanvas.height = 2 * step;
+        this._tileCanvas.width = step;
+        this._tileCanvas.height = step;
     }
 }

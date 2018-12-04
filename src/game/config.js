@@ -1,7 +1,7 @@
-const ROWS_COUNT = 10;
-const COLUMNS_COUNT = 11;
+export const ROWS_COUNT = 10;
+export const COLUMNS_COUNT = 11;
 
-const TYPES_ON_MAP = {
+export const TYPES_ON_MAP = {
     UNDEF: 'UNDEF',
     GATE: 'GATE',
     CENTRAL: 'CENTRAL',
@@ -11,7 +11,7 @@ const TYPES_ON_MAP = {
 
 export const TILES = [6, 14, 14, 6, 14];
 
-const TILE_WIDTH = 115;
+export const TILE_WIDTH = 115;
 
 export const TILE_SIZE = {
     x: TILE_WIDTH,
@@ -26,7 +26,7 @@ export const TYPE_WAYS = {
     4: [3, 5, 4, 0, 2, 1],
 };
 
-const SPECIAL_TILES = {
+export const SPECIAL_TILES = {
     SIDE: {
         gates: [0, 5, 0, 0, 0, 1],
         stoneGate: 0,
@@ -34,7 +34,7 @@ const SPECIAL_TILES = {
 
 };
 
-const FROM_GATES_MOVEMENT = {
+export const FROM_GATES_MOVEMENT = {
     0: {
         0: {
             row: -1,
@@ -101,13 +101,13 @@ const FROM_GATES_MOVEMENT = {
     },
 };
 
-const STONE_TYPES = {
+export const STONE_TYPES = {
     YELLOW: 1,
     GREEN: 2,
     BLUE: 3,
 };
 
-const COLORS = {
+export const COLORS = {
     BACKGROUND: 'rgb(250, 230, 180)',
     BORDER: 'rgb(160, 140, 100)',
     BACKGROUND_SIDE: 'rgb(90, 140, 250)',
@@ -120,17 +120,7 @@ const COLORS = {
     SELECTED_TILE: 'rgb(255, 200, 80)'
 };
 
-const WAY_WIDTH = 20;
-
-
-export {ROWS_COUNT};
-export {COLUMNS_COUNT};
-export {TYPES_ON_MAP};
-export {SPECIAL_TILES};
-export {STONE_TYPES};
-export {FROM_GATES_MOVEMENT};
-export {COLORS};
-export {WAY_WIDTH};
+export const WAY_WIDTH = 20;
 
 // {
 //     0: {count: 6},

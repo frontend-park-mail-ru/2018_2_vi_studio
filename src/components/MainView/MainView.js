@@ -7,21 +7,21 @@ export default class MainView extends Component {
         super(VirtualDOM.createElementByHtml(renderMainView()));
 
         this._contentEl = this._element.getElementsByClassName('main-view__content')[0];
-        this._navEl = this._element.getElementsByClassName('main-view__nav-container')[0];
+        this._asideContentEl = this._element.getElementsByClassName('main-view__aside-content')[0];
         this._asideEl = this._element.getElementsByClassName('main-view__aside')[0];
         this._asideToggleButton = this._element.getElementsByClassName('main-view__aside-toggle')[0];
 
         this._asideToggleButton.addEventListener('click', this._toggleNav.bind(this));
 
-        this._navEl.addEventListener('click', this._toggleNav.bind(this));
+        this._asideContentEl.addEventListener('click', this._toggleNav.bind(this));
     }
 
     get content() {
         return this._contentEl;
     }
 
-    get nav() {
-        return this._navEl;
+    get asideContent() {
+        return this._asideContentEl;
     }
 
     _toggleNav () {

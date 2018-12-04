@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+
 @import "constants";
 /* components */
-@import "components/FileInput/file-input";
 @import "components/Navigation/navigation";
+@import "components/FileInput/file-input";
 @import "components/Video/video";
 @import "components/Form/form";
 @import "components/Leaderboard/leaderboard";
@@ -18,6 +20,7 @@ html {
 
 a {
   text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
 }
 
 button {
@@ -26,8 +29,9 @@ button {
 }
 
 body {
-  min-height: 100%;
+  height: 100%;
   margin: 0;
+  overflow-y: hidden;
   display: flex;
 
   #root {

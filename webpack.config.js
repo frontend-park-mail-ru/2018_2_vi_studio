@@ -28,8 +28,9 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    'to-string-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
+                    'postcss-loader',
                 ]
             },
             {
@@ -37,7 +38,8 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
-                    "sass-loader",
+                    'postcss-loader',
+                    'sass-loader',
                 ],
             },
         ]
