@@ -50,7 +50,7 @@ class Game extends GameCore {
 
             if (tile === this.tileScene.selectedTile) {
                 this.tileScene.rotate();
-                return
+                return;
             }
 
             if (tile instanceof TileWithWays && !tile.settled) {
@@ -105,6 +105,11 @@ class Game extends GameCore {
             const data = evt.lastTry;
             this.boardScene.tileMap.tiles[data.row][data.col].setType(this.tileScene.tile.getType(), data.rotationCount);
             this.boardScene.tileMap.tiles[data.row][data.col].settled = true;
+            this.boardScene.tileMap.tiles[data.row][data.col].fillStyle = COLORS.SELECTED_TILE;
+            setTimeout(() => {
+                this.boardScene.tileMap.tiles[data.row][data.col].fillStyle = COLORS.BACKGROUND;
+                bus.emit(EVENTS.GAME_STATE_CHANGED, this.state);
+            }, 500);
         }
 
         this.tileScene.tile.setType(evt.currentTry.tileType);
