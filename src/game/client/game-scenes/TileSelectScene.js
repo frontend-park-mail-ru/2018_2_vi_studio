@@ -4,7 +4,7 @@ import TileWithWays from "../graphics/TileWithWays.js";
 import {EVENTS} from "../../../constants.js";
 import {COLORS} from "../../config.js";
 
-const TILE_SELECT_SCENE_CENTER = 500;
+const TILE_SELECT_SCENE_CENTER = 200;
 
 export default class TileSelectScene extends Scene {
     constructor(canvas) {
