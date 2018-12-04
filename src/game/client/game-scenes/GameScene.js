@@ -4,9 +4,7 @@ import {TileMap} from "../graphics/TileMap.js";
 export default class GameScene extends Scene{
     constructor(canvas) {
         super(canvas.getContext('2d'));
-        this._width = canvas.width;
-        this._height = canvas.height;
-        this._canvasSize = canvas.getBoundingClientRect().height;
+        this._canvas = canvas;
 
         this.requestFrameId = null;
         this.render = this.render.bind(this);
@@ -28,14 +26,14 @@ export default class GameScene extends Scene{
     }
 
     get canvasSize() {
-        return this._canvasSize;
+        return this._canvas.getBoundingClientRect().height;
     }
 
     get width() {
-        return this._width;
+        return this._canvas.width;
     }
 
     get height() {
-        return this._height;
+        return this._canvas.height;
     }
 };

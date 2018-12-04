@@ -15,9 +15,16 @@ export default class GameController extends Controller {
         this._onClick = this._handleEvent.bind(this, 'click');
         this.stop = this.stop.bind(this);
         this.start = this.start.bind(this);
+
+        // window.addEventListener('resize', () => {
+        //     this._view.resize();
+        //     bus.emit(EVENTS.GAME_STATE_CHANGED);
+        // });
     }
 
     handle(args = []) {
+        // this._view.resize();
+
         bus.on(EVENTS.SERVICE_START, this.start);
 
         switch (args[0]) {

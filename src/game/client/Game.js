@@ -18,15 +18,13 @@ class Game extends GameCore {
         this.tileScene = new TileSelectScene(component.tileCanvas);
         this.playersRoot = component.playersRoot;
 
-        this.rotateButton = component.rotateButton;
-        this.rotateButton.addEventListener('click', this.tileScene.rotate);
-
         this.submitButton = component.submitButton;
         this.submitButton.addEventListener('click', this.tileScene.submit);
 
         this.userId = null;
 
         this.state = {};
+
         this.showProgress = showProgress;
     }
 
@@ -40,7 +38,6 @@ class Game extends GameCore {
         this.boardScene.destroy();
         this.tileScene.destroy();
 
-        this.rotateButton.removeEventListener('click', this.tileScene.rotate);
         this.submitButton.removeEventListener('click', this.tileScene.submit);
     }
 
@@ -50,6 +47,11 @@ class Game extends GameCore {
             const x = evt.x * this.boardScene.width / this.boardScene.canvasSize;
             const y = evt.y * this.boardScene.height / this.boardScene.canvasSize;
             const tile = this.boardScene.tileMap.getTile(x, y);
+
+            if (tile === this.tileScene.selectedTile) {
+                this.tileScene.rotate();
+                return
+            }
 
             if (tile instanceof TileWithWays && !tile.settled) {
                 // remove last selected tile

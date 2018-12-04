@@ -69,20 +69,20 @@ export default class MainController extends Controller {
 
     renderNav(ignoreAuth) {
         if (ignoreAuth) {
-            Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._view.nav);
+            Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._view.asideContent);
             return;
         }
 
         UserModel.get().then(
             response => {
                 if (response.error) {
-                    Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._view.nav)
+                    Component.render(new Navigation({items: GUEST_NAV_ITEMS}), this._view.asideContent)
                 } else {
 
                     Component.render([
                         new Profile({name: response.nickname, avatar: response.avatar}),
                         new Navigation({items: USER_NAV_ITEMS})
-                    ], this._view.nav);
+                    ], this._view.asideContent);
                 }
             }
         ).catch(error => {

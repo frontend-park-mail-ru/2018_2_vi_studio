@@ -2,23 +2,11 @@
   .leaders__member {
     color: $main-color;
     font-family: sans-serif;
-    font-size: 18pt;
+    font-size: 16pt;
     margin-bottom: 25px;
 
     &:last-child {
       margin: 0;
-    }
-
-    &:nth-child(1) {
-      color: #3c301e;
-    }
-
-    &:nth-child(2) {
-      color: #504328;
-    }
-
-    &:nth-child(3) {
-      color: #645732;
     }
 
     .leaders__name {
