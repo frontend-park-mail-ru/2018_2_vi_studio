@@ -7,6 +7,8 @@ import {TILE_SIZE, STONE_TYPES, FROM_GATES_MOVEMENT} from "../../config.js";
 import bus from "../../../bus";
 import {EVENTS} from "../../../constants";
 
+const X_OFFSET = 40;
+
 const ROWS_COUNT = 10;
 const COLUMNS_COUNT = 11;
 const TYPES = {
@@ -85,8 +87,8 @@ export class TileMap {
 
     _setSidesTiles() {
         // side tiles
-        let centralRow = this.rows / 2 ^ 0;
-        let centralColumn = this.columns / 2 ^ 0;
+        let centralRow = Math.floor(this.rows / 2);
+        let centralColumn = Math.floor(this.columns / 2);
         this.schema[1][centralColumn] = {
             type: TYPES.SIDE, rotation: Math.PI,
             rotationCount: 3,
@@ -163,7 +165,7 @@ export class TileMap {
             return schemaLine.map((schema, j) => {
                 let tile = null;
 
-                const x = 1.5 * (j + 1) * TILE_SIZE.x - 40;
+                const x = 1.5 * (j + 1) * TILE_SIZE.x - X_OFFSET;
                 const y = j % 2 === 0 ? (i * 2 + 1) * TILE_SIZE.y : i * 2 * TILE_SIZE.y;
 
                 switch (schema.type) {
@@ -240,7 +242,7 @@ export class TileMap {
     }
 
     getTile(x, y) {
-        const j = Math.round(x / 1.5 / TILE_SIZE.x) - 1;
+        const j = Math.round((x + X_OFFSET) / 1.5 / TILE_SIZE.x) - 1;
         const i = j % 2 === 0 ? Math.round((y / TILE_SIZE.y - 1) / 2) : Math.round(y / TILE_SIZE.y / 2);
         let tile = this.tiles[i][j];
         tile.row = i;

@@ -47,3 +47,7 @@ body {
 .hidden {
   display: none;
 }
+
+input[type="submit"], button {
+  cursor: pointer;
+}

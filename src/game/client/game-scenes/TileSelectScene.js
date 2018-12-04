@@ -4,7 +4,7 @@ import TileWithWays from "../graphics/TileWithWays.js";
 import {EVENTS} from "../../../constants.js";
 import {COLORS} from "../../config.js";
 
-const TILE_SELECT_SCENE_CENTER = 500;
+const TILE_SELECT_SCENE_CENTER = 200;
 
 export default class TileSelectScene extends Scene {
     constructor(canvas) {
@@ -18,8 +18,6 @@ export default class TileSelectScene extends Scene {
         this.render = this.render.bind(this);
 
         this.tile = new TileWithWays(this._ctx, null);
-        this.halfHeight *= 2;
-        this.halfWidth *= 2;
 
         this.tile.x = TILE_SELECT_SCENE_CENTER;
         this.tile.y = TILE_SELECT_SCENE_CENTER;
