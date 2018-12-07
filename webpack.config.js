@@ -13,7 +13,7 @@ module.exports = {
     entry: './src/main.js',
     output: {
         filename: isProd ? '[name].bundle.min.js' : '[name].bundle.js',
-        path: __dirname + '/build'
+        path: __dirname + '/public'
     },
     module: {
         rules: [
