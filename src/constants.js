@@ -1,5 +1,5 @@
-export const SERVER_WS_PATH = `ws://${process.env.SERVER_IP}:8001`;
-export const SERVER_PATH = `http://${process.env.SERVER_IP}:8000`;
+export const SERVER_WS_PATH = `ws://${process.env.SERVER_IP}`;
+export const SERVER_PATH = `http://${process.env.SERVER_IP}`;
 
 export const EVENTS = {
     QUEUE_POSITION: 'QUEUE_POSITION',
