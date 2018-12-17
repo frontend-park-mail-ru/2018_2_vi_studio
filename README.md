@@ -2,4 +2,4 @@
 
 http://95.163.180.8
 
-SERVER_IP=127.0.0.1 npm run build
+SERVER_HOST=127.0.0.1 npm run build

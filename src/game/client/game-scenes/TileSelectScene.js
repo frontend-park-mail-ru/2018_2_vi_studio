@@ -46,7 +46,7 @@ export default class TileSelectScene extends Scene {
             bus.emit(EVENTS.DONE_TRY, data);
             bus.emit(EVENTS.GAME_STATE_CHANGED, {});
         } else {
-            alert('Select tile position, please!');
+            bus.emit(EVENTS.ALERT, {message: 'Select tile position, please!'});
         }
     };
 

@@ -1,0 +1,28 @@
+.popup {
+  display: none;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(63, 63, 63, 0.8);
+  top: 0;
+  left: 0;
+
+  &_show {
+    display: flex;
+  }
+
+  .popup__content {
+    background: white;
+    width: 320px;
+    padding: 40px;
+    margin: auto;
+
+    .popup__message {
+      margin: 10px 0;
+    }
+
+    .button {
+      margin: 10px 0;
+    }
+  }
+}
