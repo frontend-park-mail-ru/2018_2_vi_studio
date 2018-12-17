@@ -12,6 +12,8 @@ import Profile from "../components/Profile/Profile.js";
 import MainView from "../components/MainView/MainView.js";
 import SignInForm from "../components/SignInForm/SignInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
+import {EVENTS} from "../constants.js";
+import bus from "../bus.js";
 
 const USER_NAV_ITEMS = [
     {title: 'Single player', href: '/game/offline'},
@@ -86,7 +88,7 @@ export default class MainController extends Controller {
                 }
             }
         ).catch(error => {
-            this.router.open('/error');
+            MainController.alertUnavailable();
         });
     }
 
@@ -111,7 +113,7 @@ export default class MainController extends Controller {
                     this.router.open('/');
                 }
             }).catch(error => {
-                this.router.open('/error');
+                MainController.alertUnavailable();
             });
         });
     };
@@ -135,7 +137,7 @@ export default class MainController extends Controller {
                     console.log(obj);
                     this.router.open('/sign_in');
                 }).catch(error => {
-                    this.router.open('/error')
+                    MainController.alertUnavailable();
                 });
             } else {
                 form.showError('Passwords do not match');
@@ -163,7 +165,7 @@ export default class MainController extends Controller {
             formEl.nickname.value = obj.nickname;
             formEl.email.value = obj.email;
         }).catch(error => {
-            this.router.open('/error');
+            MainController.alertUnavailable();
         });
 
         formEl.addEventListener("submit", event => {
@@ -183,7 +185,7 @@ export default class MainController extends Controller {
                 this.renderNav();
                 this.router.open('/profile');
             }).catch(error => {
-                this.router.open('/error');
+                MainController.alertUnavailable();
             });
         });
     }
@@ -206,7 +208,7 @@ export default class MainController extends Controller {
                 }
             }
         ).catch(error => {
-            this.router.open('/error');
+            MainController.alertUnavailable();
         })
     }
 
@@ -216,5 +218,9 @@ export default class MainController extends Controller {
 
     renderHome() {
         Component.render(new Video(), this._view.content);
+    }
+
+    static alertUnavailable() {
+        bus.emit(EVENTS.ALERT, {message: 'Сервис не доступен. Проверьте ваше соединение с интернетом'});
     }
 }
