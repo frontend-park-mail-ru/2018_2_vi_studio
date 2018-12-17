@@ -16,39 +16,50 @@ export default class Bot extends Player {
         this.tileMap = tileMap;
     }
 
+    static randomInteger(min, max) {
+        let rand = min + Math.random() * (max - min);
+        rand = Math.floor(rand);
+        return rand;
+    }
+
     getNextTile(nextTryData) {
         const type = nextTryData.currentTry.tileType;
         let tempTile = new TileWithWays();
         tempTile.setType(type);
 
-        // TODO: make same logic i-gataullin
-        for (let i = 0; i < ROWS_COUNT; i++) {
-            for (let j = 0; j < COLUMNS_COUNT; j++) {
-                const tile = this.tileMap.tiles[i][j];
+        let row = Bot.randomInteger(0, ROWS_COUNT);
+        let col = Bot.randomInteger(0, COLUMNS_COUNT);
+        let rotationCount = 0;
+        while (true) {
+            const tile = this.tileMap.tiles[row][col];
 
-                if (tile instanceof TileWithWays && tile.settled === false) {
-                    const typeOfMovement = j % 2;
-                    const movement = FROM_GATES_MOVEMENT[typeOfMovement];
-                    for (let k = 0; k < tempTile.gates.length; k++) {
-                        const neighbor1 = this.tileMap.tiles[i + movement[k].row][j + movement[k].col];
-                        const neighbor2 = this.tileMap.tiles[i + movement[tempTile.gates[k]].row][j + movement[tempTile.gates[k]].col];
+            if (tile instanceof TileWithWays && tile.settled === false) {
+                const typeOfMovement = col % 2;
+                const movement = FROM_GATES_MOVEMENT[typeOfMovement];
+                for (let k = 0; k < tempTile.gates.length; k++) {
+                    const neighbor1 = this.tileMap.tiles[row + movement[k].row][col + movement[k].col];
+                    const neighbor2 = this.tileMap.tiles[row + movement[tempTile.gates[k]].row][col + movement[tempTile.gates[k]].col];
 
-                        if (neighbor1 instanceof GateTile && neighbor1.zero === false &&
-                            neighbor2 instanceof GateTile && neighbor2.zero === false) {
-                            return {
-                                row: i,
-                                col: j,
-                                rotationCount: 1,
-                            };
-                        }
+                    if (neighbor1 instanceof GateTile && neighbor1.zero === false &&
+                        neighbor2 instanceof GateTile && neighbor2.zero === false) {
+                        rotationCount = 1;
+                        return {
+                            row: row,
+                            col: col,
+                            rotationCount: rotationCount,
+                        };
                     }
-                    return {
-                        row: i,
-                        col: j,
-                        rotationCount: 0,
-                    };
                 }
+                return {
+                    row: row,
+                    col: col,
+                    rotationCount: rotationCount,
+                };
             }
+            col += 1;
+            row += (col / COLUMNS_COUNT) === 1 ? 1: 0;
+            col %= COLUMNS_COUNT;
+            row %= ROWS_COUNT;
         }
     }
 }

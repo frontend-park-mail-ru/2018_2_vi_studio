@@ -7,14 +7,8 @@ import GateTile from "./GateTile.js";
 import CentralTile from "./CentralTile.js";
 import {STONE_TYPES} from "../../config.js";
 import Stone from "./Stone.js";
+import MapSchema from "./MapSchema.js";
 
-const TYPES = {
-    UNDEF: 'UNDEF',
-    GATE: 'GATE',
-    CENTRAL: 'CENTRAL',
-    SIDE: 'SIDE',
-    STD: 'STD',
-};
 
 const CENTRAL_GREEN_STONES_COUNT = 5;
 
@@ -25,138 +19,10 @@ export default class TileMap {
         this.gates = [];
         this.rows = ROWS_COUNT;
         this.columns = COLUMNS_COUNT;
-    }
-
-    initSchema() {
-        this.schema = [];
-        for (let i = 0; i < ROWS_COUNT; i++) {
-            this.schema.push([]);
-            for (let j = 0; j < COLUMNS_COUNT; j++) {
-                this.schema[i].push(TYPES.STD);
-            }
-        }
-        this._setUndefTiles();
-        this._setSidesTiles();
-        this._setCentralTile();
-        this._setGateTiles();
-    }
-
-    _setUndefTiles() {
-        this.schema[0][0] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[0][1] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[0][2] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[0][3] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[0][5] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[0][7] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[0][8] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[0][9] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[1][0] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[1][1] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[1][9] = {type: TYPES_ON_MAP.UNDEF};
-
-
-        this.schema[2][0] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[2][10] = {type: TYPES_ON_MAP.UNDEF};
-
-
-        this.schema[0][COLUMNS_COUNT - 1] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[0][COLUMNS_COUNT - 2] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[1][COLUMNS_COUNT - 1] = {type: TYPES_ON_MAP.UNDEF};
-
-        this.schema[ROWS_COUNT - 3][COLUMNS_COUNT - 1] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[ROWS_COUNT - 2][COLUMNS_COUNT - 1] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[ROWS_COUNT - 1][COLUMNS_COUNT - 1] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[ROWS_COUNT - 1][COLUMNS_COUNT - 2] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[ROWS_COUNT - 1][COLUMNS_COUNT - 3] = {type: TYPES_ON_MAP.UNDEF};
-
-        this.schema[ROWS_COUNT - 1][0] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[ROWS_COUNT - 1][1] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[ROWS_COUNT - 1][2] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[ROWS_COUNT - 2][0] = {type: TYPES_ON_MAP.UNDEF};
-        this.schema[ROWS_COUNT - 3][0] = {type: TYPES_ON_MAP.UNDEF};
-    }
-
-    _setSidesTiles() {
-        // side tiles
-        let centralRow = this.rows / 2 ^ 0;
-        let centralColumn = this.columns / 2 ^ 0;
-        this.schema[1][centralColumn] = {
-            // type: TYPES.SIDE, rotation: Math.PI,
-            type: TYPES_ON_MAP.SIDE, rotation: 3,
-        };
-        this.schema[ROWS_COUNT - 1][centralColumn] = {
-            type: TYPES_ON_MAP.SIDE, rotation: 0,
-        };
-        this.schema[centralRow + centralRow - 3][centralColumn + centralRow - 1] = {
-            type: TYPES_ON_MAP.SIDE,
-            rotation: 5,
-            // rotation: 0,
-        };
-        this.schema[centralRow + centralRow - 3][1] = {
-            type: TYPES_ON_MAP.SIDE,
-            rotation: 1,
-        };
-        this.schema[3][9] = {
-            type: TYPES_ON_MAP.SIDE,
-            rotation: 4,
-        };
-        this.schema[3][1] = {
-            type: TYPES_ON_MAP.SIDE,
-            rotation: 2,
-        };
-    }
-
-    _setCentralTile() {
-        let centralRow = this.rows / 2 ^ 0;
-        let centralColumn = this.columns / 2 ^ 0;
-        this.schema[centralRow][centralColumn] = {
-            type: TYPES_ON_MAP.CENTRAL,
-        };
-
-    }
-
-    _setGateTiles() {
-        this.schema[3][0] = {type: TYPES_ON_MAP.GATE, zero: true};
-        this.schema[4][0] = {type: TYPES_ON_MAP.GATE, zero: false}; // 9
-        this.schema[5][0] = {type: TYPES_ON_MAP.GATE, zero: false}; // 8
-        this.schema[6][0] = {type: TYPES_ON_MAP.GATE, zero: true};
-
-        this.schema[2][1] = {type: TYPES_ON_MAP.GATE, zero: true};
-        this.schema[1][2] = {type: TYPES_ON_MAP.GATE, zero: false}; // 10
-        this.schema[1][3] = {type: TYPES_ON_MAP.GATE, zero: false}; // 11
-        this.schema[0][4] = {type: TYPES_ON_MAP.GATE, zero: true};
-        //
-        this.schema[0][6] = {type: TYPES_ON_MAP.GATE, zero: true};
-        this.schema[1][7] = {type: TYPES_ON_MAP.GATE, zero: false}; // 0
-        this.schema[1][8] = {type: TYPES_ON_MAP.GATE, zero: false}; // 1
-        this.schema[2][9] = {type: TYPES_ON_MAP.GATE, zero: true};
-
-        this.schema[3][10] = {type: TYPES_ON_MAP.GATE, zero: true};
-        this.schema[4][10] = {type: TYPES_ON_MAP.GATE, zero: false}; // 2
-        this.schema[5][10] = {type: TYPES_ON_MAP.GATE, zero: false}; // 3
-        this.schema[6][10] = {type: TYPES_ON_MAP.GATE, zero: true};
-
-        this.schema[8][1] = {type: TYPES_ON_MAP.GATE, zero: true};
-        this.schema[8][2] = {type: TYPES_ON_MAP.GATE, zero: false}; // 7
-        this.schema[9][3] = {type: TYPES_ON_MAP.GATE, zero: false}; // 6
-        this.schema[9][4] = {type: TYPES_ON_MAP.GATE, zero: true};
-
-        this.schema[8][9] = {type: TYPES_ON_MAP.GATE, zero: true};
-        this.schema[8][8] = {type: TYPES_ON_MAP.GATE, zero: false}; // 4
-        this.schema[9][7] = {type: TYPES_ON_MAP.GATE, zero: false}; // 5
-        this.schema[9][6] = {type: TYPES_ON_MAP.GATE, zero: true};
-
-        // this.schema[0][7] = {type: TYPES.UNDEF};
-        // this.schema[0][8] = {type: TYPES.UNDEF};
-        // this.schema[0][9] = {type: TYPES.UNDEF};
-        // this.schema[1][0] = {type: TYPES.UNDEF};
-        // this.schema[1][1] = {type: TYPES.UNDEF};
-        // this.schema[1][9] = {type: TYPES.UNDEF};
-
+        this.schema = MapSchema.schema;
     }
 
     init() {
-        this.initSchema();
         this.gates = [];
         for (let i = 0; i < ROWS_COUNT; i++) {
             this.tiles.push([]);
@@ -167,7 +33,7 @@ export default class TileMap {
                         tile = null;
                         break;
                     case TYPES_ON_MAP.SIDE:
-                        tile = new SideTile(this.schema[i][j].rotation);
+                        tile = new SideTile(this.schema[i][j].rotationCount);
                         const stone = new Stone(STONE_TYPES.YELLOW, tile, i, j, tile.stoneGate);
                         this.stones.push(stone);
                         break;
@@ -178,7 +44,7 @@ export default class TileMap {
                             const stone = new Stone(STONE_TYPES.GREEN, tile, i, j, k);
                             this.stones.push(stone);
                         }
-                        const stone1 = new Stone(STONE_TYPES.GREEN, tile, i, j, CENTRAL_GREEN_STONES_COUNT);  // TODO: must be BLUE type i-gataullin
+                        const stone1 = new Stone(STONE_TYPES.GREEN, tile, i, j, CENTRAL_GREEN_STONES_COUNT);
                         this.stones.push(stone1);
                         break;
                     case TYPES_ON_MAP.GATE:

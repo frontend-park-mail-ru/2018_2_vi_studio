@@ -4,7 +4,7 @@ import {SPECIAL_TILES} from "../../config.js";
 class SideTile extends Tile {
     constructor(rotationCount) {
         super();
-        this.gates = Object.assign([], SPECIAL_TILES.SIDE.gates);
+        this.gates = SPECIAL_TILES.SIDE.gates.slice();
         this.stoneGate = SPECIAL_TILES.SIDE.stoneGate;
         this.setRotation(rotationCount);
         this.setRotationStoneGate(rotationCount);
