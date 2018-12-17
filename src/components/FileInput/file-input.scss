@@ -1,0 +1,53 @@
+@import '../../constants';
+
+.file-input {
+  border-bottom: 2px solid $main-color;
+  font-family: sans-serif;
+
+  .file-input__name {
+    position: relative;
+    top: -48px;
+    color: $main-color;
+    font-size: 8pt;
+    padding: 0 5px;
+  }
+
+  .file-input__container {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 10px 0 0 5px;
+    background: none;
+    color: $main-color;
+    font-size: 16pt;
+    outline: none;
+
+    .file-input__button {
+      display: inline-block;
+      box-sizing: border-box;
+      background: $main-color;
+      font-size: 16pt;
+      font-family: sans-serif;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      border: none;
+      width: 100px;
+
+      &:hover {
+        background: $main-color-light;
+      }
+    }
+
+    .file-input__file-name {
+      display: inline-block;
+      width: 205px;
+    }
+
+    .file-input__input {
+      visibility: hidden;
+      position: absolute;
+      width: 0;
+    }
+  }
+}

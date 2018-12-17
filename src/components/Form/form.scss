@@ -1,0 +1,27 @@
+@import '../Field/field';
+@import '../Button/button';
+
+.form {
+  .form__error {
+    display: none;
+    font-family: sans-serif;
+    text-align: center;
+    background: #ffc7b7;
+    color: #aa5a4c;
+
+    &_active {
+      display: block;
+      padding: 16px;
+      margin-bottom: 25px;
+    }
+  }
+
+  .field, .file-input {
+    margin-bottom: 25px;
+    height: 48px;
+  }
+
+  .button {
+    height: 48px;
+  }
+}

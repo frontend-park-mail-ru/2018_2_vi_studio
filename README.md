@@ -1,4 +1,5 @@
 # 2018_2_vi_studio
-front-end - <здесь будет ссылка>
 
-back-end - <здесь будет ссылка>
+http://95.163.180.8
+
+SERVER_IP=127.0.0.1 npm run build

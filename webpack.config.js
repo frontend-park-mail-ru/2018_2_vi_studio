@@ -1,14 +1,16 @@
-const webpack = require('webpack');
 const isProd = process.env.NODE_ENV === 'production';
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
 
 console.log(`Is Production: ${isProd}`);
+console.log(`Server IP: ${process.env.SERVER_IP}`);
 
 module.exports = {
-    mode: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
+    mode: isProd ? 'production' : 'development',
     devtool: 'source-map',
-    entry: './src/javascripts/main.js',
+    entry: './src/main.js',
     output: {
         filename: isProd ? '[name].bundle.min.js' : '[name].bundle.js',
         path: __dirname + '/build'
@@ -17,57 +19,42 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader', use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                url: false,
-                                minimize: isProd,
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader: 'sass-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        }
-                    ]
-                })
+                exclude: /node_modules/,
+                loader: "babel-loader",
+                options: {
+                    presets: ["@babel/preset-env"]
+                }
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader', use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                url: false,
-                                minimize: isProd,
-                                sourceMap: true
-                            }
-                        }
-                    ]
-                })
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader',
+                ]
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader',
+                    'sass-loader',
+                ],
             },
         ]
     },
-    plugins: isProd ? [
-        new ExtractTextPlugin('[name].bundle.min.css'),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production')
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
         }),
-        // new UglifyJsPlugin()
-    ] : [
-        new ExtractTextPlugin('[name].bundle.css'),
-    ],
-    node: {
-        fs: 'empty'
-    }
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
+            'process.env.SERVER_IP': JSON.stringify(process.env.SERVER_IP),
+        }),
+        new ServiceWorkerWebpackPlugin({
+            entry: path.join(__dirname, 'src/sw.js'),
+        }),
+    ]
 };
