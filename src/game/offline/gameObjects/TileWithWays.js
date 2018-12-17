@@ -6,15 +6,12 @@ class TileWithWays extends Tile {
         super();
         this.rotationCount = 0;
         this.settled = false;
-        this.stonesOnGate = [null, null, null, null, null, null];
-        // this.setType(type);
-        // this.setRotation(rotationCount);
     }
 
     setType(type) {
         this.type = type;
         this.rotationCount = 0;
-        this.gates = Object.assign([], TYPE_WAYS[type]);
+        this.gates = TYPE_WAYS[type].slice();
     }
 }
 

@@ -1,5 +1,6 @@
-export const SERVER_WS_PATH = `ws://${process.env.SERVER_IP}:8001`;
-export const SERVER_PATH = `http://${process.env.SERVER_IP}:8000`;
+export const SERVER_WS_PATH = `wss://${process.env.SERVER_HOST}/game-ws`;
+export const SERVER_API_PATH = `https://${process.env.SERVER_HOST}/api`;
+export const IMAGES_PATH = `https://${process.env.SERVER_HOST}/media/images/`;
 
 export const EVENTS = {
     QUEUE_POSITION: 'QUEUE_POSITION',
@@ -12,9 +13,9 @@ export const EVENTS = {
     READY_TO_PLAY: 'READY_TO_PLAY',
     DONE_TRY: 'DONE_TRY',
     SERVICE_START: 'SERVICE_START',
-    SUBMIT: 'SUBMIT'
+    SUBMIT: 'SUBMIT',
+    ALERT: 'ALERT',
 };
 
-export const IMAGES_PATH = SERVER_PATH + '/media/images/';
-export const NO_AVATAR_PATH = '/build/images/no-avatar.jpg';
-export const BOT_AVATAR_PATH = '/build/images/bot-avatar.png';
+export const NO_AVATAR_PATH = '/public/images/no-avatar.jpg';
+export const BOT_AVATAR_PATH = '/public/images/bot-avatar.png';

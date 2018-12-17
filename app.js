@@ -15,13 +15,13 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use(sassMiddleware({
         src: path.join(__dirname, 'src'),
-        dest: path.join(__dirname, 'build'),
+        dest: path.join(__dirname, 'public'),
         indentedSyntax: false, // true = .sass and false = .scss
         sourceMap: true,
     }));
-app.use('/sw.js', express.static(path.join(__dirname, 'build/sw.js')));
+app.use('/sw.js', express.static(path.join(__dirname, 'public/sw.js')));
 app.use('/src', express.static(path.join(__dirname, 'src')));
-app.use('/build', express.static(path.join(__dirname, 'build')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 const router = express.Router();
 router.get('*', function(req, res, next) {

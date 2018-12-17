@@ -21,6 +21,14 @@ class Game extends GameCore {
         this.submitButton = component.submitButton;
         this.submitButton.addEventListener('click', this.tileScene.submit);
 
+        this.quitButton = component.quitButton;
+        this.quitButton.addEventListener('click',
+            () => bus.emit(EVENTS.ALERT, {
+                message: 'Do you really want to quit the game?',
+                actions: [{name: 'Yes', callback: () => bus.emit(EVENTS.GAME_OVER)}]
+            })
+        );
+
         this.userId = null;
 
         this.state = {};
@@ -50,7 +58,7 @@ class Game extends GameCore {
 
             if (tile === this.tileScene.selectedTile) {
                 this.tileScene.rotate();
-                return
+                return;
             }
 
             if (tile instanceof TileWithWays && !tile.settled) {
@@ -105,6 +113,11 @@ class Game extends GameCore {
             const data = evt.lastTry;
             this.boardScene.tileMap.tiles[data.row][data.col].setType(this.tileScene.tile.getType(), data.rotationCount);
             this.boardScene.tileMap.tiles[data.row][data.col].settled = true;
+            this.boardScene.tileMap.tiles[data.row][data.col].fillStyle = COLORS.SELECTED_TILE;
+            setTimeout(() => {
+                this.boardScene.tileMap.tiles[data.row][data.col].fillStyle = COLORS.BACKGROUND;
+                bus.emit(EVENTS.GAME_STATE_CHANGED, this.state);
+            }, 500);
         }
 
         this.tileScene.tile.setType(evt.currentTry.tileType);
@@ -117,7 +130,7 @@ class Game extends GameCore {
         if (evt.gameOver.players) {
             this.players.forEach(player => player.deactivate());
             const msg = this.players.map(player => `${player.nickname}: ${player.points}`);
-            alert(msg);
+            bus.emit(EVENTS.ALERT, {message: msg});
             bus.emit(EVENTS.GAME_OVER);
         }
 
@@ -125,8 +138,9 @@ class Game extends GameCore {
     }
 
     onWrongTry(ent) {
-        alert('Не стоит закрывать выходы!' +
-            'Поверните ячейку или разместите в другом месте.');
+        bus.emit(EVENTS.ALERT, {
+            message: 'Не стоит закрывать выходы! Поверните ячейку или разместите в другом месте.'
+        });
     }
 }
 
