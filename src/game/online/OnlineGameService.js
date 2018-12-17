@@ -34,4 +34,9 @@ export default class OnlineGameService extends GameService{
     onWSClose(event) {
         this.destroy();
     }
+
+    destroy() {
+        this.ws.close(200, 'game over');
+        super.destroy();
+    }
 }
