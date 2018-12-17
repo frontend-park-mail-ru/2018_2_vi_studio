@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 
 console.log(`Is Production: ${isProd}`);
-console.log(`Server IP: ${process.env.SERVER_IP}`);
+console.log(`Server IP: ${process.env.SERVER_HOST}`);
 
 module.exports = {
     mode: isProd ? 'production' : 'development',
@@ -51,7 +51,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(isProd ? 'production' : 'development'),
-            'process.env.SERVER_IP': JSON.stringify(process.env.SERVER_IP),
+            'process.env.SERVER_HOST': JSON.stringify(process.env.SERVER_HOST),
         }),
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'src/sw.js'),
