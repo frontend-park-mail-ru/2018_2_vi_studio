@@ -9,8 +9,8 @@ export default class GameView extends Component {
         this._playersEl = this.element.getElementsByClassName('game-view__players')[0];
         this._tileCanvas = this.element.getElementsByClassName('game-view__tile-view')[0];
         this._boardCanvas = this.element.getElementsByClassName('game-view__area')[0];
-        this._rotateButton = this.element.getElementsByClassName('game-view__rotate-button')[0];
         this._submitButton = this.element.getElementsByClassName('game-view__submit-button')[0];
+        this._quitButton = this.element.getElementsByClassName('game-view__quit-button')[0];
 
         this.resize = this.resize.bind(this);
     }
@@ -27,8 +27,8 @@ export default class GameView extends Component {
         return this._tileCanvas;
     }
 
-    get rotateButton() {
-        return this._rotateButton;
+    get quitButton() {
+        return this._quitButton;
     }
 
     get submitButton() {

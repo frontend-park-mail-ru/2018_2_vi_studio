@@ -13,7 +13,8 @@ export const EVENTS = {
     READY_TO_PLAY: 'READY_TO_PLAY',
     DONE_TRY: 'DONE_TRY',
     SERVICE_START: 'SERVICE_START',
-    SUBMIT: 'SUBMIT'
+    SUBMIT: 'SUBMIT',
+    ALERT: 'ALERT',
 };
 
 export const NO_AVATAR_PATH = '/public/images/no-avatar.jpg';

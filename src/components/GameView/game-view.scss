@@ -29,13 +29,18 @@
           padding: 10% 25%;
         }
 
-        .game-view__submit-button {
+        .game-view__submit-button, .game-view__quit-button {
           background: #ff8200;
           color: white;
-          font-size: 24pt;
+          font-size: 20pt;
           border-radius: 60px;
-          padding: 15px 30px;
+          padding: 10px 30px;
+          margin: 10px 0;
           width: 100%;
+        }
+
+        .game-view__quit-button {
+          background: brown;
         }
       }
     }
@@ -63,7 +68,7 @@
         .game-view__tile-manager {
           flex: 1;
 
-          .game-view__submit-button {
+          .game-view__submit-button, .game-view__quit-button {
             font-size: 12pt;
             padding: 10px 15px;
           }

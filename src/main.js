@@ -5,11 +5,12 @@ import MainController from './controllers/MainController.js';
 import GameController from './controllers/GameController.js';
 import {EVENTS} from "./constants.js";
 import bus from './bus.js';
-
-import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+import ErrorController from "./controllers/ErrorController.js";
+import Component from "./components/Component.js";
+import PopUp from "./components/PopUp/PopUp.js";
+import runtime from 'serviceworker-webpack-plugin/lib/runtime.js';
 
 import './main.scss';
-import ErrorController from "./controllers/ErrorController";
 
 
 if ('serviceWorker' in navigator) {
@@ -19,8 +20,10 @@ if ('serviceWorker' in navigator) {
 const root = document.getElementById('root');
 const router = new Router(root);
 
-bus.on(EVENTS.QUEUE_POSITION, data => alert('QUEUE POSITION: ' + data.position));
-// bus.on(EVENTS.GAME_OVER, () => alert('GAME OVER'));
+const popup = document.getElementById('popup');
+Component.render(new PopUp(), popup);
+
+bus.on(EVENTS.QUEUE_POSITION, data => bus.emit(EVENTS.ALERT, {message: 'QUEUE POSITION: ' + data.position}));
 
 router
     .register('/error', ErrorController)
