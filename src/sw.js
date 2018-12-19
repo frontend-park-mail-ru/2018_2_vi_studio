@@ -30,6 +30,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', event => {
     /** online first */
+    if (event.request.method !== 'GET') return;
     event.respondWith(
         caches.match(event.request).then(
             (cachedResponse = {}) => {
@@ -41,7 +42,9 @@ self.addEventListener('fetch', event => {
                         }
                         // обновляем кэш
                         caches.open(CACHE_NAME).then(cache => {
-                            cache.put(event.request, response.clone());
+                            if (event.request) {
+                                cache.put(event.request, response.clone());
+                            }
                         });
                         // возвращаем свежий ресурс
                         return response.clone();
@@ -50,7 +53,7 @@ self.addEventListener('fetch', event => {
                     });
                 }
 
-                return cachedResponse
+                return cachedResponse;
             }
         )
     );

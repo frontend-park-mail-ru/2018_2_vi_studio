@@ -1,7 +1,8 @@
 export const SERVER_WS_PATH = `wss://${process.env.SERVER_HOST}/game-ws`;
-export const SERVER_API_PATH = `https://${process.env.SERVER_HOST}/api`;
-export const IMAGES_PATH = `https://${process.env.SERVER_HOST}/media/images/`;
-
+export const SERVER_API_PATH = `http://${process.env.SERVER_HOST}`;
+// export const IMAGES_PATH = `http://${process.env.SERVER_HOST}/media/images/`;
+export const IMAGES_PATH = `http://hb.bizmrg.com/vi-studio/`;
+//https://hb.bizmrg.com/vi-studio/2a2ef2d0-3dc7-42fb-9601-418201e09f06
 export const EVENTS = {
     QUEUE_POSITION: 'QUEUE_POSITION',
     GAME_START: 'GAME_START',
