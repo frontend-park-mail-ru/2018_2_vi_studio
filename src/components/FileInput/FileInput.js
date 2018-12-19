@@ -1,8 +1,8 @@
 import Component from "../Component.js";
-import renderFileInput from "./FileInput.pug.js"
+import renderFileInput from "./FileInput.pug.js";
 import VirtualDOM from "../VirtualDOM.js";
 
-const FILE_NAME_PATERN = /\/([^\/]+)$/;
+const FILE_NAME_PATERN = /\\([^\\]+)$/;
 
 export default class FileInput extends Component {
     constructor(props = {}) {
@@ -18,8 +18,8 @@ export default class FileInput extends Component {
             event.preventDefault();
             inputEl.click();
         });
-
         inputEl.addEventListener('change', () => {
+            console.log("VAL", inputEl.value);
             nameEl.innerText = inputEl.value.match(FILE_NAME_PATERN)[1];
         });
     }
