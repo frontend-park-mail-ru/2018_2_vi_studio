@@ -6,14 +6,9 @@ import {BOT_AVATAR_PATH} from "../../constants";
 
 export default class Profile extends Component {
     constructor(props = {}) {
-        if (props.avatar &&  props.avatar !== BOT_AVATAR_PATH) {
-            props.avatar = IMAGES_PATH + props.avatar;
-        }
-
-        alert(props.avatar + BOT_AVATAR_PATH);
 
         super(VirtualDOM.createElementByHtml(renderProfile({
-            avatar: props.avatar ? props.avatar : NO_AVATAR_PATH,
+            avatar: props.avatar ? IMAGES_PATH + props.avatar : NO_AVATAR_PATH,
             name: props.name || ''
         })));
     }

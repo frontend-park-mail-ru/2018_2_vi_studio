@@ -19,7 +19,7 @@ export const EVENTS = {
 };
 
 export const NO_AVATAR_PATH = '/public/images/no-avatar.jpg';
-export const BOT_AVATAR_PATH = '/public/images/bot-avatar.png';
+export const BOT_AVATAR_PATH = 'bot-avatar.png';
 
 export const USER_NAV_ITEMS = [
     {title: 'Single player', href: '/game/offline'},
