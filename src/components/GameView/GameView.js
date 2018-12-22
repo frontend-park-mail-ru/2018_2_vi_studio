@@ -53,6 +53,6 @@ export default class GameView extends Component {
     }
 
     get loading() {
-        return this.element.getElementsByClassName('game-view__loading-img')[0];
+        return this.element.getElementsByClassName('game-view__loading')[0];
     }
 }
