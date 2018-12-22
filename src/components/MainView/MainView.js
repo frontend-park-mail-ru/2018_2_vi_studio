@@ -13,7 +13,7 @@ export default class MainView extends Component {
 
         // this._asideToggleButton.addEventListener('click', this._toggleNav.bind(this));
 
-        this._asideContentEl.addEventListener('click', this._toggleNav.bind(this));
+        // this._asideContentEl.addEventListener('click', this._toggleNav.bind(this));
     }
 
     get content() {
