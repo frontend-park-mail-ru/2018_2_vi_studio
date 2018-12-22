@@ -18,7 +18,7 @@ self.addEventListener('install', (event) => {
         caches.open(CACHE_NAME)
             .then((cache) => {
                 // загружаем в наш cache необходимые файлы
-                console.log("loading...");[]byte(
+                console.log("loading...");
                 return cache.addAll(assetsToCache);
 
             })
