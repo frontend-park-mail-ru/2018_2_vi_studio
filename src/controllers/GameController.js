@@ -16,6 +16,7 @@ export default class GameController extends Controller {
         this.stop = this.stop.bind(this);
         this.start = this.start.bind(this);
 
+        bus.on(EVENTS.NEXT_TRY, () => this._view.loading.style.display = 'none');
         // window.addEventListener('resize', () => {
         //     this._view.resize();
         //     bus.emit(EVENTS.GAME_STATE_CHANGED);

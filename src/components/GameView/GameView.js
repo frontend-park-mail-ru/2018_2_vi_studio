@@ -51,4 +51,8 @@ export default class GameView extends Component {
         this._tileCanvas.width = step;
         this._tileCanvas.height = step;
     }
+
+    get loading() {
+        return this.element.getElementsByClassName('game-view__loading-img')[0];
+    }
 }

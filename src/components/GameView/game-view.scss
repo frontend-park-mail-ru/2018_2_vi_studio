@@ -4,6 +4,21 @@
   background: $slave-color;
   height: 100%;
 
+  .game-view__loading {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    top: 0;
+    left: 0;
+
+    .game-view__loading-img {
+      margin: auto;
+    }
+  }
+
   .game-view__content {
     display: flex;
     max-height: 100%;
@@ -58,6 +73,8 @@
         margin: auto;
       }
     }
+
+
 
 
     @media screen and (orientation: portrait) {
