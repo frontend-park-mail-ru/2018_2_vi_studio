@@ -6,13 +6,18 @@
   flex-direction: column;
   height: 100%;
 
-  .home-view__nav {
-    padding: 10px;
+  .home-view__nav .profile{
+    padding: 10px 30px 10px 10px;
     background: rgba(255,255,255, 0.2);
     width: 360px;
     margin: 20px auto;
     border-radius: 50px;
     text-align: left;
+
+    .profile__name {
+      color: white;
+      text-align: center;
+    }
   }
 
   @media (max-width: 980px) {
