@@ -2,12 +2,13 @@ import Component from "../Component.js";
 import VirtualDOM from "../VirtualDOM.js";
 import renderPlayer from "./Player.pug.js";
 import {NO_AVATAR_PATH} from "../../constants.js";
+import {IMAGES_PATH} from "../../constants.js";
 
 export default class Player extends Component {
     constructor(props = {}) {
         super(VirtualDOM.createElementByHtml(
             renderPlayer({
-                avatar: props.avatar ? props.avatar : NO_AVATAR_PATH,
+                avatar: props.avatar ? IMAGES_PATH + props.avatar : NO_AVATAR_PATH,
                 nickname: props.nickname || '',
             })
         ));
