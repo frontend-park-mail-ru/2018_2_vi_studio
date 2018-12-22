@@ -6,7 +6,7 @@ import {BOT_AVATAR_PATH} from "../../constants";
 
 export default class Profile extends Component {
     constructor(props = {}) {
-        if (props.avatar !== BOT_AVATAR_PATH) {
+        if (props.avatar &&  props.avatar !== BOT_AVATAR_PATH) {
             props.avatar = IMAGES_PATH + props.avatar;
         }
 
