@@ -3,13 +3,14 @@
 import Router from './Router.js';
 import MainController from './controllers/MainController.js';
 import GameController from './controllers/GameController.js';
+import HomeController from "./controllers/HomeController.js";
 import {EVENTS} from "./constants.js";
 import bus from './bus.js';
 import ErrorController from "./controllers/ErrorController.js";
 import Component from "./components/Component.js";
 import PopUp from "./components/PopUp/PopUp.js";
-import runtime from 'serviceworker-webpack-plugin/lib/runtime.js';
 
+import runtime from 'serviceworker-webpack-plugin/lib/runtime.js';
 import './main.scss';
 
 
@@ -29,6 +30,6 @@ router
     .register('/error', ErrorController)
     .register('/game/:tag', GameController)
     .register('/:tag', MainController)
-    .register('/', MainController);
+    .register('/', HomeController);
 
 router.start();

@@ -5,34 +5,16 @@ import Navigation from "../components/Navigation/Navigation.js";
 import Form from "../components/Form/Form.js";
 import Leaderboard from "../components/Leaderboard/Leaderboard.js";
 import Rules from "../components/Rules/Rules.js";
-import Video from "../components/Video/Video.js";
 import SessionModel from "../models/SessionModel.js";
 import LeaderModel from "../models/LeaderModel.js";
 import Profile from "../components/Profile/Profile.js";
 import MainView from "../components/MainView/MainView.js";
 import SignInForm from "../components/SignInForm/SignInForm.js";
 import SignUpForm from "../components/SignUpForm/SignUpForm.js";
-import {EVENTS} from "../constants.js";
+import {EVENTS, GUEST_NAV_ITEMS, USER_NAV_ITEMS} from "../constants.js";
 import bus from "../bus.js";
 
-const USER_NAV_ITEMS = [
-    {title: 'Single player', href: '/game/offline'},
-    {title: 'Multi player', href: '/game/online'},
-    {title: 'Home', href: '/'},
-    {title: 'Profile', href: '/profile'},
-    {title: 'Leaders', href: '/leaders'},
-    {title: 'Rules', href: '/rules'},
-    {title: 'Sign out', href: '/sign_out'}
-];
 
-const GUEST_NAV_ITEMS = [
-    {title: 'Home', href: '/'},
-    {title: 'Single player', href: '/game/offline'},
-    {title: 'Sign in', href: '/sign_in'},
-    {title: 'Sign up', href: '/sign_up'},
-    {title: 'Leaders', href: '/leaders'},
-    {title: 'Rules', href: '/rules'},
-];
 
 export default class MainController extends Controller {
     constructor(router) {
@@ -41,7 +23,6 @@ export default class MainController extends Controller {
         this.router = router;
 
         this.actions = {
-            home: this.renderHome.bind(this),
             sign_in: this.renderSignIn.bind(this),
             sign_up: this.renderSignUp.bind(this),
             leaders: this.renderLeaders.bind(this),
@@ -62,10 +43,8 @@ export default class MainController extends Controller {
 
         if (action && this.actions[action]) {
             this.actions[action]();
-        } else if (action) {
-            this.router.open('/');
         } else {
-            this.actions.home();
+            this.router.open('/');
         }
     }
 
@@ -214,10 +193,6 @@ export default class MainController extends Controller {
 
     renderRules() {
         Component.render(new Rules(), this._view.content);
-    }
-
-    renderHome() {
-        Component.render(new Video(), this._view.content);
     }
 
     static alertUnavailable() {

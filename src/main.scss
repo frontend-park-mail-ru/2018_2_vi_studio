@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+@import url('https://fonts.googleapis.com/css?family=Lobster');
 
 @import "constants";
 /* components */
 @import "components/Navigation/navigation";
 @import "components/FileInput/file-input";
-@import "components/Video/video";
 @import "components/Form/form";
 @import "components/Leaderboard/leaderboard";
 @import "components/Rules/rules";
@@ -13,7 +13,8 @@
 @import "components/PopUp/popup";
 /* controllers */
 @import "components/MainView/main-view";
-@import "components/GameView/game-view";
+@import "components/HomeView/home-view";
+//@import "components/HomeView/video";
 
 html {
   height: 100%;

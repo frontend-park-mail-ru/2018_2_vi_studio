@@ -20,3 +20,22 @@ export const EVENTS = {
 
 export const NO_AVATAR_PATH = '/public/images/no-avatar.jpg';
 export const BOT_AVATAR_PATH = '/public/images/bot-avatar.png';
+
+export const USER_NAV_ITEMS = [
+    {title: 'Single player', href: '/game/offline'},
+    {title: 'Multi player', href: '/game/online'},
+    {title: 'Home', href: '/'},
+    {title: 'Profile', href: '/profile'},
+    {title: 'Leaders', href: '/leaders'},
+    {title: 'Rules', href: '/rules'},
+    {title: 'Sign out', href: '/sign_out'}
+];
+
+export const GUEST_NAV_ITEMS = [
+    {title: 'Home', href: '/'},
+    {title: 'Single player', href: '/game/offline'},
+    {title: 'Sign in', href: '/sign_in'},
+    {title: 'Sign up', href: '/sign_up'},
+    {title: 'Leaders', href: '/leaders'},
+    {title: 'Rules', href: '/rules'},
+];

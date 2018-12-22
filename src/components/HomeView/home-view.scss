@@ -1,15 +1,16 @@
 @import "../../constants";
 
-.main-view {
+.home-view {
   flex: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  height: 100%;
 
   @media (max-width: 980px) {
     flex-direction: column;
   }
 
-  .main-view__background {
+  .home-view__background {
     filter: blur(6px);
     position: fixed;
     background: url("/src/images/background.jpg") center center;
@@ -18,65 +19,52 @@
     height: 100%;
     z-index: -1;
 
-    .main-view__bg-filter {
+    .home-view__bg-filter {
       height: 100%;
       background: rgba(0, 0, 0, 0.3);
     }
   }
 
-  .main-view__content {
-    flex: 1;
+  .home-view__flex-cont{
     display: flex;
     flex-direction: column;
 
-    .video {
-      margin: auto;
-      max-width: 100%;
+    justify-content: center;
+    height: 100%;
+  }
 
-      @media (min-width: 660px) {
-        width: 640px;
-        height: 360px;
-      }
+  .home-view__header {
+    font-family: 'Lobster', cursive;
+    font-size: 140px;
+    color: #ffcd80;
+    text-align: center;
 
-      @media (min-width: 1280px) {
-        width: 960px;
-        height: 540px;
-      }
-    }
 
-    .form, .leaders {
-      padding: 25px;
-      box-sizing: border-box;
-      align-self: center;
-      width: 360px;
-      margin: auto;
-      background: $slave-color-opacity-08;
-    }
-
-    .rules {
-      margin: 80px;
-    }
-
-    @media (max-width: 980px) {
-      &_hide {
-        display: none;
-      }
+    @media (min-width: 980px) {
+      font-size: 200px;
     }
   }
 
-  .main-view__aside-toggle {
+  .home-view__content {
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+  }
+
+  .home-view__aside-toggle {
     display: none;
     position: absolute;
   }
 
-  .main-view__aside {
+  .home-view__aside {
     min-width: 300px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     background: $slave-color-opacity-02;
 
-    .main-view__aside-content {
+    .home-view__aside-content {
       padding: 15px 0;
 
       .navigation {
@@ -94,13 +82,13 @@
   // mobile
   @media (max-width: 980px) {
 
-    .main-view__aside-toggle {
+    .home-view__aside-toggle {
       display: inline-block;
       width: 40px;
       padding: 20px;
     }
 
-    .main-view__aside {
+    .home-view__aside {
       width: 100%;
       border-right: none;
       margin: 0;
@@ -108,7 +96,7 @@
       display: none;
 
 
-      .main-view__nav-container {
+      .home-view__nav-container {
         margin: auto;
       }
 
