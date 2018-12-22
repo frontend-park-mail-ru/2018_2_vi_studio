@@ -11,7 +11,7 @@ export default class Profile extends Component {
         }
 
         super(VirtualDOM.createElementByHtml(renderProfile({
-            avatar: props.avatar ? IMAGES_PATH + props.avatar : NO_AVATAR_PATH,
+            avatar: props.avatar ? props.avatar : NO_AVATAR_PATH,
             name: props.name || ''
         })));
     }
