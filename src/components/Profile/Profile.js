@@ -10,7 +10,7 @@ export default class Profile extends Component {
             props.avatar = IMAGES_PATH + props.avatar;
         }
 
-        console.log(props.avatar, BOT_AVATAR_PATH);
+        alert(props.avatar + BOT_AVATAR_PATH);
 
         super(VirtualDOM.createElementByHtml(renderProfile({
             avatar: props.avatar ? props.avatar : NO_AVATAR_PATH,
