@@ -5,7 +5,7 @@ const CACHE_NAME = 'indigo_serviceworker_v_1';
 
 const {assets} = global.serviceWorkerOption;
 //
-let assetsToCache = [...assets.map(asset => "/build" + asset), '/', '/build/images/favicon.ico'];
+let assetsToCache = [...assets.map(asset => "/build" + asset), '/', '/public/images/favicon.ico'];
 
 self.addEventListener('install', (event) => {
     // задержим обработку события
@@ -18,7 +18,7 @@ self.addEventListener('install', (event) => {
         caches.open(CACHE_NAME)
             .then((cache) => {
                 // загружаем в наш cache необходимые файлы
-                console.log("loading...");
+                console.log("loading...");[]byte(
                 return cache.addAll(assetsToCache);
 
             })
