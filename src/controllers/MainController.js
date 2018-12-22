@@ -36,6 +36,10 @@ export default class MainController extends Controller {
         };
 
         this.renderNav();
+
+        this._view.asideToggleButton.addEventListener('click', () => {
+            this.router.open('/');
+        })
     }
 
     handle(args = []) {
