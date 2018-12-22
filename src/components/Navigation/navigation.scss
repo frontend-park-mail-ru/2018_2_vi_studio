@@ -3,11 +3,13 @@
     display: block;
     color: white;
     text-decoration: none;
-
-
     font-size: 24pt;
     font-weight: 600;
-    padding: 12px 50px;
+    padding: 6px 50px;
+
+    @media (max-width: 980px) {
+      padding: 12px 50px;
+    }
 
     &_active {
       padding-left: 45px;
