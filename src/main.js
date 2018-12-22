@@ -24,8 +24,6 @@ const router = new Router(root);
 const popup = document.getElementById('popup');
 Component.render(new PopUp(), popup);
 
-bus.on(EVENTS.QUEUE_POSITION, data => bus.emit(EVENTS.ALERT, {message: 'QUEUE POSITION: ' + data.position}));
-
 router
     .register('/error', ErrorController)
     .register('/game/:tag', GameController)
